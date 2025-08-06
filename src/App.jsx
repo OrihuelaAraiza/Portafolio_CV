@@ -6,6 +6,8 @@ import Apps from "./pages/Apps"; // <--- NUEVA RUTA
 import About from "./pages/About";
 import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
+import FogGlow from "./components/FogGlow";
+import ParticlesBg from "./components/ParticlesBg";
 
 function AnimatedRoutes() {
   const location = useLocation();
@@ -26,6 +28,8 @@ export default function App() {
   return (
     <div className="flex flex-col min-h-screen bg-dark text-light font-display">
       <BrowserRouter>
+      <ParticlesBg />
+      <FogGlow />
         <Navbar />
         <div className="pt-20 max-w-6xl mx-auto px-4 flex-1 flex flex-col w-full">
           <AnimatedRoutes />

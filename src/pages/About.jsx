@@ -1,139 +1,210 @@
+// src/pages/About.jsx
 import { useEffect } from "react";
 import { motion } from "framer-motion";
-import { FaReact, FaJs, FaCss3Alt, FaHtml5, FaGithub, FaFigma } from "react-icons/fa";
-import { SiTailwindcss, SiSwift, SiUnity, SiFramer } from "react-icons/si";
-
-const skills = [
-  { icon: <FaReact />, name: "React", color: "#61dafb" },
-  { icon: <SiTailwindcss />, name: "TailwindCSS", color: "#38bdf8" },
-  { icon: <SiFramer />, name: "Framer Motion", color: "#ef476f" },
-  { icon: <FaJs />, name: "JavaScript", color: "#f7e018" },
-  { icon: <SiSwift />, name: "SwiftUI", color: "#fa7343" },
-  { icon: <SiUnity />, name: "Unity", color: "#222c37" },
-  { icon: <FaGithub />, name: "GitHub", color: "#fff" },
-  { icon: <FaFigma />, name: "Figma", color: "#a259ff" },
-  { icon: <FaCss3Alt />, name: "CSS", color: "#264de4" },
-  { icon: <FaHtml5 />, name: "HTML", color: "#e44d26" },
+import AnimatedBg from "../components/AnimatedBg";
+import avatarPixel from "../assets/avatar.png";
+const awards = [
+  {
+    icon: "🏆",
+    title: "Agro Youth Hackathon",
+    desc: "2nd place, Best Prototype (2024)",
+  },
+  {
+    icon: "🥈",
+    title: "iOS Lab Hackathon",
+    desc: "2nd place, App Innovation (2024)",
+  },
+  {
+    icon: "💡",
+    title: "Enactus Hackathon",
+    desc: "Best Social Impact Project",
+  },
+  {
+    icon: "📈",
+    title: "Lead Generation Specialist",
+    desc: " Whitefriar (2023)",
+  },
 ];
 
-const projects = [
-  { title: "Portafolio Web Animado", techs: ["React", "TailwindCSS", "Framer Motion"], desc: "Web personal con animaciones y transiciones modernas.", year: 2024 },
-  { title: "Mi Campo - App iOS", techs: ["SwiftUI", "ML", "UX"], desc: "App agrícola inteligente para diagnóstico de cultivos.", year: 2024 },
-  { title: "UPocket", techs: ["SwiftUI", "UI Custom"], desc: "App académica universitaria con UI personalizada.", year: 2024 },
+const education = [
+  {
+    icon: "🎓",
+    degree: "BSc. Animation & Video Game Engineering",
+    school: "Universidad Panamericana (2022-2026)",
+  },
+  {
+    icon: "🛠️",
+    degree: "Technical Degree in Automated Systems",
+    school: "Instituto Politécnico Nacional (2017-2020)",
+  },
 ];
 
 export default function About() {
   useEffect(() => window.scrollTo(0, 0), []);
 
+  // MOTTO animado (simula un typewriter)
+  const motto = "Turning Ideas Into Code.";
+
   return (
-    <motion.section
-      key="about"
-      initial={{ opacity: 0, y: 32 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, y: -32 }}
-      transition={{ duration: 0.5, type: "spring" }}
-      className="min-h-[calc(100vh-7rem)] flex flex-col items-center justify-center w-full px-2"
+    <section className="relative min-h-screen w-full flex flex-col items-center justify-center bg-dark overflow-x-hidden">
+      {/* Fondo animado */}
+      <AnimatedBg />
+
+      {/* Contenido principal */}
+      <div className="relative z-10 max-w-3xl mx-auto py-24 px-4 flex flex-col items-center">
+
+        {/* Avatar y nombre */}
+        <motion.img
+          src={avatarPixel}
+          alt="JP Orihuela"
+          className="w-28 h-28 mb-4 drop-shadow-2xl animate-float"
+          initial={{ opacity: 0, scale: 0.8, y: 32 }}
+          animate={{ opacity: 1, scale: 1, y: 0 }}
+          transition={{ delay: 0.1, duration: 0.7, type: "spring" }}
+        />
+
+        <motion.h1
+          className="text-4xl font-extrabold text-accent mb-1 text-center"
+          initial={{ opacity: 0, x: -60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.25, duration: 0.7, type: "spring" }}
+        >
+          Juan Pablo Orihuela
+        </motion.h1>
+        <motion.h2
+          className="text-lg font-semibold text-light/80 mb-1 text-center"
+          initial={{ opacity: 0, x: 60 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.36, duration: 0.7, type: "spring" }}
+        >
+          Software Engineer & Digital Creative
+        </motion.h2>
+
+        {/* Motto animado */}
+        <motion.div
+          className="text-orange font-bold text-center mb-6"
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ delay: 0.55, duration: 0.7, type: "spring" }}
+        >
+          <span className="typewriter">{motto}</span>
+          <style>
+            {`
+              .typewriter {
+                overflow: hidden;
+                border-right: .15em solid #FF7F11;
+                white-space: nowrap;
+                animation: typing 3.2s steps(${motto.length}, end), blink .75s step-end infinite;
+              }
+              @keyframes typing {
+                from { width: 0 }
+                to { width: 100% }
+              }
+              @keyframes blink {
+                50% { border-color: transparent }
+              }
+              .animate-float { animation: float 2.8s ease-in-out infinite; }
+              @keyframes float { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-18px); } }
+            `}
+          </style>
+        </motion.div>
+
+        {/* About breve */}
+        <motion.p
+          className="text-light/90 text-center mb-10 max-w-xl"
+          initial={{ opacity: 0, y: 18 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.67, duration: 0.5 }}
+        >
+          Hi! I’m JP, a developer focused on building beautiful apps, games, and digital experiences. <br />
+          Always learning, always coding. Let’s create something great together!
+        </motion.p>
+
+  {/* ---------- AWARDS / HIGHLIGHTS ---------- */}
+<motion.h3
+  className="text-2xl font-bold text-orange mb-4 mt-10"
+  initial={{ opacity: 0, y: 32 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.25, duration: 0.6, type: "spring" }}
+>
+  Awards & Highlights
+</motion.h3>
+<div className="relative w-full max-w-2xl mx-auto flex flex-col gap-8 mb-12">
+  {/* Línea vertical animada tipo timeline */}
+  <div className="absolute left-6 top-0 bottom-0 w-1 bg-gradient-to-b from-orange/50 via-transparent to-accent/40 rounded-full animate-pulse z-0" />
+  {awards.map((item, i) => (
+    <motion.div
+      key={i}
+      className={`
+        relative z-10 bg-white/10 backdrop-blur-md border-2 border-orange/40 shadow-xl 
+        rounded-2xl px-7 py-5 flex items-center gap-5
+        transition-transform duration-300
+        hover:scale-[1.035] hover:border-orange hover:shadow-accent/40
+        group
+      `}
+      initial={{ opacity: 0, y: 32, scale: 0.96 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ delay: 0.3 + i * 0.12, duration: 0.5, type: "spring" }}
+      viewport={{ once: true, margin: "-100px" }}
     >
-      <motion.h2
-        className="text-5xl sm:text-6xl font-extrabold text-orange mb-8 text-center"
-        initial={{ opacity: 0, scale: 0.8 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.1, duration: 0.5 }}
-      >
-        Sobre mí
-      </motion.h2>
-      <motion.div
-        className="bg-darker/70 rounded-3xl shadow-xl p-8 max-w-3xl text-lg mb-8 border border-orange/30"
-        initial={{ opacity: 0, x: -70 }}
-        animate={{ opacity: 1, x: 0 }}
-        transition={{ delay: 0.22, duration: 0.7, type: "spring" }}
-      >
-        <p className="mb-2 text-light/90">
-          <span className="font-bold text-accent">¡Hola! Soy JP Orihuela,</span> desarrollador frontend apasionado por crear experiencias interactivas que combinan tecnología, diseño y creatividad.
-        </p>
-        <ul className="list-disc ml-6 mb-2 text-light/80">
-          <li>Especializado en <b>React</b> y <b>SwiftUI</b> para web y mobile.</li>
-          <li>Fan de las animaciones modernas: <b>Framer Motion</b>, UI dinámica y microinteracciones.</li>
-          <li>Ganador en hackathones nacionales y desarrollador de videojuegos indie con Unity.</li>
-          <li>Experiencia en UI/UX, diseño responsivo y prototipado con Figma.</li>
-        </ul>
-        <p className="text-orange font-semibold mb-1">
-          ¿Tienes una idea? ¡Colaboremos!  
-          <a href="mailto:orihuelaaraizajuanpablo@gmail.com" className="ml-2 underline hover:text-accent">orihuelaaraizajuanpablo@gmail.com</a>
-        </p>
-      </motion.div>
-      <motion.div
-        className="mb-10 flex flex-col items-center w-full"
-        initial={{ opacity: 0, scale: 0.92 }}
-        animate={{ opacity: 1, scale: 1 }}
-        transition={{ delay: 0.35, duration: 0.7 }}
-      >
-        <h3 className="text-2xl font-bold text-light mb-5 text-center">Stack y herramientas</h3>
-        <div className="flex flex-wrap justify-center gap-5">
-          {skills.map(({ icon, name, color }) => (
-            <motion.div
-              key={name}
-              whileHover={{
-                scale: 1.17,
-                rotate: [0, 6, -6, 0],
-                boxShadow: `0 0 18px ${color}`,
-                backgroundColor: "#222a",
-              }}
-              className="flex flex-col items-center px-5 py-3 bg-dark rounded-2xl shadow hover:shadow-accent/20 border border-orange/30 transition-all duration-300 cursor-pointer"
-              title={name}
-            >
-              <span className="text-4xl mb-1" style={{ color }}>{icon}</span>
-              <span className="text-sm font-semibold text-light/90">{name}</span>
-            </motion.div>
-          ))}
+      {/* Puntero timeline */}
+      <div className="absolute -left-8 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-orange/80 shadow-accent shadow-xl flex items-center justify-center animate-bounce">
+        <span className="text-2xl drop-shadow-sm">{item.icon}</span>
+      </div>
+      {/* Info */}
+      <div className="flex-1 min-w-0">
+        <div className="flex items-center gap-2 mb-1">
+          <span className="font-bold text-light text-lg">{item.title}</span>
+          <span className="px-2 py-0.5 text-xs rounded-full bg-accent/90 text-white ml-1 font-semibold animate-pulse shadow">
+            {item.desc.split(",")[0]}
+          </span>
         </div>
-      </motion.div>
-      <motion.div
-        className="mb-10 w-full max-w-3xl"
-        initial={{ opacity: 0, y: 70 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.42, duration: 0.7 }}
-      >
-        <h3 className="text-2xl font-bold text-light mb-5 text-center">Proyectos destacados</h3>
-        <ol className="relative border-l-4 border-orange/30 pl-8">
-          {projects.map((proj, idx) => (
-            <motion.li
-              key={proj.title}
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.45 + idx * 0.14, duration: 0.5 }}
-              className="mb-6 last:mb-0"
-            >
-              <span className="absolute -left-6 top-2 w-4 h-4 rounded-full bg-orange/80 shadow-accent shadow"></span>
-              <div className="flex items-center justify-between">
-                <span className="text-lg font-bold text-accent">{proj.title}</span>
-                <span className="text-light/60 text-xs">{proj.year}</span>
-              </div>
-              <div className="text-light/80 text-base mb-1">{proj.desc}</div>
-              <div className="flex flex-wrap gap-2">
-                {proj.techs.map((t) => (
-                  <span
-                    key={t}
-                    className="bg-orange/20 text-orange px-3 py-1 rounded-full text-xs font-semibold"
-                  >
-                    {t}
-                  </span>
-                ))}
-              </div>
-            </motion.li>
-          ))}
-        </ol>
-      </motion.div>
-      <motion.div
-        className="mt-6 text-center"
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.7 }}
-      >
-        <span className="text-light/70 text-sm">¿Quieres ver mi código o platicar?  
-          <a href="mailto:orihuelaaraizajuanpablo@gmail.com" className="text-orange font-semibold ml-2 hover:underline">¡Hablemos!</a>
-        </span>
-      </motion.div>
-    </motion.section>
+        <div className="text-light/70 text-sm">{item.desc.replace(/^.*?, /, "")}</div>
+      </div>
+    </motion.div>
+  ))}
+</div>
+
+{/* ---------- EDUCATION ---------- */}
+<motion.h3
+  className="text-2xl font-bold text-orange mb-4"
+  initial={{ opacity: 0, y: 32 }}
+  whileInView={{ opacity: 1, y: 0 }}
+  transition={{ delay: 0.45, duration: 0.6, type: "spring" }}
+>
+  Education
+</motion.h3>
+<div className="relative w-full max-w-2xl mx-auto flex flex-col gap-8">
+  {/* Línea vertical animada tipo timeline */}
+  <div className="absolute left-6 top-0 bottom-0 w-1 bg-gradient-to-b from-accent/50 via-transparent to-orange/40 rounded-full animate-pulse z-0" />
+  {education.map((item, i) => (
+    <motion.div
+      key={i}
+      className={`
+        relative z-10 bg-white/10 backdrop-blur-md border-2 border-accent/40 shadow-lg
+        rounded-2xl px-7 py-5 flex items-center gap-5
+        transition-transform duration-300
+        hover:scale-[1.035] hover:border-accent hover:shadow-orange/40
+        group
+      `}
+      initial={{ opacity: 0, y: 32, scale: 0.96 }}
+      whileInView={{ opacity: 1, y: 0, scale: 1 }}
+      transition={{ delay: 0.48 + i * 0.15, duration: 0.5, type: "spring" }}
+      viewport={{ once: true, margin: "-100px" }}
+    >
+      {/* Puntero timeline */}
+      <div className="absolute -left-8 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-accent/90 shadow-orange shadow-lg flex items-center justify-center animate-bounce">
+        <span className="text-2xl drop-shadow">{item.icon}</span>
+      </div>
+      {/* Info */}
+      <div>
+        <div className="font-semibold text-light text-lg">{item.degree}</div>
+        <div className="text-light/60 text-sm">{item.school}</div>
+      </div>
+    </motion.div>
+  ))}
+</div>
+      </div>
+    </section>
   );
 }

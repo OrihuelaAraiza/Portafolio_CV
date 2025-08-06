@@ -11,3 +11,9 @@
   background: #232323;
   border-radius: 10px;
 }
+
+@keyframes fogMove {
+  0% { background-position: 0% 0%, 100% 100%, 0% 0%; }
+  50% { background-position: 50% 40%, 60% 60%, 100% 0%; }
+  100% { background-position: 0% 0%, 100% 100%, 0% 0%; }
+}

@@ -75,9 +75,9 @@ const projects = [
   }
 ];
 
-const ROOM_WIDTH = 900;
+const ROOM_WIDTH = 500;
 const ROOM_HEIGHT = 420;
-const AVATAR_SIZE = 48;
+const AVATAR_SIZE = 100;
 const MOVE_STEP = 24;
 
 export default function GameRoom() {
