@@ -50,7 +50,7 @@ const projects = [
     id: 1,
     title: "Mi Campo (iOS)",
     desc: "App agrícola inteligente para diagnóstico de cultivos.",
-    pos: { x: 110, y: 260 },
+    pos: { x: 60, y: 230 },
     img: pcImg,
     tags: ["SwiftUI", "ML", "UX"],
     link: "https://github.com/OrihuelaAraiza/mi-campo"
@@ -59,7 +59,7 @@ const projects = [
     id: 2,
     title: "UPocket",
     desc: "App universitaria para gestión escolar.",
-    pos: { x: 420, y: 90 },
+    pos: { x: 200, y: 40 },
     img: arcadeImg,
     tags: ["SwiftUI", "UI Custom"],
     link: "https://github.com/OrihuelaAraiza/upocket"
@@ -68,7 +68,7 @@ const projects = [
     id: 3,
     title: "Portafolio Web Animado",
     desc: "Portfolio interactivo con animaciones, transiciones y UI moderna.",
-    pos: { x: 700, y: 220 },
+    pos: { x: 360, y: 220 },
     img: bookImg,
     tags: ["React", "TailwindCSS", "Framer Motion"],
     link: "https://jp-portafolio.vercel.app/"
