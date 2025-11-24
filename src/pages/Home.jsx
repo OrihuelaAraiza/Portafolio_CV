@@ -4,6 +4,7 @@ import ShinyText from "../components/reactbits/TextAnimations/ShinyText/ShinyTex
 import homeImg from "../assets/home.jpeg";
 import { FaLinkedin, FaGithub, FaInstagram, FaSpotify } from "react-icons/fa";
 import { Typewriter } from 'react-simple-typewriter';
+import ParticlesBg from "./components/ParticlesBg";
 
 const social = [
   { icon: <FaLinkedin />, href: "https://www.linkedin.com/in/juan-pablo-orihuela-araiza-65a566325/", color: "#0A66C2" },
@@ -13,7 +14,9 @@ const social = [
 ];
 
 export default function Home() {
+
   return (
+    
     <motion.section
       id="home"
       className="flex flex-col md:flex-row items-center justify-center min-h-[90vh] w-full gap-10 px-4 bg-dark"

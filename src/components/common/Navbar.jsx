@@ -3,8 +3,9 @@ import { NavLink } from "react-router-dom";
 
 const navItems = [
   { name: "Inicio", path: "/" },
+  { name: "Web", path: "/web" },
   { name: "Videojuegos", path: "/games" },
-  { name: "Apps", path: "/apps" },         // <- Cambiado, uno solo
+  { name: "Apps", path: "/apps" },
   { name: "Sobre mí", path: "/about" },
 ];
 

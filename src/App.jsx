@@ -2,7 +2,8 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 import Home from "./pages/Home";
 import GameProjects from "./pages/GameProjects";
-import Apps from "./pages/Apps"; // <--- NUEVA RUTA
+import Apps from "./pages/Apps";
+import WebProjects from "./pages/WebProjects";
 import About from "./pages/About";
 import Navbar from "./components/common/Navbar";
 import Footer from "./components/common/Footer";
@@ -17,7 +18,8 @@ function AnimatedRoutes() {
       <Routes location={location} key={location.pathname}>
         <Route path="/" element={<Home />} />
         <Route path="/games" element={<GameProjects />} />
-        <Route path="/apps" element={<Apps />} />   {/* <--- Solo Apps */}
+        <Route path="/apps" element={<Apps />} />
+        <Route path="/web" element={<WebProjects />} />
         <Route path="/about" element={<About />} />
       </Routes>
     </AnimatePresence>
