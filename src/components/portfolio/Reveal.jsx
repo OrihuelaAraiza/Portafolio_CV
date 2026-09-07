@@ -1,7 +1,8 @@
-import { motion, useReducedMotion } from "framer-motion";
+import { useAppearance } from "@/hooks/useAppearance";
+import { motion } from "framer-motion";
 
 export default function Reveal({ children, className = "", delay = 0 }) {
-  const reduce = useReducedMotion();
+  const { motionDisabled: reduce } = useAppearance();
   return (
     <motion.div
       className={className}

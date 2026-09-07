@@ -1,11 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import {
-  motion,
-  MotionConfig,
-  useReducedMotion,
-  useScroll,
-  useSpring,
-} from "framer-motion";
+import { motion, useScroll, useSpring } from "framer-motion";
 import {
   Dialog,
   DialogContent,
@@ -14,6 +8,8 @@ import {
 } from "@/components/ui/dialog";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import { projects } from "@/data/portfolio";
+import AppearanceProvider from "@/components/AppearanceProvider";
+import { useAppearance } from "@/hooks/useAppearance";
 import Header from "@/components/portfolio/Header";
 import Hero, { StackStrip } from "@/components/portfolio/Hero";
 import Work from "@/components/portfolio/Work";
@@ -36,7 +32,7 @@ function Portfolio() {
   const opener = useRef(null);
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 150, damping: 30 });
-  const reduce = useReducedMotion();
+  const { motionDisabled: reduce } = useAppearance();
   useEffect(() => {
     function onPopState() {
       setActiveProject(
@@ -129,8 +125,8 @@ function Portfolio() {
 
 export default function App() {
   return (
-    <MotionConfig reducedMotion="user">
+    <AppearanceProvider>
       <Portfolio />
-    </MotionConfig>
+    </AppearanceProvider>
   );
 }

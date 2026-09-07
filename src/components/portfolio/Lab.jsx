@@ -1,5 +1,6 @@
 import { AudioLines, Gamepad2, ArrowUpRight } from "lucide-react";
 import { experiments } from "@/data/portfolio";
+import GameReel from "./GameReel";
 import Reveal from "./Reveal";
 
 export default function Lab() {
@@ -23,33 +24,38 @@ export default function Lab() {
           </p>
         </div>
       </Reveal>
+      <Reveal>
+        <GameReel />
+      </Reveal>
       <div className="experiments">
-        {experiments.map((experiment) => (
-          <Reveal key={experiment.name}>
-            <a
-              className="experiment"
-              href={experiment.href}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <div className={`experiment-symbol ${experiment.icon}`}>
-                {experiment.icon === "audio" ? (
-                  <AudioLines size={42} strokeWidth={1.3} />
-                ) : (
-                  <Gamepad2 size={42} strokeWidth={1.3} />
-                )}
-              </div>
-              <div className="experiment-content">
-                <span className="eyebrow">{experiment.type}</span>
-                <h3>{experiment.name}</h3>
-                <p>{experiment.description}</p>
-              </div>
-              <span className="experiment-link">
-                Ver código <ArrowUpRight size={24} />
-              </span>
-            </a>
-          </Reveal>
-        ))}
+        {experiments
+          .filter((experiment) => experiment.icon !== "game")
+          .map((experiment) => (
+            <Reveal key={experiment.name}>
+              <a
+                className="experiment"
+                href={experiment.href}
+                target="_blank"
+                rel="noreferrer"
+              >
+                <div className={`experiment-symbol ${experiment.icon}`}>
+                  {experiment.icon === "audio" ? (
+                    <AudioLines size={42} strokeWidth={1.3} />
+                  ) : (
+                    <Gamepad2 size={42} strokeWidth={1.3} />
+                  )}
+                </div>
+                <div className="experiment-content">
+                  <span className="eyebrow">{experiment.type}</span>
+                  <h3>{experiment.name}</h3>
+                  <p>{experiment.description}</p>
+                </div>
+                <span className="experiment-link">
+                  Ver código <ArrowUpRight size={24} />
+                </span>
+              </a>
+            </Reveal>
+          ))}
       </div>
     </section>
   );

@@ -1,6 +1,9 @@
+import { useRef } from "react";
+import { useAppearance } from "@/hooks/useAppearance";
+import TypewriterRole from "./TypewriterRole";
 import {
   motion,
-  useReducedMotion,
+  useScroll,
   useMotionValue,
   useSpring,
   useTransform,
@@ -17,8 +20,10 @@ import { FiFigma as Figma } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
 import Reveal from "./Reveal";
 
-function HeroVisual() {
-  const reduce = useReducedMotion();
+function HeroVisual({ scrollProgress }) {
+  const { motionDisabled: reduce } = useAppearance();
+  const backY = useTransform(scrollProgress, [0, 1], [0, -65]);
+  const frontY = useTransform(scrollProgress, [0, 1], [0, 70]);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const springX = useSpring(x, { stiffness: 100, damping: 25 });
@@ -44,8 +49,14 @@ function HeroVisual() {
         <span className="crosshair">+</span> DE LA IDEA A LA INTERFAZ
       </div>
       <div className="canvas-grid" aria-hidden="true" />
-      <motion.div className="composition" style={{ rotateX, rotateY }}>
-        <div className="mini-window window-back">
+      <motion.div
+        className="composition"
+        style={reduce ? undefined : { rotateX, rotateY }}
+      >
+        <motion.div
+          className="mini-window window-back"
+          style={reduce ? undefined : { y: backY, rotate: -8 }}
+        >
           <div className="window-chrome">
             <i />
             <i />
@@ -59,8 +70,11 @@ function HeroVisual() {
             height="1000"
             fetchPriority="high"
           />
-        </div>
-        <div className="mini-window window-front">
+        </motion.div>
+        <motion.div
+          className="mini-window window-front"
+          style={reduce ? undefined : { y: frontY, rotate: 5 }}
+        >
           <div className="window-chrome">
             <i />
             <i />
@@ -75,7 +89,7 @@ function HeroVisual() {
             height="1000"
             fetchPriority="high"
           />
-        </div>
+        </motion.div>
         <div className="design-chip">
           <Figma aria-hidden="true" size={16} />
           <span>Diseño que se convierte en código.</span>
@@ -96,12 +110,15 @@ function HeroVisual() {
 }
 
 export default function Hero() {
+  const target = useRef(null);
+  const { scrollYProgress } = useScroll({
+    target,
+    offset: ["start start", "end start"],
+  });
   return (
-    <section id="inicio" className="hero section-shell">
+    <section ref={target} id="inicio" className="hero section-shell">
       <Reveal className="hero-kicker">
-        <span className="eyebrow">
-          <span className="status-dot" /> FRONTEND DEVELOPER & UI/UX
-        </span>
+        <TypewriterRole />
         <span className="eyebrow hero-edition">PORTAFOLIO / 2026</span>
       </Reveal>
       <div className="hero-main">
@@ -135,7 +152,7 @@ export default function Hero() {
           </Reveal>
         </div>
         <Reveal className="hero-visual-wrap" delay={0.15}>
-          <HeroVisual />
+          <HeroVisual scrollProgress={scrollYProgress} />
         </Reveal>
       </div>
       <Reveal className="hero-bottom">

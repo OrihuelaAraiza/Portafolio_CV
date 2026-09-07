@@ -5,7 +5,8 @@ Revisión realizada el 7 de septiembre de 2026. Se consultaron los repositorios 
 ## Perfil
 
 - Nombre, correo, Ciudad de México, formación, trabajo con SwiftUI y reconocimientos: `public/JuanPabloOrihuela_CV.pdf` existente.
-- Rol actual en ROMI y stack web: [README del perfil público](https://github.com/OrihuelaAraiza/OrihuelaAraiza).
+- Roles actuales: el autor confirmó el 7 de septiembre de 2026 que es **CTO de ROMI** e **iOS Developer en la consultora e-tribe**, con **Grupo Salinas** como cliente. Esta actualización prevalece sobre los cargos anteriores del perfil público y del CV. No se inventan fechas de incorporación.
+- Stack web: [README del perfil público](https://github.com/OrihuelaAraiza/OrihuelaAraiza) y código de los proyectos.
 - LinkedIn: enlace existente en el portafolio original.
 - El PDF del CV se conserva como documento aportado; su contenido y sus enlaces pueden requerir una actualización editorial independiente.
 - Se evitaron métricas de impacto, años de experiencia y resultados comerciales que no estuvieran documentados.
@@ -28,6 +29,10 @@ Las fechas de los proyectos web identifican la versión documentada en el reposi
 ## Exploraciones
 
 - [SoundVision](https://github.com/OrihuelaAraiza/SoundVision): prototipo nativo visionOS, grafo 3D y audio espacial, documentados en su README. Se enlaza el código y no se inventa una captura del dispositivo.
-- [We Can Fix This](https://github.com/OrihuelaAraiza/We_Can_Fix_This_): prototipo cooperativo Unity, documentado en el perfil público. Se enlaza el repositorio.
+- [We Can Fix This](https://github.com/OrihuelaAraiza/We_Can_Fix_This_): prototipo cooperativo Unity, documentado en el perfil público. Se enlaza el repositorio y se muestran los dos videos proporcionados por el autor en la carpeta `Assets` del workspace:
+  - `WhatsApp Video 2026-05-18 at 23.07.13.mp4`: tráiler, aproximadamente 43 segundos, 832 × 464, con audio.
+  - `WhatsApp Video 2026-05-19 at 15.50.26.mp4`: demo de gameplay, aproximadamente 2 minutos 21 segundos, 736 × 480, sin pista de audio.
+  - Las copias de `public/videos/` conservan el contenido, duración y resolución. Se recodificaron a H.264 con metadatos al inicio del archivo para reproducción progresiva; los posters WebP son fotogramas de esos videos. Los originales permanecen intactos.
+- La escultura de la sección de proceso se genera con Three.js mediante geometría y materiales procedurales. Es una pieza interactiva del portafolio, no un modelo extraído del videojuego ni una captura de otro proyecto.
 
 Los cuatro enlaces de demo web respondieron con HTTP 200 en la fecha de revisión. El funcionamiento interno, las APIs o los pagos de esos proyectos no forman parte de la validación de este portafolio. BreveMente usa una demo con datos de ejemplo y almacenamiento local según su README; se identifica como prototipo.

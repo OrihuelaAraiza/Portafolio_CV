@@ -4,10 +4,30 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (() => {
+        let theme,
+          paused = false;
+        try {
+          theme = localStorage.getItem("jp-theme");
+          paused = localStorage.getItem("jp-motion") === "paused";
+        } catch {}
+        if (theme !== "dark" && theme !== "light")
+          theme = matchMedia("(prefers-color-scheme: dark)").matches
+            ? "dark"
+            : "light";
+        document.documentElement.dataset.theme = theme;
+        document.documentElement.style.colorScheme = theme;
+        document.documentElement.dataset.motion =
+          paused || matchMedia("(prefers-reduced-motion: reduce)").matches
+            ? "reduced"
+            : "full";
+      })();
+    </script>
     <meta name="theme-color" content="#f8f7f4" />
     <meta
       name="description"
-      content="Juan Pablo Orihuela, frontend developer en Ciudad de México. Diseño UI/UX, React, Next.js y SwiftUI: proyectos, interfaces y experiencias digitales construidas con intención."
+      content="Juan Pablo Orihuela, CTO de ROMI e iOS Developer en e-tribe para Grupo Salinas, en Ciudad de México. Diseño UI/UX, React, Next.js y SwiftUI: proyectos, interfaces y experiencias digitales construidas con intención."
     />
     <meta
       property="og:title"

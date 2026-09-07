@@ -1,5 +1,6 @@
+import { useAppearance } from "@/hooks/useAppearance";
 import { useState } from "react";
-import { motion, useReducedMotion } from "framer-motion";
+import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -12,7 +13,7 @@ const filters = [
   { id: "mobile", label: "iOS & Mobile" },
 ];
 function ProjectCard({ project, onOpen, index }) {
-  const reduce = useReducedMotion();
+  const { motionDisabled: reduce } = useAppearance();
   const mobile = project.category === "mobile";
   return (
     <motion.article

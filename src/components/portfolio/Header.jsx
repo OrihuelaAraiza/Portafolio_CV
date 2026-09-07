@@ -1,5 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-import { ArrowUpRight, Menu } from "lucide-react";
+import { ArrowUpRight, Menu, Moon, Sun, Pause, Play } from "lucide-react";
+import { useAppearance } from "@/hooks/useAppearance";
+import {
+  Tooltip,
+  TooltipContent,
+  TooltipTrigger,
+} from "@/components/ui/tooltip";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -17,6 +23,8 @@ const navLinks = [
 ];
 
 export default function Header() {
+  const { theme, toggleTheme, motionDisabled, systemReduced, toggleMotion } =
+    useAppearance();
   const [active, setActive] = useState("");
   const destination = useRef(null);
   useEffect(() => {
@@ -57,6 +65,56 @@ export default function Header() {
           ))}
         </nav>
         <div className="header-actions">
+          <div className="appearance-controls">
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  className="appearance-button motion-toggle"
+                  size="icon"
+                  variant="ghost"
+                  onClick={toggleMotion}
+                  disabled={systemReduced}
+                  aria-label={
+                    systemReduced
+                      ? "Movimiento reducido por el sistema"
+                      : motionDisabled
+                        ? "Activar animaciones"
+                        : "Pausar animaciones"
+                  }
+                  aria-pressed={motionDisabled}
+                >
+                  {motionDisabled ? <Play size={15} /> : <Pause size={15} />}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                {systemReduced
+                  ? "Respeta tu preferencia de movimiento reducido"
+                  : motionDisabled
+                    ? "Activar animaciones"
+                    : "Pausar animaciones"}
+              </TooltipContent>
+            </Tooltip>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  className="appearance-button theme-toggle"
+                  size="icon"
+                  variant="ghost"
+                  onClick={toggleTheme}
+                  aria-label={
+                    theme === "dark"
+                      ? "Activar tema claro"
+                      : "Activar tema oscuro"
+                  }
+                >
+                  {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                {theme === "dark" ? "Tema claro" : "Tema oscuro"}
+              </TooltipContent>
+            </Tooltip>
+          </div>
           <a className="header-contact" href="#contacto">
             Hablemos <ArrowUpRight size={16} />
           </a>

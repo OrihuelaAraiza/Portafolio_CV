@@ -16,7 +16,7 @@ export const projects = [
     categoryLabel: "Plataforma de salud",
     year: "2026",
     theme: "romi",
-    role: "Desarrollo frontend",
+    role: "CTO · Desarrollo frontend",
     stack: ["Next.js", "TypeScript", "Tailwind CSS", "Motion"],
     cover: "/projects/romi.webp",
     screens: [

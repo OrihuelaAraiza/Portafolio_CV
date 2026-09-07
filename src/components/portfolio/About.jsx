@@ -43,11 +43,12 @@ export default function About() {
               visual y el comportamiento de una interfaz.
             </p>
             <p>
-              Soy frontend developer en <strong>ROMI</strong>, con formación en
-              Ingeniería en Animación y Videojuegos en la Universidad
-              Panamericana. Construyo para web, exploro interfaces nativas con
-              SwiftUI y llevo esa sensibilidad por el movimiento a cada
-              proyecto.
+              Soy <strong>CTO de ROMI</strong> e{" "}
+              <strong>iOS Developer en e-tribe</strong>, trabajando para el
+              cliente <strong>Grupo Salinas</strong>. Mi formación en Ingeniería
+              en Animación y Videojuegos en la Universidad Panamericana conecta
+              mi trabajo en web y SwiftUI con una sensibilidad especial por el
+              movimiento y la interacción.
             </p>
           </Reveal>
           <Reveal>
@@ -55,8 +56,16 @@ export default function About() {
               <div>
                 <span className="experience-year">ACTUALIDAD</span>
                 <span>
-                  <strong>Frontend Developer</strong>
-                  <small>ROMI · Interfaces y experiencias web</small>
+                  <strong>CTO</strong>
+                  <small>ROMI · Dirección tecnológica y desarrollo</small>
+                </span>
+                <ArrowUpRight size={18} />
+              </div>
+              <div>
+                <span className="experience-year">ACTUALIDAD</span>
+                <span>
+                  <strong>iOS Developer</strong>
+                  <small>e-tribe · Cliente: Grupo Salinas</small>
                 </span>
                 <ArrowUpRight size={18} />
               </div>
