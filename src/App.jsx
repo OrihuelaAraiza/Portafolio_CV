@@ -1,43 +1,136 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
-import { AnimatePresence } from "framer-motion";
-import Home from "./pages/Home";
-import GameProjects from "./pages/GameProjects";
-import Apps from "./pages/Apps";
-import WebProjects from "./pages/WebProjects";
-import About from "./pages/About";
-import Navbar from "./components/common/Navbar";
-import Footer from "./components/common/Footer";
-import FogGlow from "./components/FogGlow";
-import ParticlesBg from "./components/ParticlesBg";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import {
+  motion,
+  MotionConfig,
+  useReducedMotion,
+  useScroll,
+  useSpring,
+} from "framer-motion";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { TooltipProvider } from "@/components/ui/tooltip";
+import { projects } from "@/data/portfolio";
+import Header from "@/components/portfolio/Header";
+import Hero, { StackStrip } from "@/components/portfolio/Hero";
+import Work from "@/components/portfolio/Work";
+import Approach from "@/components/portfolio/Approach";
+import Lab from "@/components/portfolio/Lab";
+import About from "@/components/portfolio/About";
+import Contact from "@/components/portfolio/Contact";
+import Footer from "@/components/portfolio/Footer";
+const ProjectDetail = lazy(() => import("@/components/ProjectDetail"));
 
-function AnimatedRoutes() {
-  const location = useLocation();
-
+function Portfolio() {
+  const [activeProject, setActiveProject] = useState(
+    () =>
+      projects.find(
+        (project) =>
+          project.id ===
+          new URLSearchParams(window.location.search).get("project"),
+      ) || null,
+  );
+  const opener = useRef(null);
+  const { scrollYProgress } = useScroll();
+  const progress = useSpring(scrollYProgress, { stiffness: 150, damping: 30 });
+  const reduce = useReducedMotion();
+  useEffect(() => {
+    function onPopState() {
+      setActiveProject(
+        projects.find(
+          (project) =>
+            project.id ===
+            new URLSearchParams(window.location.search).get("project"),
+        ) || null,
+      );
+    }
+    window.addEventListener("popstate", onPopState);
+    const target = {
+      "/about": "sobre-mi",
+      "/web": "proyectos",
+      "/apps": "proyectos",
+      "/games": "laboratorio",
+    }[window.location.pathname];
+    if (target)
+      requestAnimationFrame(() =>
+        document
+          .getElementById(target)
+          ?.scrollIntoView({ behavior: "instant" }),
+      );
+    return () => window.removeEventListener("popstate", onPopState);
+  }, []);
+  useEffect(() => {
+    document.title = activeProject
+      ? `${activeProject.title} — Juan Pablo Orihuela`
+      : "Juan Pablo Orihuela — Frontend Developer & UI/UX";
+  }, [activeProject]);
+  function openProject(project, trigger) {
+    opener.current = trigger;
+    setActiveProject(project);
+    const url = new URL(window.location.href);
+    url.searchParams.set("project", project.id);
+    window.history.pushState({ project: project.id }, "", url);
+  }
+  function closeProject() {
+    setActiveProject(null);
+    const url = new URL(window.location.href);
+    url.searchParams.delete("project");
+    window.history.replaceState({}, "", url);
+  }
   return (
-    <AnimatePresence mode="wait" initial={false}>
-      <Routes location={location} key={location.pathname}>
-        <Route path="/" element={<Home />} />
-        <Route path="/games" element={<GameProjects />} />
-        <Route path="/apps" element={<Apps />} />
-        <Route path="/web" element={<WebProjects />} />
-        <Route path="/about" element={<About />} />
-      </Routes>
-    </AnimatePresence>
+    <TooltipProvider delayDuration={200}>
+      <a href="#proyectos" className="skip-link">
+        Saltar a los proyectos
+      </a>
+      <motion.div
+        className="reading-progress"
+        style={{ scaleX: reduce ? scrollYProgress : progress }}
+      />
+      <Header />
+      <main>
+        <Hero />
+        <StackStrip />
+        <Work onOpen={openProject} />
+        <Approach />
+        <Lab />
+        <About />
+        <Contact />
+      </main>
+      <Footer />
+      <Dialog
+        open={!!activeProject}
+        onOpenChange={(open) => {
+          if (!open) closeProject();
+        }}
+      >
+        {activeProject && (
+          <Suspense
+            fallback={
+              <DialogContent className="detail-loading">
+                <DialogTitle>Cargando proyecto</DialogTitle>
+                <DialogDescription>Preparando las capturas…</DialogDescription>
+              </DialogContent>
+            }
+          >
+            <ProjectDetail
+              key={activeProject.id}
+              project={activeProject}
+              returnFocus={opener.current}
+            />
+          </Suspense>
+        )}
+      </Dialog>
+    </TooltipProvider>
   );
 }
 
 export default function App() {
   return (
-    <div className="flex flex-col min-h-screen bg-dark text-light font-display">
-      <BrowserRouter>
-      <ParticlesBg />
-      <FogGlow />
-        <Navbar />
-        <div className="pt-20 max-w-6xl mx-auto px-4 flex-1 flex flex-col w-full">
-          <AnimatedRoutes />
-        </div>
-        <Footer />
-      </BrowserRouter>
-    </div>
+    <MotionConfig reducedMotion="user">
+      <Portfolio />
+    </MotionConfig>
   );
 }
