@@ -1,3 +1,4 @@
+import { useLanguage } from "@/hooks/useLanguage";
 import { useEffect, useRef, useState } from "react";
 import { ArrowUpRight, Play, Volume2, VolumeX } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -23,6 +24,7 @@ const clips = [
 ];
 
 export default function GameReel() {
+  const { t } = useLanguage();
   const [selected, setSelected] = useState("trailer");
   const [started, setStarted] = useState(false);
   const [failed, setFailed] = useState(false);
@@ -58,7 +60,7 @@ export default function GameReel() {
     <article className="game-reel">
       <div className="reel-intro">
         <div>
-          <span className="eyebrow">UNITY · C# · MULTIJUGADOR</span>
+          <span className="eyebrow">{t("UNITY · C# · MULTIJUGADOR")}</span>
           <h3>
             We Can Fix This<span>_</span>
           </h3>
@@ -69,7 +71,7 @@ export default function GameReel() {
           target="_blank"
           rel="noreferrer"
         >
-          Explorar el código <ArrowUpRight size={17} />
+          {t("Explorar el código")} <ArrowUpRight size={17} />
         </a>
       </div>
       <div className="reel-screen" id="game-reel-player">
@@ -83,17 +85,19 @@ export default function GameReel() {
             preload="none"
             src={clip.source}
             poster={clip.poster}
-            aria-label={`${clip.label} de We Can Fix This`}
+            aria-label={t("{clip} de We Can Fix This", { clip: t(clip.label) })}
             onError={() => setFailed(true)}
           >
-            Tu navegador no puede reproducir este video.
+            {t("Tu navegador no puede reproducir este video.")}
           </video>
         ) : (
           <Button
             variant="ghost"
             className="reel-cover"
             onClick={() => setStarted(true)}
-            aria-label={`Reproducir ${clip.label.toLowerCase()} de We Can Fix This`}
+            aria-label={t("Reproducir {clip} de We Can Fix This", {
+              clip: t(clip.label).toLowerCase(),
+            })}
           >
             <img
               src={clip.poster}
@@ -106,20 +110,20 @@ export default function GameReel() {
             <span className="reel-play">
               <Play size={26} fill="currentColor" />
               <span>
-                VER {clip.label.toUpperCase()}
+                {t("VER")} {t(clip.label).toUpperCase()}
                 <small>{clip.length}</small>
               </span>
             </span>
             <span className="reel-corner">
-              UN MUNDO QUE RESPONDE A LO QUE HACES.
+              {t("UN MUNDO QUE RESPONDE A LO QUE HACES.")}
             </span>
           </Button>
         )}
         {failed && (
           <div className="video-error" role="alert">
-            <p>No se pudo reproducir el video.</p>
+            <p>{t("No se pudo reproducir el video.")}</p>
             <a href={clip.source} download>
-              Descargar {clip.label.toLowerCase()}
+              {t("Descargar")} {t(clip.label).toLowerCase()}
             </a>
           </div>
         )}
@@ -128,7 +132,7 @@ export default function GameReel() {
         <Tabs value={selected} onValueChange={selectClip}>
           <TabsList
             className="reel-tabs"
-            aria-label="Seleccionar video de We Can Fix This"
+            aria-label={t("Seleccionar video de We Can Fix This")}
           >
             {clips.map((item) => (
               <TabsTrigger
@@ -136,7 +140,7 @@ export default function GameReel() {
                 value={item.id}
                 aria-controls="game-reel-player"
               >
-                {item.label}
+                {t(item.label)}
                 <span>{item.length}</span>
               </TabsTrigger>
             ))}
@@ -144,13 +148,13 @@ export default function GameReel() {
         </Tabs>
         <span className="reel-audio">
           {clip.audio ? <Volume2 size={14} /> : <VolumeX size={14} />}{" "}
-          {clip.audio ? "Con audio" : "Demo sin audio"}
+          {clip.audio ? t("Con audio") : t("Demo sin audio")}
         </span>
       </div>
       <p className="reel-description">
-        Cooperación, sistemas interactivos y respuesta visual. Un prototipo
-        multijugador donde el game design se convierte en una experiencia
-        compartida.
+        {t(
+          "Cooperación, sistemas interactivos y respuesta visual. Un prototipo multijugador donde el game design se convierte en una experiencia compartida.",
+        )}
       </p>
     </article>
   );

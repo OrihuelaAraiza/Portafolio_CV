@@ -1,3 +1,4 @@
+import { useLanguage } from "@/hooks/useLanguage";
 import { useRef, useState } from "react";
 import { Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -71,6 +72,7 @@ const fields = [
 const empty = { name: "", email: "", subject: "Un proyecto web", message: "" };
 
 export default function ContactForm() {
+  const { t } = useLanguage();
   const [values, setValues] = useState(empty);
   const [errors, setErrors] = useState({});
   // Hasta el primer envío no se marca nada en rojo: corregir a alguien mientras
@@ -113,7 +115,7 @@ export default function ContactForm() {
 
     // Sin servidor: se arma el correo y lo abre el cliente del visitante. El
     // mensaje queda también en pantalla por si no hay cliente configurado.
-    const subject = `${values.subject} — ${values.name.trim()}`;
+    const subject = `${t(values.subject)} — ${values.name.trim()}`;
     const body = `${values.message.trim()}\n\n—\n${values.name.trim()}\n${values.email.trim()}`;
     const href = `mailto:${profile.email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
     // Un enlace real en lugar de asignar location: el gesto del visitante sigue
@@ -146,13 +148,13 @@ export default function ContactForm() {
               key={field.name}
               className={`form-row ${field.wide ? "form-row-wide" : ""}`}
             >
-              <label htmlFor={field.name}>{field.label}</label>
+              <label htmlFor={field.name}>{t(field.label)}</label>
 
               {field.type === "select" ? (
                 <select {...shared}>
                   {field.options.map((option) => (
                     <option key={option} value={option}>
-                      {option}
+                      {t(option)}
                     </option>
                   ))}
                 </select>
@@ -160,7 +162,7 @@ export default function ContactForm() {
                 <textarea
                   {...shared}
                   rows={5}
-                  placeholder={field.placeholder}
+                  placeholder={t(field.placeholder)}
                   maxLength={MAX_MESSAGE}
                 />
               ) : (
@@ -168,7 +170,7 @@ export default function ContactForm() {
                   {...shared}
                   type={field.type}
                   autoComplete={field.autoComplete}
-                  placeholder={field.placeholder}
+                  placeholder={t(field.placeholder)}
                 />
               )}
 
@@ -179,7 +181,7 @@ export default function ContactForm() {
               )}
 
               <span className="form-error" id={errorId} role="alert">
-                {error || ""}
+                {error ? t(error) : ""}
               </span>
             </p>
           );
@@ -188,23 +190,26 @@ export default function ContactForm() {
 
       <div className="form-actions">
         <Button type="submit" className="primary-cta">
-          Enviar mensaje <Send size={16} aria-hidden="true" />
+          {t("Enviar mensaje")} <Send size={16} aria-hidden="true" />
         </Button>
         <span className="form-note">
-          Se abre tu cliente de correo con el mensaje ya escrito. Nada se envía
-          desde esta página.
+          {t(
+            "Se abre tu cliente de correo con el mensaje ya escrito. Nada se envía desde esta página.",
+          )}
         </span>
       </div>
 
       {sent && (
         <div className="form-sent" role="status">
           <p>
-            Listo, <strong>{values.name.trim()}</strong>. Si tu cliente de correo
-            no se abrió, escríbeme directo a{" "}
+            {t("Listo,")} <strong>{values.name.trim()}</strong>
+            {t(
+              ". Si tu cliente de correo no se abrió, escríbeme directo a",
+            )}{" "}
             <a href={sent.href}>{profile.email}</a>.
           </p>
           <details>
-            <summary>Ver el mensaje que preparé</summary>
+            <summary>{t("Ver el mensaje que preparé")}</summary>
             <pre>{sent.body}</pre>
           </details>
         </div>

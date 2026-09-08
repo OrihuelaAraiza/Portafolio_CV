@@ -1,3 +1,4 @@
+import { useLanguage } from "@/hooks/useLanguage";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { motion, useScroll, useSpring } from "framer-motion";
@@ -8,7 +9,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { TooltipProvider } from "@/components/ui/tooltip";
-import { projects } from "@/data/portfolio";
+import LanguageProvider from "@/components/LanguageProvider";
 import AppearanceProvider from "@/components/AppearanceProvider";
 import { useAppearance } from "@/hooks/useAppearance";
 import Header from "@/components/portfolio/Header";
@@ -27,14 +28,12 @@ const importProjectDetail = () => import("@/components/ProjectDetail");
 const ProjectDetail = lazy(importProjectDetail);
 
 function Portfolio() {
-  const [activeProject, setActiveProject] = useState(
-    () =>
-      projects.find(
-        (project) =>
-          project.id ===
-          new URLSearchParams(window.location.search).get("project"),
-      ) || null,
+  const { t, projects } = useLanguage();
+  const [activeProjectId, setActiveProjectId] = useState(() =>
+    new URLSearchParams(window.location.search).get("project"),
   );
+  const activeProject =
+    projects.find((project) => project.id === activeProjectId) || null;
   const [paletteOpen, setPaletteOpen] = useState(false);
   const opener = useRef(null);
   const { scrollYProgress } = useScroll();
@@ -49,7 +48,10 @@ function Portfolio() {
   }, []);
   useEffect(() => {
     function onKeyDown(event) {
-      if ((event.metaKey || event.ctrlKey) && event.key?.toLowerCase() === "k") {
+      if (
+        (event.metaKey || event.ctrlKey) &&
+        event.key?.toLowerCase() === "k"
+      ) {
         event.preventDefault();
         setPaletteOpen((open) => !open);
       }
@@ -59,12 +61,8 @@ function Portfolio() {
   }, []);
   useEffect(() => {
     function onPopState() {
-      setActiveProject(
-        projects.find(
-          (project) =>
-            project.id ===
-            new URLSearchParams(window.location.search).get("project"),
-        ) || null,
+      setActiveProjectId(
+        new URLSearchParams(window.location.search).get("project"),
       );
     }
     window.addEventListener("popstate", onPopState);
@@ -90,7 +88,7 @@ function Portfolio() {
   function openProject(project, trigger) {
     function apply() {
       opener.current = trigger;
-      setActiveProject(project);
+      setActiveProjectId(project.id);
       const url = new URL(window.location.href);
       url.searchParams.set("project", project.id);
       window.history.pushState({ project: project.id }, "", url);
@@ -114,7 +112,7 @@ function Portfolio() {
     });
   }
   function closeProject() {
-    setActiveProject(null);
+    setActiveProjectId(null);
     const url = new URL(window.location.href);
     url.searchParams.delete("project");
     window.history.replaceState({}, "", url);
@@ -122,7 +120,7 @@ function Portfolio() {
   return (
     <TooltipProvider delayDuration={200}>
       <a href="#proyectos" className="skip-link">
-        Saltar a los proyectos
+        {t("Saltar a los proyectos")}
       </a>
       <motion.div
         className="reading-progress"
@@ -154,8 +152,10 @@ function Portfolio() {
           <Suspense
             fallback={
               <DialogContent className="detail-loading">
-                <DialogTitle>Cargando proyecto</DialogTitle>
-                <DialogDescription>Preparando las capturas…</DialogDescription>
+                <DialogTitle>{t("Cargando proyecto")}</DialogTitle>
+                <DialogDescription>
+                  {t("Preparando las capturas…")}
+                </DialogDescription>
               </DialogContent>
             }
           >
@@ -173,8 +173,10 @@ function Portfolio() {
 
 export default function App() {
   return (
-    <AppearanceProvider>
-      <Portfolio />
-    </AppearanceProvider>
+    <LanguageProvider>
+      <AppearanceProvider>
+        <Portfolio />
+      </AppearanceProvider>
+    </LanguageProvider>
   );
 }

@@ -178,6 +178,7 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  gap: 24px;
 }
 .wordmark {
   display: flex;
@@ -235,6 +236,7 @@ h3 {
   display: flex;
   align-items: center;
   gap: 14px;
+  flex-shrink: 0;
 }
 .header-contact {
   display: flex;
@@ -280,6 +282,7 @@ h3 {
 .accent-word {
   color: var(--orange);
   position: relative;
+  margin-left: 0.04em;
 }
 .period {
   color: var(--orange);
@@ -646,6 +649,10 @@ h3 {
 .project-card {
   min-width: 0;
 }
+.project-card > .tags {
+  border-top: 1px solid var(--line);
+  padding-top: 14px;
+}
 .project-art {
   display: block;
   width: 100%;
@@ -654,7 +661,7 @@ h3 {
   padding: 0;
   position: relative;
   overflow: hidden;
-  border-radius: 5px;
+  border-radius: 12px;
   isolation: isolate;
   color: #29332e;
   white-space: normal;
@@ -768,7 +775,7 @@ h3 {
 .project-art:hover .project-open,
 .project-art:focus-visible .project-open {
   background: var(--ink);
-  color: #fff;
+  color: var(--paper);
 }
 .project-art:hover .project-open > span,
 .project-art:focus-visible .project-open > span {
@@ -3407,7 +3414,8 @@ h3 {
 .form-row select {
   /* La flecha nativa no combina con el resto; se dibuja una propia. */
   appearance: none;
-  background-image: linear-gradient(45deg, transparent 50%, var(--metadata) 50%),
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--metadata) 50%),
     linear-gradient(135deg, var(--metadata) 50%, transparent 50%);
   background-position:
     calc(100% - 11px) 20px,
@@ -3551,4 +3559,160 @@ h3 {
   display: inline-flex;
   align-items: center;
   gap: 4px;
+}
+
+/* Language is a persistent choice, visible beside the appearance controls. */
+.language-switch {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  padding: 3px;
+  gap: 2px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--paper);
+}
+.language-switch button {
+  min-width: 34px;
+  min-height: 30px;
+  padding: 5px 8px;
+  border-radius: 999px;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.03em;
+  color: var(--subtle);
+  transition:
+    background 160ms ease,
+    color 160ms ease;
+}
+.language-switch button:hover {
+  background: var(--surface);
+  color: var(--ink);
+}
+.language-switch button[aria-pressed="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+.language-switch button:focus-visible {
+  outline-offset: 2px;
+}
+.detail-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding-right: 26px;
+  margin-bottom: 14px;
+}
+.detail-toolbar .eyebrow {
+  flex-wrap: wrap;
+  gap: 5px;
+}
+.mobile-menu-preferences {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding-top: 16px;
+  border-top: 1px solid var(--line);
+}
+.mobile-menu-preferences > button {
+  white-space: normal;
+  height: auto;
+  min-height: 44px;
+  max-width: 180px;
+  font-size: 11px;
+  text-align: left;
+}
+.hero-visual {
+  border-radius: 12px;
+}
+.section-heading h2,
+.about-copy h2,
+.contact-title h2,
+.story-step h3 {
+  text-wrap: balance;
+}
+.project-info p {
+  font-size: 14px;
+  line-height: 1.65;
+}
+.project-filters {
+  padding: 4px;
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  gap: 4px;
+}
+.project-filters button {
+  min-height: 40px;
+  border-radius: 5px;
+}
+.project-filters button:focus-visible {
+  outline-offset: 2px;
+}
+@media (min-width: 681px) and (max-width: 1100px) {
+  .header-contact,
+  .wordmark-name {
+    display: none;
+  }
+  .header-inner {
+    gap: 18px;
+  }
+  .desktop-nav {
+    gap: 22px;
+    margin-left: 0;
+  }
+}
+@media (max-width: 680px) {
+  .header-inner {
+    gap: 10px;
+  }
+  .header-actions {
+    gap: 4px;
+  }
+  .wordmark-name {
+    display: none;
+  }
+  .language-switch button {
+    min-height: 36px;
+    min-width: 32px;
+    padding-inline: 6px;
+  }
+  .palette-trigger,
+  .appearance-button,
+  .mobile-menu-trigger {
+    width: 38px;
+    height: 44px;
+  }
+  .palette-trigger {
+    border: 0;
+  }
+  .detail-toolbar {
+    padding-right: 16px;
+    gap: 10px;
+  }
+  .detail-toolbar .eyebrow {
+    max-width: 60%;
+  }
+  .project-filters {
+    width: 100%;
+  }
+  .project-filters button {
+    flex: 1;
+    min-height: 44px;
+    padding-inline: 10px;
+  }
+  .hero-ctas {
+    flex-wrap: wrap;
+    gap: 16px 22px;
+  }
+  html[lang="en"] .hero-copy h1 {
+    font-size: clamp(43px, 11.5vw, 74px);
+  }
+}
+@media (max-width: 360px) {
+  .appearance-controls .motion-toggle {
+    display: none;
+  }
 }

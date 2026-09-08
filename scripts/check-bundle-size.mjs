@@ -11,7 +11,10 @@ import { join, resolve } from "node:path";
 const DIST = resolve(process.cwd(), "dist");
 
 // Gzip nivel 9, la misma compresión que sirve un CDN estático.
-const BUDGET = { js: 165 * 1024, css: 20 * 1024 };
+// ES/EN adds a complete local translation catalog (about 8 kB gzip).
+// Both languages are bundled so switching also works offline and never resets
+// the form or gallery while waiting for another language download.
+const BUDGET = { js: 175 * 1024, css: 20 * 1024 };
 
 const html = readFileSync(join(DIST, "index.html"), "utf8");
 const referenced = new Set(

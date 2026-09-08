@@ -1,3 +1,4 @@
+import { useLanguage } from "@/hooks/useLanguage";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ArrowUpRight,
@@ -19,7 +20,7 @@ import {
   CommandList,
   CommandSeparator,
 } from "@/components/ui/command";
-import { projects, profile } from "@/data/portfolio";
+import { profile } from "@/data/portfolio";
 import { useAppearance } from "@/hooks/useAppearance";
 
 const sections = [
@@ -57,11 +58,12 @@ function matchCommand(value, search) {
 // para que al cerrar el diálogo el foco vuelva a un elemento que existe.
 function cardFor(project) {
   return document.querySelector(
-    `[aria-label="Ver proyecto ${CSS.escape(project.title)}"]`,
+    `[data-project-id="${CSS.escape(project.id)}"]`,
   );
 }
 
 export default function CommandPalette({ open, onOpenChange, onOpenProject }) {
+  const { t, projects } = useLanguage();
   const { theme, toggleTheme, motionDisabled, systemReduced, toggleMotion } =
     useAppearance();
   const [copied, setCopied] = useState(false);
@@ -93,21 +95,27 @@ export default function CommandPalette({ open, onOpenChange, onOpenProject }) {
     <CommandDialog
       open={open}
       onOpenChange={onOpenChange}
-      title="Paleta de comandos"
-      description="Busca proyectos, secciones y acciones del portafolio."
+      label={t("Resultados de la búsqueda")}
+      title={t("Paleta de comandos")}
+      description={t("Busca proyectos, secciones y acciones del portafolio.")}
       className="command-palette"
       filter={matchCommand}
     >
-      <CommandInput placeholder="Buscar proyectos, secciones o acciones…" />
+      <CommandInput
+        aria-label={t("Buscar proyectos, secciones o acciones…")}
+        placeholder={t("Buscar proyectos, secciones o acciones…")}
+      />
       <CommandList>
-        <CommandEmpty>Sin resultados.</CommandEmpty>
+        <CommandEmpty>{t("Sin resultados.")}</CommandEmpty>
 
-        <CommandGroup heading="Proyectos">
+        <CommandGroup heading={t("Proyectos")}>
           {projects.map((project) => (
             <CommandItem
               key={project.id}
               value={`${project.title} ${project.categoryLabel} ${project.stack.join(" ")}`}
-              onSelect={() => run(() => onOpenProject(project, cardFor(project)))}
+              onSelect={() =>
+                run(() => onOpenProject(project, cardFor(project)))
+              }
             >
               <span className="command-index">{project.number}</span>
               <span className="command-label">{project.title}</span>
@@ -118,11 +126,11 @@ export default function CommandPalette({ open, onOpenChange, onOpenProject }) {
 
         <CommandSeparator />
 
-        <CommandGroup heading="Ir a">
+        <CommandGroup heading={t("Ir a")}>
           {sections.map((section) => (
             <CommandItem
               key={section.id}
-              value={`Ir a ${section.label}`}
+              value={`${t("Ir a")} ${t(section.label)}`}
               onSelect={() =>
                 run(() =>
                   document.getElementById(section.id)?.scrollIntoView({
@@ -132,16 +140,16 @@ export default function CommandPalette({ open, onOpenChange, onOpenProject }) {
               }
             >
               <ArrowUpRight size={16} aria-hidden="true" />
-              <span className="command-label">{section.label}</span>
+              <span className="command-label">{t(section.label)}</span>
             </CommandItem>
           ))}
         </CommandGroup>
 
         <CommandSeparator />
 
-        <CommandGroup heading="Acciones">
+        <CommandGroup heading={t("Acciones")}>
           <CommandItem
-            value={theme === "dark" ? "Tema claro" : "Tema oscuro"}
+            value={theme === "dark" ? t("Tema claro") : t("Tema oscuro")}
             onSelect={toggleTheme}
           >
             {theme === "dark" ? (
@@ -150,13 +158,19 @@ export default function CommandPalette({ open, onOpenChange, onOpenProject }) {
               <Moon size={16} aria-hidden="true" />
             )}
             <span className="command-label">
-              {theme === "dark" ? "Cambiar a tema claro" : "Cambiar a tema oscuro"}
+              {theme === "dark"
+                ? t("Cambiar a tema claro")
+                : t("Cambiar a tema oscuro")}
             </span>
           </CommandItem>
 
           {!systemReduced && (
             <CommandItem
-              value={motionDisabled ? "Activar animaciones" : "Pausar animaciones"}
+              value={
+                motionDisabled
+                  ? t("Activar animaciones")
+                  : t("Pausar animaciones")
+              }
               onSelect={toggleMotion}
             >
               {motionDisabled ? (
@@ -165,25 +179,30 @@ export default function CommandPalette({ open, onOpenChange, onOpenProject }) {
                 <Pause size={16} aria-hidden="true" />
               )}
               <span className="command-label">
-                {motionDisabled ? "Activar animaciones" : "Pausar animaciones"}
+                {motionDisabled
+                  ? t("Activar animaciones")
+                  : t("Pausar animaciones")}
               </span>
             </CommandItem>
           )}
 
-          <CommandItem value="Copiar correo electrónico" onSelect={copyEmail}>
+          <CommandItem
+            value={t("Copiar correo electrónico")}
+            onSelect={copyEmail}
+          >
             {copied ? (
               <Check size={16} aria-hidden="true" />
             ) : (
               <Copy size={16} aria-hidden="true" />
             )}
             <span className="command-label">
-              {copied ? "Correo copiado" : "Copiar mi correo"}
+              {copied ? t("Correo copiado") : t("Copiar mi correo")}
             </span>
             <span className="command-hint">{profile.email}</span>
           </CommandItem>
 
           <CommandItem
-            value="Descargar CV"
+            value={t("Descargar CV")}
             onSelect={() =>
               run(() => {
                 const link = document.createElement("a");
@@ -194,27 +213,27 @@ export default function CommandPalette({ open, onOpenChange, onOpenProject }) {
             }
           >
             <Download size={16} aria-hidden="true" />
-            <span className="command-label">Descargar mi CV</span>
+            <span className="command-label">{t("Descargar mi CV")}</span>
           </CommandItem>
 
           <CommandItem
-            value="GitHub repositorios código"
+            value={t("GitHub repositorios código")}
             onSelect={() =>
               run(() => window.open(profile.github, "_blank", "noopener"))
             }
           >
             <Github size={16} aria-hidden="true" />
-            <span className="command-label">Abrir GitHub</span>
+            <span className="command-label">{t("Abrir GitHub")}</span>
           </CommandItem>
 
           <CommandItem
-            value="LinkedIn contacto profesional"
+            value={t("LinkedIn contacto profesional")}
             onSelect={() =>
               run(() => window.open(profile.linkedin, "_blank", "noopener"))
             }
           >
             <Linkedin size={16} aria-hidden="true" />
-            <span className="command-label">Abrir LinkedIn</span>
+            <span className="command-label">{t("Abrir LinkedIn")}</span>
           </CommandItem>
         </CommandGroup>
       </CommandList>

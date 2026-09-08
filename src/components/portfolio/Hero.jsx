@@ -1,3 +1,4 @@
+import { useLanguage } from "@/hooks/useLanguage";
 import { useRef } from "react";
 import { useAppearance } from "@/hooks/useAppearance";
 import TypewriterRole from "./TypewriterRole";
@@ -21,6 +22,7 @@ import { Button } from "@/components/ui/button";
 import Reveal from "./Reveal";
 
 function HeroVisual({ scrollProgress }) {
+  const { t } = useLanguage();
   const { motionDisabled: reduce } = useAppearance();
   const backY = useTransform(scrollProgress, [0, 1], [0, -65]);
   const frontY = useTransform(scrollProgress, [0, 1], [0, 70]);
@@ -46,7 +48,7 @@ function HeroVisual({ scrollProgress }) {
       }}
     >
       <div className="canvas-label">
-        <span className="crosshair">+</span> DE LA IDEA A LA INTERFAZ
+        <span className="crosshair">+</span> {t("DE LA IDEA A LA INTERFAZ")}
       </div>
       <div className="canvas-grid" aria-hidden="true" />
       <motion.div
@@ -65,7 +67,7 @@ function HeroVisual({ scrollProgress }) {
           </div>
           <img
             src="/projects/romi.webp"
-            alt="Vista del sitio ROMI, desarrollado por Juan Pablo"
+            alt={t("Vista del sitio ROMI, desarrollado por Juan Pablo")}
             width="1440"
             height="1000"
             fetchPriority="high"
@@ -84,7 +86,7 @@ function HeroVisual({ scrollProgress }) {
           </div>
           <img
             src="/projects/one-pharmacy.webp"
-            alt="Vista del catálogo de One Pharmacy"
+            alt={t("Vista del catálogo de One Pharmacy")}
             width="1440"
             height="1000"
             fetchPriority="high"
@@ -92,7 +94,7 @@ function HeroVisual({ scrollProgress }) {
         </motion.div>
         <div className="design-chip">
           <Figma aria-hidden="true" size={16} />
-          <span>Diseño que se convierte en código.</span>
+          <span>{t("Diseño que se convierte en código.")}</span>
         </div>
         <div className="cursor-chip" aria-hidden="true">
           <MousePointer2 fill="currentColor" size={23} />
@@ -101,7 +103,7 @@ function HeroVisual({ scrollProgress }) {
       </motion.div>
       <div className="canvas-footer">
         <span>
-          <span className="status-dot" /> IDEAS EN MOVIMIENTO
+          <span className="status-dot" /> {t("IDEAS EN MOVIMIENTO")}
         </span>
         <Code2 size={16} />
       </div>
@@ -110,6 +112,7 @@ function HeroVisual({ scrollProgress }) {
 }
 
 export default function Hero() {
+  const { t } = useLanguage();
   const target = useRef(null);
   const { scrollYProgress } = useScroll({
     target,
@@ -119,35 +122,43 @@ export default function Hero() {
     <section ref={target} id="inicio" className="hero section-shell">
       <Reveal className="hero-kicker">
         <TypewriterRole />
-        <span className="eyebrow hero-edition">PORTAFOLIO / 2026</span>
+        <span className="eyebrow hero-edition">{t("PORTAFOLIO / 2026")}</span>
       </Reveal>
       <div className="hero-main">
         <div className="hero-copy">
           <Reveal>
             <h1>
-              Interfaces
+              {t("Interfaces")}
               <br />
-              con{" "}
+              {t("con")}{" "}
               <span className="accent-word">
-                intención<span className="period">.</span>
+                {t("intención")}
+                <span className="period">.</span>
               </span>
             </h1>
           </Reveal>
           <Reveal delay={0.1}>
             <p className="hero-intro">
-              Soy <strong>Juan Pablo Orihuela.</strong> Conecto diseño y código
-              para crear experiencias digitales que se ven bien. Y se sienten
-              todavía mejor.
+              {t("Soy")} <strong>Juan Pablo Orihuela.</strong>{" "}
+              {t(
+                "Conecto diseño y código para crear experiencias digitales que se ven bien. Y se sienten todavía mejor.",
+              )}
             </p>
           </Reveal>
           <Reveal delay={0.2} className="hero-ctas">
             <Button asChild className="primary-cta">
               <a href="#proyectos">
-                Explorar mi trabajo <ArrowDown size={17} />
+                {t("Explorar mi trabajo")} <ArrowDown size={17} />
               </a>
             </Button>
-            <a className="text-link" href="/JuanPabloOrihuela_CV.pdf" download>
-              Descargar CV <Download size={16} />
+            <a
+              className="text-link"
+              href="/JuanPabloOrihuela_CV.pdf"
+              hrefLang="es"
+              title={t("CV en español")}
+              download
+            >
+              {t("Descargar CV")} <Download size={16} />
             </a>
           </Reveal>
         </div>
@@ -157,11 +168,12 @@ export default function Hero() {
       </div>
       <Reveal className="hero-bottom">
         <span className="location">
-          <MapPin size={14} /> Ciudad de México <span className="slash">/</span>{" "}
-          Diseñando para cualquier lugar.
+          <MapPin size={14} /> {t("Ciudad de México")}{" "}
+          <span className="slash">/</span>{" "}
+          {t("Diseñando para cualquier lugar.")}
         </span>
         <a href="#proyectos" className="scroll-cue">
-          UN POCO DE SCROLL, MUCHO QUE VER <ArrowDown size={14} />
+          {t("UN POCO DE SCROLL, MUCHO QUE VER")} <ArrowDown size={14} />
         </a>
       </Reveal>
     </section>
@@ -169,10 +181,11 @@ export default function Hero() {
 }
 
 export function StackStrip() {
+  const { t } = useLanguage();
   return (
     <div className="stack-strip">
       <div className="section-shell stack-inner">
-        <span className="eyebrow">MI CAJA DE HERRAMIENTAS</span>
+        <span className="eyebrow">{t("MI CAJA DE HERRAMIENTAS")}</span>
         <div className="stack-names">
           <span>
             <Code2 /> React

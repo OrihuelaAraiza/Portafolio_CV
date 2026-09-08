@@ -1,3 +1,4 @@
+import { useLanguage } from "@/hooks/useLanguage";
 import { useEffect, useState } from "react";
 import { useAppearance } from "@/hooks/useAppearance";
 
@@ -9,6 +10,7 @@ const roles = [
 ];
 
 export default function TypewriterRole() {
+  const { t } = useLanguage();
   const { motionDisabled } = useAppearance();
   const [state, setState] = useState({
     word: 0,
@@ -44,8 +46,9 @@ export default function TypewriterRole() {
   return (
     <div className="typewriter-role">
       <span className="sr-only">
-        CTO en ROMI. iOS Developer en e-tribe para Grupo Salinas. Frontend,
-        UI/UX y desarrollo creativo.
+        {t(
+          "CTO en ROMI. iOS Developer en e-tribe para Grupo Salinas. Frontend, UI/UX y desarrollo creativo.",
+        )}
       </span>
       <span className="editor-prompt" aria-hidden="true">
         &gt;

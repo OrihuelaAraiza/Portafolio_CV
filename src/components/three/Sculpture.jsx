@@ -1,8 +1,10 @@
+import { useLanguage } from "@/hooks/useLanguage";
 import { useEffect, useRef, useState } from "react";
 import { useAppearance } from "@/hooks/useAppearance";
 import Asterisk from "@/components/portfolio/Asterisk";
 
 export default function Sculpture({ progress }) {
+  const { t } = useLanguage();
   const canvas = useRef(null);
   const engine = useRef(null);
   const { theme, motionDisabled } = useAppearance();
@@ -50,7 +52,9 @@ export default function Sculpture({ progress }) {
     <div className="sculpture-container" data-scene-status={status}>
       <canvas
         ref={canvas}
-        aria-label="Escultura 3D de un nudo orbital, con anillos y formas geométricas"
+        aria-label={t(
+          "Escultura 3D de un nudo orbital, con anillos y formas geométricas",
+        )}
         role="img"
         className={status === "fallback" ? "sculpture-hidden" : ""}
       />
@@ -61,8 +65,8 @@ export default function Sculpture({ progress }) {
           </span>
           <small>
             {status === "loading"
-              ? "DANDO FORMA A LA IDEA"
-              : "DISEÑO · CÓDIGO · MOVIMIENTO"}
+              ? t("DANDO FORMA A LA IDEA")
+              : t("DISEÑO · CÓDIGO · MOVIMIENTO")}
           </small>
         </div>
       )}

@@ -1,10 +1,11 @@
+import { useLanguage } from "@/hooks/useLanguage";
 import { useAppearance } from "@/hooks/useAppearance";
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { projects, profile } from "@/data/portfolio";
+import { profile } from "@/data/portfolio";
 import Reveal from "./Reveal";
 
 const filters = [
@@ -13,6 +14,7 @@ const filters = [
   { id: "mobile", label: "iOS & Mobile" },
 ];
 function ProjectCard({ project, onOpen, index }) {
+  const { t } = useLanguage();
   const { motionDisabled: reduce } = useAppearance();
   const mobile = project.category === "mobile";
   return (
@@ -26,7 +28,8 @@ function ProjectCard({ project, onOpen, index }) {
         variant="ghost"
         className={`project-art ${project.theme} ${mobile ? "mobile-art" : ""}`}
         onClick={(event) => onOpen(project, event.currentTarget)}
-        aria-label={`Ver proyecto ${project.title}`}
+        data-project-id={project.id}
+        aria-label={t("Ver proyecto {title}", { title: project.title })}
       >
         <span className="project-art-top">
           <span>{project.categoryLabel}</span>
@@ -65,7 +68,7 @@ function ProjectCard({ project, onOpen, index }) {
             <img
               data-cover=""
               src={project.cover}
-              alt={`Captura real de ${project.title}`}
+              alt={t("Captura real de {title}", { title: project.title })}
               width="1440"
               height="1000"
               loading="lazy"
@@ -74,7 +77,7 @@ function ProjectCard({ project, onOpen, index }) {
         )}
         <span className="project-open">
           <ArrowUpRight size={20} />
-          <span>Explorar proyecto</span>
+          <span>{t("Explorar proyecto")}</span>
         </span>
       </Button>
       <div className="project-info">
@@ -103,6 +106,7 @@ function ProjectCard({ project, onOpen, index }) {
 }
 
 export default function Work({ onOpen }) {
+  const { t, projects } = useLanguage();
   const [filter, setFilter] = useState(
     () =>
       ({ "/web": "web", "/apps": "mobile" })[window.location.pathname] || "all",
@@ -113,25 +117,32 @@ export default function Work({ onOpen }) {
         <div className="section-heading">
           <div>
             <span className="eyebrow">
-              <span className="section-index">01 /</span> TRABAJO SELECCIONADO
+              <span className="section-index">01 /</span>{" "}
+              {t("TRABAJO SELECCIONADO")}
             </span>
             <h2>
-              Del concepto
-              <br />a la <span className="serif-word">experiencia.</span>
+              {t("Del concepto")}
+              <br />
+              {t("a la")}{" "}
+              <span className="serif-word">{t("experiencia.")}</span>
             </h2>
           </div>
           <p>
-            Productos reales, exploraciones y muchas
-            <br className="desktop-break" /> decisiones detrás de cada píxel.
+            {t("Productos reales, exploraciones y muchas")}
+            <br className="desktop-break" />{" "}
+            {t("decisiones detrás de cada píxel.")}
           </p>
         </div>
       </Reveal>
       <Tabs value={filter} onValueChange={setFilter}>
         <div className="work-toolbar">
-          <TabsList className="project-filters" aria-label="Filtrar proyectos">
+          <TabsList
+            className="project-filters"
+            aria-label={t("Filtrar proyectos")}
+          >
             {filters.map(({ id, label }) => (
               <TabsTrigger key={id} value={id}>
-                {label}
+                {t(label)}
                 <span>
                   {id === "all"
                     ? projects.length.toString().padStart(2, "0")
@@ -149,7 +160,7 @@ export default function Work({ onOpen }) {
             target="_blank"
             rel="noreferrer"
           >
-            Todo en GitHub <ArrowUpRight size={16} />
+            {t("Todo en GitHub")} <ArrowUpRight size={16} />
           </a>
         </div>
         {filters.map(({ id }) => (
@@ -173,7 +184,7 @@ export default function Work({ onOpen }) {
         target="_blank"
         rel="noreferrer"
       >
-        Explorar todos mis repositorios <ArrowUpRight size={16} />
+        {t("Explorar todos mis repositorios")} <ArrowUpRight size={16} />
       </a>
     </section>
   );

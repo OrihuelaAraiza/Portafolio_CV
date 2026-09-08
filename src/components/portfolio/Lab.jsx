@@ -1,26 +1,31 @@
+import { useLanguage } from "@/hooks/useLanguage";
 import { AudioLines, Gamepad2, ArrowUpRight } from "lucide-react";
 import { experiments } from "@/data/portfolio";
 import GameReel from "./GameReel";
 import Reveal from "./Reveal";
 
 export default function Lab() {
+  const { t } = useLanguage();
   return (
     <section id="laboratorio" className="lab-section section-shell">
       <Reveal>
         <div className="section-heading">
           <div>
             <span className="eyebrow">
-              <span className="section-index">03 /</span> MÁS ALLÁ DEL NAVEGADOR
+              <span className="section-index">03 /</span>{" "}
+              {t("MÁS ALLÁ DEL NAVEGADOR")}
             </span>
             <h2>
-              La curiosidad
+              {t("La curiosidad")}
               <br />
-              también <span className="serif-word">se programa.</span>
+              {t("también")}{" "}
+              <span className="serif-word">{t("se programa.")}</span>
             </h2>
           </div>
           <p>
-            Mi formación en animación y videojuegos
-            <br className="desktop-break" /> también vive en lo que construyo.
+            {t("Mi formación en animación y videojuegos")}
+            <br className="desktop-break" />{" "}
+            {t("también vive en lo que construyo.")}
           </p>
         </div>
       </Reveal>
@@ -46,12 +51,12 @@ export default function Lab() {
                   )}
                 </div>
                 <div className="experiment-content">
-                  <span className="eyebrow">{experiment.type}</span>
+                  <span className="eyebrow">{t(experiment.type)}</span>
                   <h3>{experiment.name}</h3>
-                  <p>{experiment.description}</p>
+                  <p>{t(experiment.description)}</p>
                 </div>
                 <span className="experiment-link">
-                  Ver código <ArrowUpRight size={24} />
+                  {t("Ver código")} <ArrowUpRight size={24} />
                 </span>
               </a>
             </Reveal>

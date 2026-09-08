@@ -32,12 +32,25 @@ El resultado estático se genera en `dist/`. `vercel.json` conserva los accesos 
 ## Contenido
 
 - `src/data/portfolio.js`: perfil, proyectos, capturas, enlaces y descripciones.
+- `src/data/en.json`: traducciones al inglés; las claves son los textos originales en español.
 - `public/projects/`: capturas reales optimizadas a WebP, sin dependencia de servicios externos en tiempo de ejecución.
 - `public/videos/`: tráiler y gameplay de We Can Fix This aportados por el autor, con posters extraídos de los videos.
 - `public/JuanPabloOrihuela_CV.pdf`: CV original; sustituir este archivo para actualizar la descarga.
 - `docs/content-sources.md`: procedencia y límites del contenido.
 
 Para añadir un proyecto, completa su entrada en `portfolio.js` y agrega las capturas locales. Los proyectos móviles usan al menos dos capturas. Los botones de demo y código se muestran solo cuando existe un enlace. Cada ficha admite un enlace directo, por ejemplo `/?project=romi`.
+
+## Español e inglés
+
+El selector ES/EN está en la cabecera, el menú móvil y las fichas. Cambia el contenido sin recargar ni perder el filtro activo, la captura abierta o los datos del formulario. Traduce también etiquetas accesibles, errores, búsquedas y asuntos del correo preparado; el mensaje escrito por el visitante conserva su texto.
+
+El idioma de entrada es español. La elección se guarda en `jp-language` cuando el navegador permite almacenamiento. Un enlace con `?lang=en` o `?lang=es` tiene prioridad sobre esa preferencia y puede combinarse con una ficha, por ejemplo `/?lang=en&project=romi`. Cambiar de idioma conserva el proyecto y el ancla en la URL. Si el almacenamiento está bloqueado, el selector sigue funcionando y la URL mantiene la elección al recargar.
+
+`LanguageProvider` comparte la selección y las fichas traducidas; `useLanguage` expone `t(texto, variables)`. Al editar contenido español o añadir proyectos, actualiza también sus claves en `en.json`, incluidas las etiquetas de capturas y los textos de estado. Los nombres propios, tecnologías y capturas originales se conservan. El CV sigue siendo el PDF original en español, identificado con `hreflang` y el título del enlace.
+
+Ambos idiomas se incluyen localmente para que cambiar de idioma no dependa de otra descarga. El presupuesto de JavaScript inicial pasa de 165 a 175 kB gzip para incorporar el catálogo completo de traducciones; CSS conserva su límite de 20 kB. `tests/language.spec.js` comprueba persistencia, almacenamiento bloqueado, enlaces directos, conservación de formularios y galerías, búsqueda en inglés, navegación móvil, accesibilidad en ambos temas y anchos de 320 a 1440 px.
+
+El idioma de `<html>` y las descripciones de metadata se actualizan durante la visita. El HTML estático, el sitemap, el JSON-LD y la imagen social que reciben los rastreadores sin JavaScript siguen usando la versión española.
 
 ## Buscadores y enlaces compartidos
 
@@ -51,6 +64,7 @@ Para añadir un proyecto, completa su entrada en `portfolio.js` y agrega las cap
 - `src/components/ProjectDetail.jsx`: ficha con galería, cargada bajo demanda.
 - `src/components/three/`: escultura procedural Three.js, cargada al acercarse a la sección de proceso.
 - `src/components/AppearanceProvider.jsx`: tema claro/oscuro y pausa de movimiento con persistencia opcional en el navegador.
+- `src/components/LanguageProvider.jsx`: idioma, traducciones y contenido localizado sin reiniciar los componentes.
 - `src/components/portfolio/Asterisk.jsx`: el asterisco de la marca, dibujado en SVG.
 - `src/components/CommandPalette.jsx`: paleta de comandos con ⌘K sobre proyectos, secciones y acciones.
 - `src/components/portfolio/ContactForm.jsx`: formulario con validación y errores accesibles, sin servidor.

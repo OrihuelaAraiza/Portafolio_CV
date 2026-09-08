@@ -1,7 +1,17 @@
+import { useLanguage } from "@/hooks/useLanguage";
 import { useState, useEffect, useRef } from "react";
-import { ArrowUpRight, Menu, Moon, Search, Sun, Pause, Play } from "lucide-react";
+import {
+  ArrowUpRight,
+  Menu,
+  Moon,
+  Search,
+  Sun,
+  Pause,
+  Play,
+} from "lucide-react";
 import { useAppearance } from "@/hooks/useAppearance";
 import Asterisk from "./Asterisk";
+import LanguageSwitch from "./LanguageSwitch";
 import {
   Tooltip,
   TooltipContent,
@@ -32,6 +42,7 @@ const navLinks = [
 ];
 
 export default function Header({ onOpenPalette }) {
+  const { t } = useLanguage();
   const { theme, toggleTheme, motionDisabled, systemReduced, toggleMotion } =
     useAppearance();
   const [active, setActive] = useState("");
@@ -53,15 +64,20 @@ export default function Header({ onOpenPalette }) {
   return (
     <header className="site-header">
       <div className="header-inner">
-        <a href="#inicio" className="wordmark" aria-label="JP Orihuela, inicio">
-          jp<Asterisk className="logo-star" />
+        <a
+          href="#inicio"
+          className="wordmark"
+          aria-label={t("JP Orihuela, inicio")}
+        >
+          jp
+          <Asterisk className="logo-star" />
           <span className="wordmark-name">
             Juan Pablo
             <br />
             Orihuela
           </span>
         </a>
-        <nav className="desktop-nav" aria-label="Navegación principal">
+        <nav className="desktop-nav" aria-label={t("Navegación principal")}>
           {navLinks.map((link) => (
             <a
               className={active === link.href ? "active" : ""}
@@ -69,24 +85,29 @@ export default function Header({ onOpenPalette }) {
               key={link.href}
               href={link.href}
             >
-              {link.label}
+              {t(link.label)}
             </a>
           ))}
         </nav>
         <div className="header-actions">
+          <LanguageSwitch />
           <Tooltip>
             <TooltipTrigger asChild>
               <Button
                 variant="ghost"
                 className="palette-trigger"
                 onClick={onOpenPalette}
-                aria-label={`Buscar en el portafolio, atajo ${shortcutLabel}`}
+                aria-label={t("Buscar en el portafolio, atajo {shortcut}", {
+                  shortcut: shortcutLabel,
+                })}
               >
                 <Search size={15} aria-hidden="true" />
                 <kbd aria-hidden="true">{shortcutLabel}</kbd>
               </Button>
             </TooltipTrigger>
-            <TooltipContent>Proyectos, secciones y acciones</TooltipContent>
+            <TooltipContent>
+              {t("Proyectos, secciones y acciones")}
+            </TooltipContent>
           </Tooltip>
           <div className="appearance-controls">
             <Tooltip>
@@ -99,10 +120,10 @@ export default function Header({ onOpenPalette }) {
                   disabled={systemReduced}
                   aria-label={
                     systemReduced
-                      ? "Movimiento reducido por el sistema"
+                      ? t("Movimiento reducido por el sistema")
                       : motionDisabled
-                        ? "Activar animaciones"
-                        : "Pausar animaciones"
+                        ? t("Activar animaciones")
+                        : t("Pausar animaciones")
                   }
                   aria-pressed={motionDisabled}
                 >
@@ -111,10 +132,10 @@ export default function Header({ onOpenPalette }) {
               </TooltipTrigger>
               <TooltipContent>
                 {systemReduced
-                  ? "Respeta tu preferencia de movimiento reducido"
+                  ? t("Respeta tu preferencia de movimiento reducido")
                   : motionDisabled
-                    ? "Activar animaciones"
-                    : "Pausar animaciones"}
+                    ? t("Activar animaciones")
+                    : t("Pausar animaciones")}
               </TooltipContent>
             </Tooltip>
             <Tooltip>
@@ -126,20 +147,20 @@ export default function Header({ onOpenPalette }) {
                   onClick={toggleTheme}
                   aria-label={
                     theme === "dark"
-                      ? "Activar tema claro"
-                      : "Activar tema oscuro"
+                      ? t("Activar tema claro")
+                      : t("Activar tema oscuro")
                   }
                 >
                   {theme === "dark" ? <Sun size={17} /> : <Moon size={17} />}
                 </Button>
               </TooltipTrigger>
               <TooltipContent>
-                {theme === "dark" ? "Tema claro" : "Tema oscuro"}
+                {theme === "dark" ? t("Tema claro") : t("Tema oscuro")}
               </TooltipContent>
             </Tooltip>
           </div>
           <a className="header-contact" href="#contacto">
-            Hablemos <ArrowUpRight size={16} />
+            {t("Hablemos")} <ArrowUpRight size={16} />
           </a>
           <Dialog>
             <DialogTrigger asChild>
@@ -147,7 +168,7 @@ export default function Header({ onOpenPalette }) {
                 variant="ghost"
                 size="icon"
                 className="mobile-menu-trigger"
-                aria-label="Abrir menú"
+                aria-label={t("Abrir menú")}
               >
                 <Menu />
               </Button>
@@ -167,11 +188,11 @@ export default function Header({ onOpenPalette }) {
                 });
               }}
             >
-              <DialogTitle>Explora el portafolio</DialogTitle>
+              <DialogTitle>{t("Explora el portafolio")}</DialogTitle>
               <DialogDescription>
-                Diseño, código y un poco de mí.
+                {t("Diseño, código y un poco de mí.")}
               </DialogDescription>
-              <nav aria-label="Navegación móvil">
+              <nav aria-label={t("Navegación móvil")}>
                 {[...navLinks, { href: "#contacto", label: "Hablemos" }].map(
                   (link) => (
                     <DialogClose key={link.href} asChild>
@@ -181,13 +202,29 @@ export default function Header({ onOpenPalette }) {
                           destination.current = link.href;
                         }}
                       >
-                        {link.label}
+                        {t(link.label)}
                         <ArrowUpRight />
                       </a>
                     </DialogClose>
                   ),
                 )}
               </nav>
+              <div className="mobile-menu-preferences">
+                <LanguageSwitch />
+                <Button
+                  variant="ghost"
+                  disabled={systemReduced}
+                  onClick={toggleMotion}
+                  aria-pressed={motionDisabled}
+                >
+                  {motionDisabled ? <Play size={15} /> : <Pause size={15} />}
+                  {systemReduced
+                    ? t("Movimiento reducido por el sistema")
+                    : motionDisabled
+                      ? t("Activar animaciones")
+                      : t("Pausar animaciones")}
+                </Button>
+              </div>
             </DialogContent>
           </Dialog>
         </div>

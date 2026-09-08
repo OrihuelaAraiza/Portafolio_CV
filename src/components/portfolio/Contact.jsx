@@ -1,3 +1,4 @@
+import { useLanguage } from "@/hooks/useLanguage";
 import { useState, useEffect, useRef } from "react";
 import { ArrowUpRight, Sparkles, Check, Copy } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,7 @@ import ContactForm from "./ContactForm";
 import Reveal from "./Reveal";
 
 export default function Contact() {
+  const { t } = useLanguage();
   const [copyState, setCopyState] = useState("idle");
   const timeout = useRef(null);
   useEffect(() => () => clearTimeout(timeout.current), []);
@@ -29,14 +31,14 @@ export default function Contact() {
       <div className="section-shell">
         <Reveal>
           <div className="contact-kicker">
-            <span className="eyebrow">¿TIENES UNA IDEA EN MENTE?</span>
+            <span className="eyebrow">{t("¿TIENES UNA IDEA EN MENTE?")}</span>
             <Sparkles size={22} />
           </div>
           <a className="contact-title" href={`mailto:${profile.email}`}>
             <h2>
-              Hagamos algo
+              {t("Hagamos algo")}
               <br />
-              <span>que se sienta diferente.</span>
+              <span>{t("que se sienta diferente.")}</span>
             </h2>
             <span className="contact-arrow">
               <ArrowUpRight strokeWidth={1} />
@@ -44,9 +46,9 @@ export default function Contact() {
           </a>
           <div className="contact-bottom">
             <p>
-              Un producto, una colaboración o una buena conversación.
+              {t("Un producto, una colaboración o una buena conversación.")}
               <br />
-              Todo empieza con un hola.
+              {t("Todo empieza con un hola.")}
             </p>
             <div className="email-area">
               <div className="email-row">
@@ -56,7 +58,7 @@ export default function Contact() {
                     <Button
                       variant="ghost"
                       size="icon"
-                      aria-label="Copiar correo electrónico"
+                      aria-label={t("Copiar correo electrónico")}
                       onClick={copyEmail}
                     >
                       {copyState === "copied" ? (
@@ -66,14 +68,14 @@ export default function Contact() {
                       )}
                     </Button>
                   </TooltipTrigger>
-                  <TooltipContent>Copiar correo</TooltipContent>
+                  <TooltipContent>{t("Copiar correo")}</TooltipContent>
                 </Tooltip>
               </div>
               <span className="copy-feedback" role="status">
                 {copyState === "copied"
-                  ? "Correo copiado. ¡Hablemos!"
+                  ? t("Correo copiado. ¡Hablemos!")
                   : copyState === "failed"
-                    ? "Puedes seleccionar el correo y copiarlo manualmente."
+                    ? t("Puedes seleccionar el correo y copiarlo manualmente.")
                     : ""}
               </span>
             </div>

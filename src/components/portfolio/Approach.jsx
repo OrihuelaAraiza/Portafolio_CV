@@ -1,3 +1,4 @@
+import { useLanguage } from "@/hooks/useLanguage";
 import { useRef, useState } from "react";
 import {
   motion,
@@ -5,7 +6,13 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { ArrowDown, ArrowUpRight, Box, Code2, MousePointer2 } from "lucide-react";
+import {
+  ArrowDown,
+  ArrowUpRight,
+  Box,
+  Code2,
+  MousePointer2,
+} from "lucide-react";
 import { FiFigma as Figma } from "react-icons/fi";
 import { useAppearance } from "@/hooks/useAppearance";
 import Sculpture from "@/components/three/Sculpture";
@@ -39,6 +46,7 @@ const stages = [
 ];
 
 function StoryStep({ stage, reduced }) {
+  const { t } = useLanguage();
   const ref = useRef(null);
   const { scrollYProgress } = useScroll({
     target: ref,
@@ -52,19 +60,20 @@ function StoryStep({ stage, reduced }) {
       <motion.div style={reduced ? undefined : { y, opacity }}>
         <div className="story-step-top">
           <span className="eyebrow">
-            {stage.number} / {stage.name}
+            {stage.number} / {t(stage.name)}
           </span>
           <Icon size={23} aria-hidden="true" />
         </div>
-        <h3>{stage.title}</h3>
-        <p>{stage.text}</p>
-        <span className="eyebrow story-tags">{stage.tags}</span>
+        <h3>{t(stage.title)}</h3>
+        <p>{t(stage.text)}</p>
+        <span className="eyebrow story-tags">{t(stage.tags)}</span>
       </motion.div>
     </article>
   );
 }
 
 export default function Approach() {
+  const { t } = useLanguage();
   const timeline = useRef(null);
   const { motionDisabled } = useAppearance();
   const [chapter, setChapter] = useState(0);
@@ -86,17 +95,18 @@ export default function Approach() {
           <div className="section-heading">
             <div>
               <span className="eyebrow">
-                <span className="section-index">02 /</span> DE LA IDEA A LO QUE
-                SIENTES
+                <span className="section-index">02 /</span>{" "}
+                {t("DE LA IDEA A LO QUE SIENTES")}
               </span>
               <h2>
-                El detalle no es el final.
+                {t("El detalle no es el final.")}
                 <br />
-                Es <span className="serif-word">el punto de partida.</span>
+                {t("Es")}{" "}
+                <span className="serif-word">{t("el punto de partida.")}</span>
               </h2>
             </div>
             <span className="scrolly-hint">
-              TRES MOMENTOS. UNA EXPERIENCIA. <ArrowDown size={16} />
+              {t("TRES MOMENTOS. UNA EXPERIENCIA.")} <ArrowDown size={16} />
             </span>
           </div>
         </Reveal>
@@ -107,17 +117,19 @@ export default function Approach() {
                 <Box size={14} /> INTERACTION STUDY / 001
               </span>
               <span className="scene-live">
-                <i /> 3D EN TIEMPO REAL
+                <i /> {t("3D EN TIEMPO REAL")}
               </span>
             </div>
             <Sculpture progress={scrollYProgress} />
             <div className="scene-bottom">
               <span>
                 {motionDisabled
-                  ? "FORMA · MATERIAL · MOVIMIENTO"
-                  : ["01 / ESTRUCTURA", "02 / MATERIAL", "03 / MOVIMIENTO"][
-                      chapter
-                    ]}
+                  ? t("FORMA · MATERIAL · MOVIMIENTO")
+                  : [
+                      t("01 / ESTRUCTURA"),
+                      t("02 / MATERIAL"),
+                      t("03 / MOVIMIENTO"),
+                    ][chapter]}
               </span>
               <span>
                 THREE.JS
