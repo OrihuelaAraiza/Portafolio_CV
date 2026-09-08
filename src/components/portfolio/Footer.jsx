@@ -1,6 +1,7 @@
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 import { FiGithub as Github, FiLinkedin as Linkedin } from "react-icons/fi";
 import { profile } from "@/data/portfolio";
+import Asterisk from "./Asterisk";
 
 export default function Footer() {
   return (
@@ -10,7 +11,7 @@ export default function Footer() {
         className="wordmark footer-logo"
         aria-label="Volver al inicio"
       >
-        jp<span className="logo-star">✳</span>
+        jp<Asterisk className="logo-star" />
       </a>
       <p>
         © {new Date().getFullYear()} Juan Pablo Orihuela.

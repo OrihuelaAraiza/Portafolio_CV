@@ -5,7 +5,7 @@ import {
   useScroll,
   useTransform,
 } from "framer-motion";
-import { ArrowDown, Box, Code2, MousePointer2 } from "lucide-react";
+import { ArrowDown, ArrowUpRight, Box, Code2, MousePointer2 } from "lucide-react";
 import { FiFigma as Figma } from "react-icons/fi";
 import { useAppearance } from "@/hooks/useAppearance";
 import Sculpture from "@/components/three/Sculpture";
@@ -119,7 +119,10 @@ export default function Approach() {
                       chapter
                     ]}
               </span>
-              <span>THREE.JS ↗</span>
+              <span>
+                THREE.JS
+                <ArrowUpRight size={11} strokeWidth={1.75} aria-hidden="true" />
+              </span>
             </div>
             <div className="scene-progress" aria-hidden="true">
               {stages.map((stage, index) => (

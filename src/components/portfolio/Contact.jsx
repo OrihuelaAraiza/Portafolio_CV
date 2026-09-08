@@ -7,6 +7,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { profile } from "@/data/portfolio";
+import ContactForm from "./ContactForm";
 import Reveal from "./Reveal";
 
 export default function Contact() {
@@ -77,6 +78,9 @@ export default function Contact() {
               </span>
             </div>
           </div>
+        </Reveal>
+        <Reveal>
+          <ContactForm />
         </Reveal>
       </div>
     </section>

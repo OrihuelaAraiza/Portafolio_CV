@@ -32,6 +32,10 @@ export default function ProjectDetail({ project, returnFocus }) {
         className={`detail-gallery ${project.theme} ${project.category === "mobile" ? "is-mobile" : ""}`}
       >
         <img
+          // El mismo nombre que lleva la portada de la tarjeta: el navegador
+          // interpola entre ambas al abrir la ficha. Solo se aplica a la primera
+          // captura, que es la que la tarjeta mostraba.
+          style={screen === 0 ? { viewTransitionName: "project-cover" } : undefined}
           src={current.src}
           alt={`${project.title}: ${current.label}`}
           width={project.category === "mobile" ? 600 : 1440}

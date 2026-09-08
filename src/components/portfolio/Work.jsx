@@ -45,6 +45,7 @@ function ProjectCard({ project, onOpen, index }) {
             </div>
             <div className="phone-frame phone-primary">
               <img
+                data-cover=""
                 src={project.cover}
                 alt={`${project.title}: ${project.screens[0].label}`}
                 width="600"
@@ -62,6 +63,7 @@ function ProjectCard({ project, onOpen, index }) {
               <span>{new URL(project.live).hostname}</span>
             </div>
             <img
+              data-cover=""
               src={project.cover}
               alt={`Captura real de ${project.title}`}
               width="1440"

@@ -1,4 +1,5 @@
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { motion, useScroll, useSpring } from "framer-motion";
 import {
   Dialog,
@@ -18,7 +19,12 @@ import Lab from "@/components/portfolio/Lab";
 import About from "@/components/portfolio/About";
 import Contact from "@/components/portfolio/Contact";
 import Footer from "@/components/portfolio/Footer";
-const ProjectDetail = lazy(() => import("@/components/ProjectDetail"));
+import CommandPalette from "@/components/CommandPalette";
+// El import se guarda aparte para poder precargarlo: la transición compartida
+// necesita que la ficha se monte en el mismo fotograma en que se abre, y con el
+// chunk todavía en la red React mostraría el estado de carga.
+const importProjectDetail = () => import("@/components/ProjectDetail");
+const ProjectDetail = lazy(importProjectDetail);
 
 function Portfolio() {
   const [activeProject, setActiveProject] = useState(
@@ -29,10 +35,28 @@ function Portfolio() {
           new URLSearchParams(window.location.search).get("project"),
       ) || null,
   );
+  const [paletteOpen, setPaletteOpen] = useState(false);
   const opener = useRef(null);
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 150, damping: 30 });
   const { motionDisabled: reduce } = useAppearance();
+  useEffect(() => {
+    const idle = window.requestIdleCallback;
+    const preload = () => importProjectDetail();
+    const handle = idle ? idle(preload) : setTimeout(preload, 1500);
+    return () =>
+      idle ? window.cancelIdleCallback(handle) : clearTimeout(handle);
+  }, []);
+  useEffect(() => {
+    function onKeyDown(event) {
+      if ((event.metaKey || event.ctrlKey) && event.key?.toLowerCase() === "k") {
+        event.preventDefault();
+        setPaletteOpen((open) => !open);
+      }
+    }
+    window.addEventListener("keydown", onKeyDown, true);
+    return () => window.removeEventListener("keydown", onKeyDown, true);
+  }, []);
   useEffect(() => {
     function onPopState() {
       setActiveProject(
@@ -64,11 +88,30 @@ function Portfolio() {
       : "Juan Pablo Orihuela — Frontend Developer & UI/UX";
   }, [activeProject]);
   function openProject(project, trigger) {
-    opener.current = trigger;
-    setActiveProject(project);
-    const url = new URL(window.location.href);
-    url.searchParams.set("project", project.id);
-    window.history.pushState({ project: project.id }, "", url);
+    function apply() {
+      opener.current = trigger;
+      setActiveProject(project);
+      const url = new URL(window.location.href);
+      url.searchParams.set("project", project.id);
+      window.history.pushState({ project: project.id }, "", url);
+    }
+
+    // La portada de la tarjeta y la captura de la ficha comparten un nombre de
+    // transición, así que el navegador interpola de una a otra en lugar de
+    // hacerlas aparecer y desaparecer. Sin soporte, o con el movimiento
+    // reducido, se abre igual sin animar.
+    const cover = trigger
+      ?.closest?.(".project-card")
+      ?.querySelector("[data-cover]");
+    if (reduce || !document.startViewTransition || !cover) return apply();
+
+    cover.style.viewTransitionName = "project-cover";
+    document.startViewTransition(() => {
+      // Se libera antes de montar la ficha: dos elementos no pueden llevar el
+      // mismo nombre en el mismo fotograma.
+      cover.style.viewTransitionName = "";
+      flushSync(apply);
+    });
   }
   function closeProject() {
     setActiveProject(null);
@@ -85,7 +128,7 @@ function Portfolio() {
         className="reading-progress"
         style={{ scaleX: reduce ? scrollYProgress : progress }}
       />
-      <Header />
+      <Header onOpenPalette={() => setPaletteOpen(true)} />
       <main>
         <Hero />
         <StackStrip />
@@ -96,6 +139,11 @@ function Portfolio() {
         <Contact />
       </main>
       <Footer />
+      <CommandPalette
+        open={paletteOpen}
+        onOpenChange={setPaletteOpen}
+        onOpenProject={openProject}
+      />
       <Dialog
         open={!!activeProject}
         onOpenChange={(open) => {

@@ -10,7 +10,8 @@
     "preview": "vite preview",
     "test": "playwright test",
     "test:ui": "playwright test --ui",
-    "check": "npm run lint && npm run build && npm test"
+    "size": "node scripts/check-bundle-size.mjs",
+    "check": "npm run lint && npm run build && npm run size && npm test"
   },
   "dependencies": {
     "@fontsource-variable/dm-sans": "^5.3.0",
@@ -22,6 +23,7 @@
     "@radix-ui/react-tooltip": "^1.2.16",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
+    "cmdk": "^1.1.1",
     "framer-motion": "^12.23.12",
     "lucide-react": "^1.42.0",
     "react": "^19.1.0",
@@ -47,5 +49,8 @@
     "postcss": "^8.5.6",
     "tailwindcss": "^3.3.5",
     "vite": "^7.0.4"
+  },
+  "engines": {
+    "node": ">=22.12"
   }
 }

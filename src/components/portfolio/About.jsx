@@ -24,7 +24,10 @@ export default function About() {
           </div>
           <div className="portrait-caption">
             <span>JUAN PABLO ORIHUELA</span>
-            <span>CDMX, MÉXICO ↗</span>
+            <span>
+              CDMX, MÉXICO
+              <ArrowUpRight size={10} strokeWidth={1.75} aria-hidden="true" />
+            </span>
           </div>
         </Reveal>
         <div className="about-copy">

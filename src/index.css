@@ -3167,3 +3167,388 @@ h3 {
 :root[data-motion="reduced"] .project-card:nth-child(even) {
   padding-top: 0;
 }
+
+/* ── Paleta de comandos ─────────────────────────────────────────────────── */
+
+.palette-trigger {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  height: 34px;
+  padding: 0 11px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  color: var(--subtle);
+  background: transparent;
+}
+.palette-trigger:hover {
+  background: var(--surface);
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+.palette-trigger kbd {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: inherit;
+}
+
+.command-palette {
+  display: block;
+  gap: 0;
+  top: 12vh;
+  width: calc(100% - 32px);
+  max-width: 580px;
+  transform: translate(-50%, 0);
+  padding: 0;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  overflow: hidden;
+}
+/* El botón de cierre que trae DialogContent se solaparía con el campo de
+   búsqueda. Escape y el clic en el fondo siguen cerrando la paleta. */
+.command-palette > button {
+  display: none;
+}
+.command-palette [cmdk-root] {
+  background: transparent;
+  color: var(--ink);
+}
+.command-palette [cmdk-input-wrapper] {
+  border-bottom: 1px solid var(--line);
+  padding: 4px 16px;
+  color: var(--subtle);
+}
+.command-palette [cmdk-input] {
+  font-family: var(--sans);
+  font-size: 15px;
+  color: var(--ink);
+}
+.command-palette [cmdk-input]::placeholder {
+  color: var(--subtle);
+}
+.command-palette [cmdk-list] {
+  max-height: min(58vh, 420px);
+  padding: 6px;
+  scroll-padding-block: 6px;
+}
+.command-palette [cmdk-group-heading] {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--metadata);
+  padding: 14px 10px 8px;
+}
+.command-palette [cmdk-separator] {
+  background: var(--line);
+  margin: 4px 10px;
+}
+.command-palette [cmdk-item] {
+  gap: 12px;
+  padding: 11px 10px;
+  border-radius: 7px;
+  color: var(--ink);
+  cursor: pointer;
+}
+.command-palette [cmdk-item][data-selected="true"] {
+  background: var(--surface);
+  color: var(--ink);
+}
+.command-palette [cmdk-item] svg {
+  color: var(--metadata);
+}
+.command-palette [cmdk-item][data-selected="true"] svg {
+  color: var(--accent-ink);
+}
+.command-palette [cmdk-empty] {
+  padding: 28px 10px;
+  color: var(--subtle);
+  font-size: 14px;
+}
+.command-index {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--metadata);
+  min-width: 20px;
+}
+.command-label {
+  font-size: 15px;
+  letter-spacing: -0.01em;
+}
+.command-hint {
+  margin-left: auto;
+  padding-left: 14px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--metadata);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 45%;
+}
+
+@media (max-width: 900px) {
+  .palette-trigger {
+    width: 34px;
+    padding: 0;
+    justify-content: center;
+    border-radius: 50%;
+  }
+  .palette-trigger kbd {
+    display: none;
+  }
+  .command-palette {
+    top: 7vh;
+  }
+  .command-hint {
+    display: none;
+  }
+}
+
+/* ── Transición compartida entre la tarjeta y la ficha ───────────────────── */
+
+/* La portada viaja de su sitio en la retícula al de la captura de la ficha. El
+   resto de la página se funde más rápido para que la imagen dirija el momento. */
+::view-transition-group(project-cover) {
+  animation-duration: 340ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+::view-transition-old(project-cover),
+::view-transition-new(project-cover) {
+  animation-duration: 340ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+  /* Las proporciones de la tarjeta y de la ficha no coinciden; recortar en vez
+     de deformar evita que la imagen se estire durante el recorrido. */
+  height: 100%;
+  object-fit: cover;
+  overflow: clip;
+}
+::view-transition-old(root),
+::view-transition-new(root) {
+  animation-duration: 200ms;
+}
+
+/* El movimiento reducido ya se comprueba antes de iniciar la transición; esto
+   cubre además cualquier transición que el navegador dispare por su cuenta. */
+@media (prefers-reduced-motion: reduce) {
+  ::view-transition-group(*),
+  ::view-transition-old(*),
+  ::view-transition-new(*) {
+    animation: none !important;
+  }
+}
+:root[data-motion="reduced"] ::view-transition-group(*),
+:root[data-motion="reduced"] ::view-transition-old(*),
+:root[data-motion="reduced"] ::view-transition-new(*) {
+  animation: none !important;
+}
+
+/* ── Formulario de contacto ─────────────────────────────────────────────── */
+
+/* La sección de contacto es terracota con texto crema y colores fijos. Un
+   formulario ahí dentro no puede señalar errores: el rojo desaparece sobre el
+   naranja. Va sobre una tarjeta de papel, que además lo separa como la zona
+   donde sí hay algo que hacer. */
+.contact-form {
+  margin-top: 56px;
+  padding: 38px 40px 34px;
+  background: var(--paper);
+  color: var(--ink);
+  border-radius: 10px;
+}
+/* La sección fuerza el contorno blanco de foco; dentro de la tarjeta sería
+   invisible. */
+.contact-form :focus-visible {
+  outline-color: var(--orange);
+}
+.form-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px 32px;
+}
+.form-row {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin: 0;
+  position: relative;
+}
+.form-row-wide {
+  grid-column: 1 / -1;
+}
+.form-row label {
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--metadata);
+}
+.form-row input,
+.form-row select,
+.form-row textarea {
+  font-family: var(--sans);
+  font-size: 16px;
+  color: var(--ink);
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--line-strong);
+  border-radius: 0;
+  padding: 10px 0;
+  width: 100%;
+  transition: border-color 0.18s ease;
+}
+.form-row textarea {
+  resize: vertical;
+  min-height: 118px;
+  line-height: 1.65;
+}
+.form-row select {
+  /* La flecha nativa no combina con el resto; se dibuja una propia. */
+  appearance: none;
+  background-image: linear-gradient(45deg, transparent 50%, var(--metadata) 50%),
+    linear-gradient(135deg, var(--metadata) 50%, transparent 50%);
+  background-position:
+    calc(100% - 11px) 20px,
+    calc(100% - 6px) 20px;
+  background-size:
+    5px 5px,
+    5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 26px;
+  cursor: pointer;
+}
+.form-row input::placeholder,
+.form-row textarea::placeholder {
+  color: var(--subtle);
+  opacity: 0.75;
+}
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+  outline: none;
+  border-bottom-color: var(--orange);
+}
+.form-row input:focus-visible,
+.form-row select:focus-visible,
+.form-row textarea:focus-visible {
+  outline: 2px solid var(--orange);
+  outline-offset: 4px;
+}
+.form-row [aria-invalid="true"] {
+  border-bottom-color: var(--destructive-ink, #c0392b);
+}
+.form-error {
+  font-size: 13px;
+  line-height: 1.5;
+  color: var(--destructive-ink, #c0392b);
+  min-height: 0;
+}
+.form-error:empty {
+  display: none;
+}
+.form-count {
+  position: absolute;
+  right: 0;
+  top: 0;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--metadata);
+}
+.form-actions {
+  display: flex;
+  align-items: center;
+  gap: 22px;
+  margin-top: 34px;
+  flex-wrap: wrap;
+}
+.form-note {
+  font-size: 13px;
+  color: var(--subtle);
+  max-width: 42ch;
+  line-height: 1.6;
+}
+.form-sent {
+  margin-top: 28px;
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--surface);
+  font-size: 15px;
+  line-height: 1.65;
+}
+.form-sent p {
+  margin: 0;
+}
+.form-sent a {
+  color: var(--accent-ink);
+  border-bottom: 1px solid currentColor;
+}
+.form-sent details {
+  margin-top: 12px;
+}
+.form-sent summary {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--metadata);
+  cursor: pointer;
+}
+.form-sent pre {
+  margin: 12px 0 0;
+  padding: 14px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  font-family: var(--mono);
+  font-size: 12px;
+  line-height: 1.7;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+:root {
+  --destructive-ink: #b3341a;
+}
+:root[data-theme="dark"] {
+  --destructive-ink: #ff8b6b;
+}
+
+@media (max-width: 680px) {
+  .form-grid {
+    grid-template-columns: 1fr;
+  }
+  .contact-form {
+    margin-top: 40px;
+    padding: 28px 22px 26px;
+  }
+}
+
+/* ── Asterisco del logotipo ─────────────────────────────────────────────── */
+
+/* Sustituye al carácter ✳, que en los teléfonos se dibujaba como emoji de
+   color. Las dos medidas salen del glifo original renderizado en peso 400, el
+   que usa .logo-star: ocupaba 0.69em y su centro quedaba 0.3483em sobre la
+   línea base, de donde sale el ajuste vertical. Al expresarse en em, las reglas
+   de tamaño que ya existían siguen siendo las que mandan. */
+.asterisk {
+  width: 0.69em;
+  height: 0.69em;
+  display: inline-block;
+  vertical-align: -0.003em;
+  flex: none;
+}
+
+/* La flecha de estas dos etiquetas era el carácter ↗ (U+2197), que ninguna de
+   las tres fuentes incluye: en los teléfonos caía en la fuente de emoji de
+   color, igual que pasaba con el asterisco. Ahora es el icono de lucide que ya
+   se usa en el resto del sitio, y el contenedor pasa a inline-flex para que
+   quede alineado con la línea de texto. */
+.portrait-caption span,
+.scene-bottom span {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}

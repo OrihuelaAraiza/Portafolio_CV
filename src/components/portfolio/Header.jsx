@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from "react";
-import { ArrowUpRight, Menu, Moon, Sun, Pause, Play } from "lucide-react";
+import { ArrowUpRight, Menu, Moon, Search, Sun, Pause, Play } from "lucide-react";
 import { useAppearance } from "@/hooks/useAppearance";
+import Asterisk from "./Asterisk";
 import {
   Tooltip,
   TooltipContent,
@@ -16,13 +17,21 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 
+// La tecla del atajo cambia según el sistema. Se resuelve una sola vez: el
+// portafolio se renderiza siempre en el navegador, no hay hidratación que
+// pueda discrepar.
+const isApple =
+  typeof navigator !== "undefined" &&
+  /mac|iphone|ipad|ipod/i.test(navigator.platform || navigator.userAgent);
+const shortcutLabel = isApple ? "⌘K" : "Ctrl K";
+
 const navLinks = [
   { href: "#proyectos", label: "Proyectos" },
   { href: "#enfoque", label: "Mi enfoque" },
   { href: "#sobre-mi", label: "Sobre mí" },
 ];
 
-export default function Header() {
+export default function Header({ onOpenPalette }) {
   const { theme, toggleTheme, motionDisabled, systemReduced, toggleMotion } =
     useAppearance();
   const [active, setActive] = useState("");
@@ -45,7 +54,7 @@ export default function Header() {
     <header className="site-header">
       <div className="header-inner">
         <a href="#inicio" className="wordmark" aria-label="JP Orihuela, inicio">
-          jp<span className="logo-star">✳</span>
+          jp<Asterisk className="logo-star" />
           <span className="wordmark-name">
             Juan Pablo
             <br />
@@ -65,6 +74,20 @@ export default function Header() {
           ))}
         </nav>
         <div className="header-actions">
+          <Tooltip>
+            <TooltipTrigger asChild>
+              <Button
+                variant="ghost"
+                className="palette-trigger"
+                onClick={onOpenPalette}
+                aria-label={`Buscar en el portafolio, atajo ${shortcutLabel}`}
+              >
+                <Search size={15} aria-hidden="true" />
+                <kbd aria-hidden="true">{shortcutLabel}</kbd>
+              </Button>
+            </TooltipTrigger>
+            <TooltipContent>Proyectos, secciones y acciones</TooltipContent>
+          </Tooltip>
           <div className="appearance-controls">
             <Tooltip>
               <TooltipTrigger asChild>

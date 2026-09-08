@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { useAppearance } from "@/hooks/useAppearance";
+import Asterisk from "@/components/portfolio/Asterisk";
 
 export default function Sculpture({ progress }) {
   const canvas = useRef(null);
@@ -55,7 +56,9 @@ export default function Sculpture({ progress }) {
       />
       {status !== "ready" && (
         <div className="sculpture-fallback" aria-hidden="true">
-          <span>✳</span>
+          <span>
+            <Asterisk />
+          </span>
           <small>
             {status === "loading"
               ? "DANDO FORMA A LA IDEA"
