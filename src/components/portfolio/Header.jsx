@@ -37,6 +37,7 @@ const shortcutLabel = isApple ? "⌘K" : "Ctrl K";
 
 const navLinks = [
   { href: "#proyectos", label: "Proyectos" },
+  { href: "#laboratorio", label: "Videojuegos" },
   { href: "#enfoque", label: "Mi enfoque" },
   { href: "#sobre-mi", label: "Sobre mí" },
 ];

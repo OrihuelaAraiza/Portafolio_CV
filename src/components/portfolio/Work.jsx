@@ -9,10 +9,14 @@ import { profile } from "@/data/portfolio";
 import Reveal from "./Reveal";
 
 const filters = [
+  { id: "featured", label: "Selección" },
   { id: "all", label: "Todos" },
   { id: "web", label: "Web" },
+  { id: "games", label: "Videojuegos" },
   { id: "mobile", label: "iOS & Mobile" },
 ];
+const matches = (project, filter) =>
+  filter === "all" || (filter === "featured" ? project.featured : project.category === filter);
 function ProjectCard({ project, onOpen, index }) {
   const { t } = useLanguage();
   const { motionDisabled: reduce } = useAppearance();
@@ -63,7 +67,7 @@ function ProjectCard({ project, onOpen, index }) {
               <i />
               <i />
               <i />
-              <span>{new URL(project.live).hostname}</span>
+              <span>{project.live ? new URL(project.live).hostname : project.stack.slice(0, 2).join(" · ")}</span>
             </div>
             <img
               data-cover=""
@@ -96,6 +100,11 @@ function ProjectCard({ project, onOpen, index }) {
           aria-hidden="true"
         />
       </div>
+      {project.proof && <p className="project-proof">{project.proof}</p>}
+      <div className="project-card-meta">
+        <span>{project.role}</span>
+        <span>{project.status}</span>
+      </div>
       <div className="tags">
         {project.stack.slice(0, 3).map((tag) => (
           <span key={tag}>{tag}</span>
@@ -109,7 +118,7 @@ export default function Work({ onOpen }) {
   const { t, projects } = useLanguage();
   const [filter, setFilter] = useState(
     () =>
-      ({ "/web": "web", "/apps": "mobile" })[window.location.pathname] || "all",
+      ({ "/web": "web", "/apps": "mobile" })[window.location.pathname] || "featured",
   );
   return (
     <section id="proyectos" className="work-section section-shell">
@@ -144,12 +153,7 @@ export default function Work({ onOpen }) {
               <TabsTrigger key={id} value={id}>
                 {t(label)}
                 <span>
-                  {id === "all"
-                    ? projects.length.toString().padStart(2, "0")
-                    : projects
-                        .filter((project) => project.category === id)
-                        .length.toString()
-                        .padStart(2, "0")}
+                  {projects.filter((project) => matches(project, id)).length.toString().padStart(2, "0")}
                 </span>
               </TabsTrigger>
             ))}
@@ -163,10 +167,15 @@ export default function Work({ onOpen }) {
             {t("Todo en GitHub")} <ArrowUpRight size={16} />
           </a>
         </div>
+        <p className="selection-note" aria-live="polite">
+          {filter === "featured"
+            ? t("Empieza por estos cuatro: producto, datos, interacción y videojuegos.")
+            : t("{count} proyectos · Abre una ficha para explorar decisiones, capturas y código.", { count: projects.filter((project) => matches(project, filter)).length })}
+        </p>
         {filters.map(({ id }) => (
           <TabsContent key={id} value={id} className="project-grid">
             {projects
-              .filter((project) => id === "all" || project.category === id)
+              .filter((project) => matches(project, id))
               .map((project, index) => (
                 <ProjectCard
                   key={project.id}

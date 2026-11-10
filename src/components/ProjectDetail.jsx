@@ -41,6 +41,22 @@ export default function ProjectDetail({ project, returnFocus }) {
         </div>
         <DialogTitle>{project.title}</DialogTitle>
         <DialogDescription>{project.description}</DialogDescription>
+        <div className="detail-links detail-links-top">
+          {project.repo && (
+            <Button asChild variant="outline">
+              <a href={project.repo} target="_blank" rel="noreferrer">
+                <Github aria-hidden="true" /> {t("Código")}
+              </a>
+            </Button>
+          )}
+          {project.live && (
+            <Button asChild>
+              <a href={project.live} target="_blank" rel="noreferrer">
+                {t("Visitar proyecto")} <ArrowUpRight />
+              </a>
+            </Button>
+          )}
+        </div>
       </div>
       <figure
         className={`detail-gallery ${project.theme} ${project.category === "mobile" ? "is-mobile" : ""}`}
@@ -106,28 +122,31 @@ export default function ProjectDetail({ project, returnFocus }) {
           </div>
         ))}
       </div>
+      {project.verification && (
+        <div className="detail-evidence">
+          <div>
+            <h3>{t("Evidencia para explorar")}</h3>
+            <p>{project.verification}</p>
+          </div>
+          <div>
+            <h3>{t("Alcance del proyecto")}</h3>
+            <p>{project.scope}</p>
+          </div>
+        </div>
+      )}
+      {project.video && (
+        <figure className="detail-video">
+          <video controls playsInline preload="none" poster="/videos/gameplay-poster.webp" src={project.video} aria-label={t("Gameplay de We Can Fix This")} />
+          <figcaption>{t("Gameplay · 02:21 · Demo sin audio · Mayo de 2026")}</figcaption>
+        </figure>
+      )}
       <div className="detail-footer">
         <div className="tags">
           {project.stack.map((tag) => (
             <span key={tag}>{tag}</span>
           ))}
         </div>
-        <div className="detail-links">
-          {project.repo && (
-            <Button asChild variant="outline">
-              <a href={project.repo} target="_blank" rel="noreferrer">
-                <Github aria-hidden="true" /> {t("Código")}
-              </a>
-            </Button>
-          )}
-          {project.live && (
-            <Button asChild>
-              <a href={project.live} target="_blank" rel="noreferrer">
-                {t("Visitar proyecto")} <ArrowUpRight />
-              </a>
-            </Button>
-          )}
-        </div>
+
       </div>
     </DialogContent>
   );

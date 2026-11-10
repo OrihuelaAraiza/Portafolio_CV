@@ -60,7 +60,7 @@ export default function GameReel() {
     <article className="game-reel">
       <div className="reel-intro">
         <div>
-          <span className="eyebrow">{t("UNITY · C# · MULTIJUGADOR")}</span>
+          <span className="eyebrow">{t("UNITY · C# · COOPERATIVO LOCAL · 1–4 JUGADORES")}</span>
           <h3>
             We Can Fix This<span>_</span>
           </h3>
@@ -153,7 +153,7 @@ export default function GameReel() {
       </div>
       <p className="reel-description">
         {t(
-          "Cooperación, sistemas interactivos y respuesta visual. Un prototipo multijugador donde el game design se convierte en una experiencia compartida.",
+          "Cooperación, roles y estaciones de reparación en una nave en crisis. Videos del prototipo aportados en mayo de 2026; el repositorio documenta la evolución de sus sistemas.",
         )}
       </p>
     </article>

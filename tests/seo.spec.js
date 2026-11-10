@@ -70,7 +70,7 @@ test("publica un sitemap con la portada y los accesos heredados", async ({
   expect(body.match(/<url>/g)).toHaveLength(5);
 });
 
-test("describe el perfil y los seis proyectos en JSON-LD", async ({ page }) => {
+test("describe el perfil y los once proyectos en JSON-LD", async ({ page }) => {
   await page.goto("/");
   const raw = await page
     .locator('script[type="application/ld+json"]')
@@ -83,8 +83,8 @@ test("describe el perfil y los seis proyectos en JSON-LD", async ({ page }) => {
   expect(person.address.addressLocality).toBe("Ciudad de México");
 
   const list = graph.find((node) => node["@type"] === "ItemList");
-  expect(list.numberOfItems).toBe(6);
-  expect(list.itemListElement).toHaveLength(6);
+  expect(list.numberOfItems).toBe(11);
+  expect(list.itemListElement).toHaveLength(11);
 
   // Cada proyecto necesita un destino y una imagen absolutos para el rastreador.
   for (const { item } of list.itemListElement) {
@@ -94,6 +94,7 @@ test("describe el perfil y los seis proyectos en JSON-LD", async ({ page }) => {
   }
 
   // El nombre visible de las fichas y el del marcado no deben divergir.
+  await page.getByRole("tab", { name: /^Todos/ }).click();
   const titles = list.itemListElement.map(({ item }) => item.name);
   for (const title of titles) {
     await expect(

@@ -38,3 +38,56 @@ Las fechas de los proyectos web identifican la versión documentada en el reposi
 - La escultura de la sección de proceso se genera con Three.js mediante geometría y materiales procedurales. Es una pieza interactiva del portafolio, no un modelo extraído del videojuego ni una captura de otro proyecto.
 
 Los cuatro enlaces de demo web respondieron con HTTP 200 en la fecha de revisión. El funcionamiento interno, las APIs o los pagos de esos proyectos no forman parte de la validación de este portafolio. BreveMente usa una demo con datos de ejemplo y almacenamiento local según su README; se identifica como prototipo.
+
+## Actualización del 9 de noviembre de 2026
+
+Prioridad indicada por el autor: **frontend con videojuegos como diferenciador**. Se revisaron composición React, providers, datos y traducciones, fichas, navegación y foco, formulario, carga del motor 3D, estilos, metadata, scripts de build y suite Playwright. El análisis del portafolio no equivale a auditar o ejecutar las pruebas de todos los proyectos presentados.
+
+### Decisiones aplicadas
+
+- Cuatro casos al entrar: Nexo CRM, Brassbound, ROMI y We Can Fix This. El filtro Todos conserva el archivo completo de once proyectos. Web, Videojuegos e iOS & Mobile permiten profundizar sin hacer interminable la portada.
+- Frontend aparece primero en los roles y en la presentación. Las ventanas de la portada muestran Nexo y Brassbound, con capturas reales; el reel tiene acceso directo desde la portada y la navegación.
+- Videojuegos pasa antes de la sección de proceso. El puente entre ambas disciplinas se explica mediante estados, feedback y movimiento; no se inventan experiencia profesional en estudios ni títulos publicados.
+- Las fichas nuevas explican reto, interfaz, implementación, evidencia disponible y límites. Los roles y estados aparecen también en las tarjetas. Los enlaces a demos o código solo se muestran cuando se conoce un destino.
+- Las traducciones ES/EN, búsqueda de comandos, enlaces directos, JSON-LD e imagen social acompañan el nuevo catálogo. El presupuesto de carga inicial se conserva.
+
+### Procedencia de las incorporaciones
+
+| Proyecto | Evidencia revisada | Capturas y límites |
+| --- | --- | --- |
+| Nexo CRM | README, `public/agent-visual-data.mjs`, `public/agent-visuals.mjs`, `server/agent.mjs` y pruebas del checkout `nexo-crm`; [sitio público](https://nexo-electrodomesticos-crm.jp-orihuela.chatgpt.site) confirmado mediante Sites | Resumen y Clientes capturados el 9 de noviembre a 1440 × 1000. Datos de ejercicio y correos example.com. Las cifras son del dataset, no resultados comerciales atribuibles al autor. Sin repositorio público verificado: se ofrece la demo. |
+| Brassbound | [README y código público](https://github.com/OrihuelaAraiza/brassbound-atm10), módulos `tutorial-*`, `ponder-*` y estilos del checkout; [sitio público](https://brassbound-atm10-jp.jp-orihuela.chatgpt.site) confirmado mediante Sites | Inicio y Tutoriales capturados a 1440 × 1000, sin sesión personal. Progreso manual, sin conexión a Minecraft. Las escenas CSS 3D son ilustrativas. |
+| Loop | README y manifiesto de capturas del checkout `loop_app`; [repositorio público](https://github.com/OrihuelaAraiza/loop) | `docs/desarrollo/capturas/bloque-i/ios26.5/i-detalle-3-es-claro-normal.png` e `i-recorrido-3-es-claro-normal.png`, convertidas a WebP y reducidas a 600 px de ancho sin alterar el contenido. Datos sintéticos visibles. El README vigente mantiene requisitos de lanzamiento pendientes; no se ofrece un enlace a App Store. El código público puede no contener el mismo corte local de las capturas. |
+| ROMImente | [Repositorio público](https://github.com/OrihuelaAraiza/romimente-amparo-demo), README y persistencia en `public/assets/core.js` y `workflows.js` del checkout `RomiMente` | Dashboard capturado en localhost, 1440 × 1000, entrando al perfil ficticio Elena Ríos. No se incorporaron datos clínicos reales. No se verificó una URL pública de esta versión; se ofrece el código. |
+| We Can Fix This | [README público vigente](https://github.com/OrihuelaAraiza/We_Can_Fix_This_/blob/main/README.md), Unity 2022.3.62f3, URP e Input System, escenas, roles y pruebas documentadas | Reutiliza los videos y posters originales de mayo. Se aclara que el juego es cooperativo local para 1–4 jugadores. El README posterior no convierte el video anterior en evidencia de todas las funciones actuales. Proyecto colaborativo; no se atribuye propiedad exclusiva de cada sistema. |
+
+Las imágenes nuevas son capturas de interfaces y conversiones de formato. No se generaron pantallas ficticias. No se modificó el código de los otros proyectos para actualizar este portafolio.
+
+### Investigación y siguientes mejoras propuestas
+
+Fuentes consultadas el 9 de noviembre de 2026:
+
+- [GitHub Docs — Using your GitHub profile to enhance your resume](https://docs.github.com/en/account-and-profile/tutorials/using-your-github-profile-to-enhance-your-resume): destacar 3–5 proyectos relevantes y facilitar su evaluación con una descripción, demo, instrucciones y pruebas. La selección de cuatro casos aplica ese criterio al sitio.
+- [Epic Games — Career Paths](https://www.epicgames.com/site/earlycareers/career-paths?lang=en-US): acceso directo a las mejores muestras, aportación individual explícita en trabajo colaborativo y documentación técnica. Se adelantan los enlaces de demo/código en las fichas y se propone completar créditos específicos antes de atribuir sistemas del juego.
+- [Riot Games — Portfolio and Reel Suggestions](https://www.riotgames.com/en/portfolio-and-reel-suggestions): selección de las mejores piezas, acceso sencillo y proceso de resolución. Sus indicaciones por disciplina están dirigidas principalmente a portafolios artísticos; se usa el criterio general de selección, no como requisito específico de contratación frontend. El tráiler existente dura 43 segundos.
+- [web.dev — Web Vitals](https://web.dev/articles/vitals): evaluar carga, respuesta y estabilidad. Sus objetivos de campo son LCP ≤ 2.5 s, INP ≤ 200 ms y CLS ≤ 0.1 en el percentil 75. El peso de bundles y las pruebas locales de este repositorio **no prueban** esos resultados de campo.
+
+Prioridades siguientes, sujetas a evidencia o materiales que aún faltan:
+
+1. **Aportación personal en We Can Fix This:** documentar módulos y decisiones del autor con commits o créditos, y un pequeño antes/después técnico. La ficha actual explica el proyecto sin atribuir todos sus sistemas a una persona.
+2. **Build jugable:** publicar una versión descargable o WebGL solo cuando exista una build probada y se haya definido distribución y créditos. Por ahora, reel y código permiten evaluar el trabajo.
+3. **CV consistente:** actualizar el PDF con la selección reciente y el enfoque frontend, conservando solo fechas, roles y logros confirmados. El PDF aportado sigue intacto.
+4. **Resultados medidos:** incorporar un resultado verificable por caso (usabilidad, rendimiento o reducción de pasos), con método, versión y límites. No usar cifras de un dataset como si fueran impacto comercial propio.
+5. **Compartir casos:** si las fichas atraen tráfico de búsqueda, generar páginas HTML independientes por proyecto e idioma con metadata propia. La SPA conserva los enlaces `?project=`; los bots sin JavaScript reciben la portada y el catálogo JSON-LD.
+6. **Perfil de GitHub:** alinear el README de perfil y los repositorios fijados con los casos del portafolio, comprobando instrucciones de arranque y créditos. No se modificó el perfil externo en esta tarea.
+7. **Rendimiento real:** medir el despliegue final en móvil y recopilar Core Web Vitals con consentimiento y una muestra útil. La escultura sigue fuera de la carga inicial; el presupuesto actual controla JS/CSS, no fuentes, imágenes, red ni rendimiento de usuarios reales.
+
+Hermes se revisó como posible incorporación, pero no se añadió a la selección: su documentación disponible describe navegación de un prototipo y aporta menos evidencia que Loop para el objetivo frontend. SoundVision conserva su lugar como exploración espacial. El archivo de proyectos anteriores permanece accesible.
+
+### Validación de esta actualización
+
+`npm run check` completado: ESLint, build, presupuesto y **116 pruebas aprobadas**, con dos casos de menú móvil omitidos deliberadamente en el proyecto de escritorio. La suite cubre filtros, archivo completo, fichas nuevas en ES/EN, medios, navegación por teclado, foco, videos, formularios, SEO y comprobaciones axe.
+
+Revisión visual a 320, 390, 1024 y 1440 px, sin desbordamiento horizontal observado. Seis URLs de demo respondieron HTTP 200; eso no certifica sus servicios internos. Carga inicial de JS/CSS: **174.6 / 19.1 kB gzip**, dentro de los límites existentes de 175 / 20 kB. El chunk 3D conserva el aviso orientativo de Vite por superar 500 kB sin comprimir, y sigue cargándose bajo demanda. No se realizó una auditoría manual completa de accesibilidad ni medición de Core Web Vitals de campo.
+
+La verificación anterior corresponde al checkout local previo a la publicación. El despliegue debe cotejarse con el commit publicado en `main`. El CV PDF se conserva sin cambios.

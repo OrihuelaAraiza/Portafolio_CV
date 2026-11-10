@@ -21,6 +21,7 @@ import About from "@/components/portfolio/About";
 import Contact from "@/components/portfolio/Contact";
 import Footer from "@/components/portfolio/Footer";
 import CommandPalette from "@/components/CommandPalette";
+import { site } from "@/data/site";
 // El import se guarda aparte para poder precargarlo: la transición compartida
 // necesita que la ficha se monte en el mismo fotograma en que se abre, y con el
 // chunk todavía en la red React mostraría el estado de carga.
@@ -83,7 +84,7 @@ function Portfolio() {
   useEffect(() => {
     document.title = activeProject
       ? `${activeProject.title} — Juan Pablo Orihuela`
-      : "Juan Pablo Orihuela — Frontend Developer & UI/UX";
+      : site.title;
   }, [activeProject]);
   function openProject(project, trigger) {
     function apply() {
@@ -131,8 +132,8 @@ function Portfolio() {
         <Hero />
         <StackStrip />
         <Work onOpen={openProject} />
+        <Lab onOpenProject={openProject} />
         <Approach />
-        <Lab />
         <About />
         <Contact />
       </main>

@@ -36,8 +36,8 @@ test("lets visitors pause typing and motion and honors reduced motion", async ({
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
   const text = page.locator(".typewriter-text");
-  await expect(text).toHaveText("CTO @ ROMI");
-  await expect(text).not.toHaveText("CTO @ ROMI", { timeout: 6000 });
+  await expect(text).toHaveText("Frontend Developer & UI/UX");
+  await expect(text).not.toHaveText("Frontend Developer & UI/UX", { timeout: 6000 });
   await page.getByRole("button", { name: "Pausar animaciones" }).click();
   await expect(page.locator("html")).toHaveAttribute("data-motion", "reduced");
   const pausedText = await text.textContent();

@@ -16,6 +16,7 @@ import {
   MousePointer2,
   MapPin,
   Download,
+  Gamepad2,
 } from "lucide-react";
 import { FiFigma as Figma } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
@@ -63,11 +64,11 @@ function HeroVisual({ scrollProgress }) {
             <i />
             <i />
             <i />
-            <span>romi · web experience</span>
+            <span>brassbound · interactive web</span>
           </div>
           <img
-            src="/projects/romi.webp"
-            alt={t("Vista del sitio ROMI, desarrollado por Juan Pablo")}
+            src="/projects/brassbound.webp"
+            alt={t("Vista de Brassbound, guía interactiva de Minecraft")}
             width="1440"
             height="1000"
             fetchPriority="high"
@@ -81,12 +82,12 @@ function HeroVisual({ scrollProgress }) {
             <i />
             <i />
             <i />
-            <span>one pharmacy · e-commerce</span>
+            <span>nexo · data & interaction</span>
             <ArrowUpRight size={11} />
           </div>
           <img
-            src="/projects/one-pharmacy.webp"
-            alt={t("Vista del catálogo de One Pharmacy")}
+            src="/projects/nexo.webp"
+            alt={t("Vista de Nexo CRM y sus visualizaciones de datos")}
             width="1440"
             height="1000"
             fetchPriority="high"
@@ -141,7 +142,7 @@ export default function Hero() {
             <p className="hero-intro">
               {t("Soy")} <strong>Juan Pablo Orihuela.</strong>{" "}
               {t(
-                "Conecto diseño y código para crear experiencias digitales que se ven bien. Y se sienten todavía mejor.",
+                "Desarrollo frontend con React, TypeScript y atención al detalle. Mi experiencia en videojuegos aporta movimiento, respuesta visual e interacción a cada producto.",
               )}
             </p>
           </Reveal>
@@ -159,6 +160,13 @@ export default function Hero() {
               download
             >
               {t("Descargar CV")} <Download size={16} />
+            </a>
+          </Reveal>
+          <Reveal delay={0.25}>
+            <a className="hero-game-link" href="#laboratorio">
+              <Gamepad2 size={18} aria-hidden="true" />
+              <span>{t("Mi lado gamer, en código")} <small>{t("Ver reel · 43 s")}</small></span>
+              <ArrowUpRight size={17} aria-hidden="true" />
             </a>
           </Reveal>
         </div>
@@ -201,7 +209,7 @@ export function StackStrip() {
             <i /> Motion
           </span>
           <span>
-            SwiftUI <ArrowUpRight size={16} />
+            Unity / C# <ArrowUpRight size={16} />
           </span>
         </div>
       </div>

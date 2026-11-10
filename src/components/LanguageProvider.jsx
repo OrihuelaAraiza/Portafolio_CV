@@ -81,7 +81,10 @@ export default function LanguageProvider({ children }) {
             "design",
             "engineering",
             "status",
-          ].map((key) => [key, t(project[key])]),
+            "proof",
+            "verification",
+            "scope",
+          ].map((key) => [key, project[key] ? t(project[key]) : project[key]]),
         ),
         screens: project.screens.map((screen) => ({
           ...screen,

@@ -64,9 +64,9 @@ const html = `<!doctype html>
   </div>
   <h1>Interfaces con <span>intención.</span></h1>
   <div class="meta">
-    <p><strong>Juan Pablo Orihuela</strong><br><span class="dot"></span>Frontend Developer &amp; UI/UX<br><span style="padding-left:18px">Ciudad de México</span></p>
+    <p><strong>Juan Pablo Orihuela</strong><br><span class="dot"></span>Frontend &amp; Creative Developer<br><span style="padding-left:18px">Ciudad de México</span></p>
     <div class="stack">
-      <span>React</span><span>Next.js</span><span>TypeScript</span><span>SwiftUI</span><span>Three.js</span>
+      <span>React</span><span>Next.js</span><span>TypeScript</span><span>Unity / C#</span><span>Three.js</span>
     </div>
   </div>
 </body></html>`;

@@ -95,7 +95,7 @@ export default function Approach() {
           <div className="section-heading">
             <div>
               <span className="eyebrow">
-                <span className="section-index">02 /</span>{" "}
+                <span className="section-index">03 /</span>{" "}
                 {t("DE LA IDEA A LO QUE SIENTES")}
               </span>
               <h2>

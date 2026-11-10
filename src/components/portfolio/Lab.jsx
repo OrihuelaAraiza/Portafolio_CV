@@ -4,15 +4,15 @@ import { experiments } from "@/data/portfolio";
 import GameReel from "./GameReel";
 import Reveal from "./Reveal";
 
-export default function Lab() {
-  const { t } = useLanguage();
+export default function Lab({ onOpenProject }) {
+  const { t, projects } = useLanguage();
   return (
     <section id="laboratorio" className="lab-section section-shell">
       <Reveal>
         <div className="section-heading">
           <div>
             <span className="eyebrow">
-              <span className="section-index">03 /</span>{" "}
+              <span className="section-index">02 /</span>{" "}
               {t("MÁS ALLÁ DEL NAVEGADOR")}
             </span>
             <h2>
@@ -31,6 +31,16 @@ export default function Lab() {
       </Reveal>
       <Reveal>
         <GameReel />
+        <div className="game-bridge">
+          <div>
+            <span className="eyebrow">{t("DEL JUEGO AL FRONTEND")}</span>
+            <h3>{t("Cada acción merece una respuesta.")}</h3>
+            <p>{t("Estados claros, feedback inmediato y movimiento con propósito. La misma atención que necesita un jugador para entender una acción también hace más clara una interfaz.")}</p>
+          </div>
+          <button className="text-link" onClick={(event) => onOpenProject(projects.find((project) => project.id === "we-can-fix-this"), event.currentTarget)}>
+            {t("Explorar el caso técnico")} <ArrowUpRight size={17} />
+          </button>
+        </div>
       </Reveal>
       <div className="experiments">
         {experiments

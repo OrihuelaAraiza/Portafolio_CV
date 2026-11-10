@@ -60,7 +60,7 @@ test("keeps project filters, the open gallery and its screenshot across language
     "aria-selected",
     "true",
   );
-  await expect(page.locator("[data-project-id]")).toHaveCount(2);
+  await expect(page.locator("[data-project-id]")).toHaveCount(3);
   const trigger = page.getByRole("button", {
     name: "View project Mi Campo",
     exact: true,

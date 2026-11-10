@@ -34,10 +34,11 @@ test("filtra por nombre y por tecnología", async ({ page }) => {
   const options = page.getByRole("option");
 
   await input.fill("swift");
-  // Los dos proyectos iOS declaran SwiftUI en su stack.
-  await expect(options).toHaveCount(2);
-  await expect(options.first()).toContainText("Mi Campo");
-  await expect(options.nth(1)).toContainText("UPocket");
+  // Los tres proyectos iOS declaran SwiftUI en su stack.
+  await expect(options).toHaveCount(3);
+  await expect(options.first()).toContainText("Loop");
+  await expect(options.nth(1)).toContainText("Mi Campo");
+  await expect(options.nth(2)).toContainText("UPocket");
 
   await input.fill("pharmacy");
   await expect(options).toHaveCount(1);
@@ -80,7 +81,7 @@ test("las flechas mueven la selección antes de activar", async ({ page }) => {
   await expect(options.nth(1)).toHaveAttribute("aria-selected", "true");
   await page.keyboard.press("Enter");
 
-  await expect(page).toHaveURL(/project=one-pharmacy/);
+  await expect(page).toHaveURL(/project=brassbound/);
 });
 
 test("una sección lleva el scroll a su destino", async ({ page }) => {
@@ -142,13 +143,13 @@ test("devuelve el foco a la tarjeta al cerrar la ficha abierta desde la paleta",
   await open(page);
   await page
     .getByPlaceholder("Buscar proyectos, secciones o acciones…")
-    .fill("brevemente");
+    .fill("brassbound");
   await page.keyboard.press("Enter");
-  await expect(page.getByRole("dialog", { name: "BreveMente" })).toBeVisible();
+  await expect(page.getByRole("dialog", { name: "Brassbound" })).toBeVisible();
 
   await page.keyboard.press("Escape");
   await expect(
-    page.getByRole("button", { name: "Ver proyecto BreveMente", exact: true }),
+    page.getByRole("button", { name: "Ver proyecto Brassbound", exact: true }),
   ).toBeFocused();
 });
 

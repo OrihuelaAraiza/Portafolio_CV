@@ -6,7 +6,7 @@ export const profile = {
 };
 
 // Curated from public repositories and existing portfolio assets. See docs/content-sources.md.
-export const projects = [
+const previousProjects = [
   {
     id: "romi",
     number: "01",
@@ -183,6 +183,148 @@ export const projects = [
   },
 ];
 
+// Selection is editorial: frontend first, with game development as a differentiator.
+// Project dates identify documented versions, not employment start dates.
+const recentProjects = [
+  {
+    id: "nexo-crm",
+    title: "Nexo CRM",
+    subtitle: "De una tabla de datos a una decisión clara.",
+    category: "web",
+    categoryLabel: "Dashboard · Visualización de datos",
+    year: "2026",
+    theme: "nexo",
+    featured: true,
+    role: "Frontend · UI de producto",
+    stack: ["JavaScript", "Chart.js", "Gemini", "Cloudflare Workers"],
+    cover: "/projects/nexo.webp",
+    screens: [
+      { src: "/projects/nexo.webp", label: "Resumen de negocio con datos de ejercicio" },
+      { src: "/projects/nexo-clientes.webp", label: "Tabla de clientes y acciones de seguimiento" },
+    ],
+    live: "https://nexo-electrodomesticos-crm.jp-orihuela.chatgpt.site",
+    description: "Un CRM analítico que convierte un CSV de electrodomésticos en filtros, segmentos, comparativas y visualizaciones interactivas. La interfaz conecta el análisis con acciones de seguimiento.",
+    challenge: "Mantener el mismo contexto entre gráficas, tablas, fichas y consultas para que explorar los datos no obligue a empezar de nuevo.",
+    design: "Filtros compartidos, vistas guardadas, selección de audiencias y tarjetas en móvil. Las visualizaciones ofrecen tablas como alternativa al canvas.",
+    engineering: "Cálculos locales sobre el CSV y un agente Gemini con herramientas de lectura. Las gráficas del chat se construyen con resultados verificados de esas herramientas; las consultas guiadas funcionan sin IA.",
+    proof: "Filtros compartidos, gráficas y tablas que conservan el contexto.",
+    verification: "Pruebas de analítica, consultas y visualizaciones en el repositorio; comparación, exportación y estados vacíos documentados en el README.",
+    scope: "Ejercicio con 1,000 pedidos y correos de ejemplo. Notas y campañas se guardan por navegador; no se envían campañas ni se sincronizan entre equipos.",
+    status: "Demo analítica pública",
+  },
+  {
+    id: "brassbound",
+    title: "Brassbound",
+    subtitle: "Un universo de recetas, convertido en una interfaz explorable.",
+    category: "web",
+    categoryLabel: "Web interactiva · Minecraft",
+    year: "2026",
+    theme: "brassbound",
+    featured: true,
+    role: "Frontend · Diseño de interacción",
+    stack: ["JavaScript", "CSS 3D", "Vinext", "Cloudflare D1"],
+    cover: "/projects/brassbound.webp",
+    screens: [
+      { src: "/projects/brassbound.webp", label: "Mesa de trabajo de All the Mods 10" },
+      { src: "/projects/brassbound-tutoriales.webp", label: "Biblioteca de tutoriales paso a paso" },
+    ],
+    live: "https://brassbound-atm10-jp.jp-orihuela.chatgpt.site",
+    repo: "https://github.com/OrihuelaAraiza/brassbound-atm10",
+    description: "Guía en español para All the Mods 10 8.1. Une un atlas de objetos, recetas, tutoriales y construcciones ilustradas en una experiencia web inspirada en Minecraft.",
+    challenge: "Hacer navegable la complejidad de un modpack: pasar de buscar un objeto a entender sus materiales, usos y siguiente paso.",
+    design: "Una mesa de trabajo como punto de entrada, búsqueda por intención y lecciones visuales por pasos. La estética del juego acompaña jerarquías y controles de una web.",
+    engineering: "Catálogos y módulos JavaScript, escenas ilustrativas con CSS 3D y progreso compartido mediante D1. La reproducción se controla y respeta movimiento reducido.",
+    proof: "Búsqueda, recetas y tutoriales 3D dentro del mismo recorrido.",
+    verification: "El repositorio incluye pruebas de datos, tutoriales y perfiles. Cada lección conserva sus fuentes y la versión del modpack que documenta.",
+    scope: "El progreso se registra manualmente. No hay conexión al servidor de Minecraft; las escenas son ilustraciones, no una simulación del juego ni el motor Ponder.",
+    status: "Guía web pública",
+  },
+  {
+    id: "we-can-fix-this",
+    title: "We Can Fix This",
+    subtitle: "Cooperar, reparar y responder a una nave en crisis.",
+    category: "games",
+    categoryLabel: "Videojuego · Cooperativo local",
+    year: "2026",
+    theme: "wcft",
+    featured: true,
+    role: "Desarrollo de videojuegos · Proyecto colaborativo",
+    stack: ["Unity", "C#", "Input System", "URP"],
+    cover: "/videos/trailer-poster.webp",
+    screens: [
+      { src: "/videos/trailer-poster.webp", label: "Fotograma del tráiler aportado en mayo de 2026" },
+      { src: "/videos/gameplay-poster.webp", label: "Fotograma del gameplay aportado en mayo de 2026" },
+    ],
+    video: "/videos/we-can-fix-this-gameplay.mp4",
+    repo: "https://github.com/OrihuelaAraiza/We_Can_Fix_This_",
+    description: "Prototipo cooperativo local para 1–4 jugadores. La tripulación de una nave averiada coordina roles y repara estaciones antes de que se agote la integridad de la nave.",
+    challenge: "Hacer legibles los fallos simultáneos y conservar la selección de roles y dispositivos al pasar del lobby a la partida.",
+    design: "Roles con habilidades diferenciadas, estaciones reparables y feedback de la integridad de la nave. El video permite observar la interacción del prototipo.",
+    engineering: "Unity y C# con Input System. El código documenta eventos de estado en RepairStation, un registro de estaciones activas y drenaje centralizado en ShipHealth.",
+    proof: "Gameplay real y código de estados, roles e interacción.",
+    verification: "El repositorio documenta pruebas EditMode para estaciones, salud de la nave, escenas, jugadores y generación de layout. No se ejecutaron desde el portafolio.",
+    scope: "Proyecto colaborativo en desarrollo. Los videos de mayo documentan una versión anterior; no se ofrece una build jugable ni se atribuye autoría individual de todos los sistemas.",
+    status: "Prototipo Unity · 1–4 jugadores",
+  },
+  {
+    id: "loop",
+    title: "Loop",
+    subtitle: "Volver a un proyecto también es avanzar.",
+    category: "mobile",
+    categoryLabel: "App iOS · Producto personal",
+    year: "2026",
+    theme: "loop",
+    role: "Desarrollo iOS · Diseño de interacción",
+    stack: ["SwiftUI", "SwiftData", "StoreKit 2"],
+    cover: "/projects/loop-detalle.webp",
+    screens: [
+      { src: "/projects/loop-detalle.webp", label: "Detalle de proyecto con datos ficticios de prueba" },
+      { src: "/projects/loop-ruta.webp", label: "Recorrido e ideas con datos ficticios de prueba" },
+    ],
+    repo: "https://github.com/OrihuelaAraiza/loop",
+    description: "Una app nativa para registrar intentos, fotos e ideas de proyectos personales y retomar donde te quedaste. El progreso se presenta como un recorrido, sin rachas ni presión por volver.",
+    challenge: "Conservar el contexto de un proyecto entre sesiones y dar valor a avances pequeños sin convertirlos en una obligación.",
+    design: "Bienvenida breve, pistas para retomar, comparación de fotos y una mascota con gestos. El movimiento y la personalización acompañan las acciones de la persona.",
+    engineering: "SwiftUI y SwiftData, biblioteca local, respaldos con fotos y restauración validada. Incluye StoreKit 2, español e inglés y ajustes de accesibilidad.",
+    proof: "Persistencia local, respaldos y una interacción con identidad propia.",
+    verification: "Capturas de simulador del Bloque I, con datos sintéticos. El repositorio documenta pruebas de interfaz, migración y restauración, con sus límites.",
+    scope: "En desarrollo, todavía sin publicación en App Store. Las capturas no acreditan el cierre de los requisitos de lanzamiento.",
+    status: "iOS · En desarrollo",
+  },
+  {
+    id: "romimente",
+    title: "ROMImente",
+    subtitle: "Dar continuidad a flujos de trabajo complejos.",
+    category: "web",
+    categoryLabel: "Prototipo · Flujos por perfil",
+    year: "2026",
+    theme: "romimente",
+    role: "Frontend · Prototipado de producto",
+    stack: ["JavaScript", "CSS", "IndexedDB", "Vite"],
+    cover: "/projects/romimente.webp",
+    screens: [{ src: "/projects/romimente.webp", label: "Dashboard del prototipo con perfiles ficticios" }],
+    repo: "https://github.com/OrihuelaAraiza/romimente-amparo-demo",
+    description: "Demo navegable para Clínica El Amparo que explora agenda, expedientes, recursos y un portal de paciente. Un ejercicio de arquitectura de información y continuidad entre perfiles.",
+    challenge: "Organizar formularios extensos, documentos y seguimiento sin perder la relación entre una persona, su expediente y sus tareas.",
+    design: "Navegación por contexto, formularios por secciones, notas versionadas y vistas diferenciadas para profesionales y pacientes.",
+    engineering: "Interfaz en JavaScript con persistencia local e IndexedDB para archivos. Playwright cubre recorridos del demo, formularios y estados entre vistas.",
+    proof: "Flujos por perfil, formularios y persistencia del prototipo.",
+    verification: "Pruebas de navegador disponibles en el repositorio. La captura procede de una sesión local con el perfil de demostración.",
+    scope: "Solo datos ficticios. Sin autenticación real, servidor clínico ni sincronización; no es un sistema autorizado para atención clínica.",
+    status: "Demo con datos ficticios",
+  },
+];
+
+export const projects = [
+  recentProjects[0],
+  recentProjects[1],
+  { ...previousProjects[0], featured: true, proof: "Navegación multilingüe y componentes para un ecosistema de salud." },
+  recentProjects[2],
+  recentProjects[3],
+  recentProjects[4],
+  ...previousProjects.slice(1),
+].map((project, index) => ({ ...project, number: String(index + 1).padStart(2, "0") }));
+
 export const experiments = [
   {
     number: "01",
@@ -193,13 +335,5 @@ export const experiments = [
     href: "https://github.com/OrihuelaAraiza/SoundVision",
     icon: "audio",
   },
-  {
-    number: "02",
-    name: "We Can Fix This",
-    type: "Unity · C# · Game development",
-    description:
-      "Un prototipo de juego cooperativo multijugador. Otra forma de explorar sistemas interactivos, respuesta visual y experiencias compartidas.",
-    href: "https://github.com/OrihuelaAraiza/We_Can_Fix_This_",
-    icon: "game",
-  },
+
 ];

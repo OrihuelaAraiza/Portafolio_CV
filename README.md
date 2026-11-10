@@ -1,6 +1,6 @@
 # Juan Pablo Orihuela — Portafolio
 
-Portafolio de frontend y UI/UX en React + Vite. Una selección de proyectos reales, capturas locales, fichas de proyecto, experimentos de interacción y contacto directo.
+Portafolio de frontend y UI/UX con videojuegos como diferenciador, en React + Vite. Una selección de proyectos reales, capturas locales, fichas de proyecto, experimentos de interacción y contacto directo.
 
 ## Desarrollo
 
@@ -54,7 +54,7 @@ El idioma de `<html>` y las descripciones de metadata se actualizan durante la v
 
 ## Buscadores y enlaces compartidos
 
-`src/data/site.js` es el único lugar donde vive el dominio. A partir de él, `plugins/vite-plugin-seo.js` genera durante el build el `title`, la descripción, las etiquetas OpenGraph, el enlace canónico, `robots.txt` y `sitemap.xml`, más un JSON-LD con el perfil y los seis proyectos leído del mismo `portfolio.js` que dibuja las fichas: el marcado estructurado no puede describir proyectos que ya no existen. Cambiar de dominio es cambiar una línea.
+`src/data/site.js` es el único lugar donde vive el dominio. A partir de él, `plugins/vite-plugin-seo.js` genera durante el build el `title`, la descripción, las etiquetas OpenGraph, el enlace canónico, `robots.txt` y `sitemap.xml`, más un JSON-LD con el perfil y los once proyectos leído del mismo `portfolio.js` que dibuja las fichas: el marcado estructurado no puede describir proyectos que ya no existen. Cambiar de dominio es cambiar una línea.
 
 `scripts/generate-og-image.mjs` dibuja `public/og-image.png` a 1200 × 630 con el Chromium que ya instala Playwright, incrustando las fuentes desde `node_modules`. No añade dependencias y el resultado es idéntico en cada ejecución.
 
@@ -86,7 +86,7 @@ El tema sigue al sistema hasta elegir uno con el control de la cabecera; la pref
 
 Los videos tienen controles nativos y se descargan únicamente después de pulsar reproducir. Cambiar entre tráiler y gameplay detiene el anterior; salir de pantalla o cambiar de pestaña pausa el video. Las fuentes se distribuyen localmente a través de Fontsource.
 
-El contacto ofrece tres caminos: el enlace de correo, el botón de copiar la dirección y un formulario que valida en el navegador y arma el mensaje. El formulario no envía nada por la red: al validarse abre el cliente de correo con el asunto y el cuerpo ya escritos, y deja el mismo texto en pantalla por si no hay cliente configurado. La validación es propia, sin librería de formularios, y marca los campos solo después del primer intento de envío, con `aria-invalid`, mensajes enlazados por `aria-describedby` y el foco puesto en el primer campo con problema. No hay envíos simulados, analytics ni llamadas a GitHub desde el navegador.
+El contacto ofrece tres caminos: el enlace de correo, el botón de copiar la dirección y un formulario que valida en el navegador y arma el mensaje. El formulario no envía nada por la red: al validarse abre el cliente de correo con el asunto y el cuerpo ya escritos, y deja el mismo texto en pantalla por si no hay cliente configurado. La validación es propia, sin librería de formularios, y marca los campos solo después del primer intento de envío, con `aria-invalid`, mensajes enlazados por `aria-describedby` y el foco puesto en el primer campo con problema. No hay envíos simulados ni llamadas a GitHub desde el navegador. `src/main.jsx` integra Vercel Analytics; el formulario no transmite su contenido a un servidor propio.
 
 ## Recursos externos
 
@@ -99,3 +99,11 @@ El contacto ofrece tres caminos: el enlace de correo, el botón de copiar la dir
 - [Playwright](https://playwright.dev/) y [axe-core](https://github.com/dequelabs/axe-core), verificación del navegador y accesibilidad.
 
 Una auditoría automática sin incidencias no equivale a una certificación de accesibilidad ni a pruebas físicas en iPhone. Las capturas de otros proyectos documentan su apariencia; las pruebas de este repositorio cubren el portafolio.
+
+## Selección actual · noviembre de 2026
+
+La portada presenta Nexo CRM, Brassbound, ROMI y We Can Fix This. El filtro Todos abre el catálogo de once proyectos, incluidos Loop y ROMImente. Los filtros Web, Videojuegos e iOS & Mobile conservan las rutas anteriores. Las fichas y la paleta siguen disponibles aunque un proyecto no esté en la selección inicial.
+
+`featured` controla la selección; `proof` resume lo que demuestra una tarjeta; `verification` y `scope` añaden evidencia y límites a las fichas. `video` permite incluir gameplay sin descarga ni reproducción automática. Una ficha web puede tener solo código, sin URL de demo.
+
+La investigación, procedencia de capturas, diagnóstico y siguientes prioridades están en [docs/content-sources.md](docs/content-sources.md#actualización-del-9-de-noviembre-de-2026). `tests/project-refresh.spec.js` cubre selección, archivo, proyectos sin demo, evidencia traducida, medios, foco y accesibilidad de las nuevas fichas.

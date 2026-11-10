@@ -12,7 +12,7 @@ test("renders the portfolio, loads real captures, and has no overflow or runtime
   );
   await expect(
     page.getByRole("button", { name: /^Ver proyecto / }),
-  ).toHaveCount(6);
+  ).toHaveCount(4);
   for (const image of await page.locator("img").all()) {
     await image.scrollIntoViewIfNeeded();
     await expect
@@ -34,7 +34,7 @@ test("filters projects, navigates the gallery, and restores focus after Escape",
   await page.getByRole("tab", { name: "iOS & Mobile" }).click();
   await expect(
     page.getByRole("button", { name: /^Ver proyecto / }),
-  ).toHaveCount(2);
+  ).toHaveCount(3);
   const trigger = page.getByRole("button", {
     name: "Ver proyecto Mi Campo",
     exact: true,
@@ -66,7 +66,7 @@ test("filters projects, navigates the gallery, and restores focus after Escape",
   await page.getByRole("tab", { name: "Web", exact: false }).click();
   await expect(
     page.getByRole("button", { name: /^Ver proyecto / }),
-  ).toHaveCount(4);
+  ).toHaveCount(7);
 });
 
 test("supports direct project links, browser back, and legacy entry points", async ({
@@ -92,7 +92,7 @@ test("supports direct project links, browser back, and legacy entry points", asy
   );
   await expect(
     page.getByRole("button", { name: /^Ver proyecto / }),
-  ).toHaveCount(2);
+  ).toHaveCount(3);
 });
 
 test("provides a working CV download and accurate contact feedback", async ({
