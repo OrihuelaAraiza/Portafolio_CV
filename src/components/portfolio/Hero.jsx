@@ -20,6 +20,11 @@ import {
 } from "lucide-react";
 import { FiFigma as Figma } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
+import DitherField from "@/components/fx/DitherField";
+import Asterisk from "./Asterisk";
+import Line from "./Line";
+import Magnetic from "./Magnetic";
+import Marquee from "./Marquee";
 import Reveal from "./Reveal";
 
 function HeroVisual({ scrollProgress }) {
@@ -120,25 +125,26 @@ export default function Hero() {
     offset: ["start start", "end start"],
   });
   return (
-    <section ref={target} id="inicio" className="hero section-shell">
+    <section ref={target} id="inicio" className="hero">
+      <DitherField className="hero-field" />
+      <div className="section-shell hero-shell">
       <Reveal className="hero-kicker">
         <TypewriterRole />
         <span className="eyebrow hero-edition">{t("PORTAFOLIO / 2026")}</span>
       </Reveal>
       <div className="hero-main">
         <div className="hero-copy">
-          <Reveal>
-            <h1>
-              {t("Interfaces")}
-              <br />
+          <h1>
+            <Line delay={0.05}>{t("Interfaces")}</Line>
+            <Line delay={0.16}>
               {t("con")}{" "}
               <span className="accent-word">
                 {t("intención")}
                 <span className="period">.</span>
               </span>
-            </h1>
-          </Reveal>
-          <Reveal delay={0.1}>
+            </Line>
+          </h1>
+          <Reveal delay={0.3}>
             <p className="hero-intro">
               {t("Soy")} <strong>Juan Pablo Orihuela.</strong>{" "}
               {t(
@@ -146,12 +152,14 @@ export default function Hero() {
               )}
             </p>
           </Reveal>
-          <Reveal delay={0.2} className="hero-ctas">
-            <Button asChild className="primary-cta">
-              <a href="#proyectos">
-                {t("Explorar mi trabajo")} <ArrowDown size={17} />
-              </a>
-            </Button>
+          <Reveal delay={0.4} className="hero-ctas">
+            <Magnetic>
+              <Button asChild className="primary-cta">
+                <a href="#proyectos">
+                  {t("Explorar mi trabajo")} <ArrowDown size={17} />
+                </a>
+              </Button>
+            </Magnetic>
             <a
               className="text-link"
               href="/JuanPabloOrihuela_CV.pdf"
@@ -162,7 +170,7 @@ export default function Hero() {
               {t("Descargar CV")} <Download size={16} />
             </a>
           </Reveal>
-          <Reveal delay={0.25}>
+          <Reveal delay={0.5}>
             <a className="hero-game-link" href="#laboratorio">
               <Gamepad2 size={18} aria-hidden="true" />
               <span>{t("Mi lado gamer, en código")} <small>{t("Ver reel · 43 s")}</small></span>
@@ -170,7 +178,7 @@ export default function Hero() {
             </a>
           </Reveal>
         </div>
-        <Reveal className="hero-visual-wrap" delay={0.15}>
+        <Reveal className="hero-visual-wrap" delay={0.25}>
           <HeroVisual scrollProgress={scrollYProgress} />
         </Reveal>
       </div>
@@ -184,9 +192,22 @@ export default function Hero() {
           {t("UN POCO DE SCROLL, MUCHO QUE VER")} <ArrowDown size={14} />
         </a>
       </Reveal>
+      </div>
     </section>
   );
 }
+
+const tools = [
+  { name: "React", icon: <Code2 /> },
+  { name: "Next.js", className: "next-logo" },
+  { name: "TypeScript", icon: <b className="ts-logo">TS</b> },
+  { name: "Tailwind CSS" },
+  { name: "Motion", icon: <i />, className: "motion-logo" },
+  { name: "Three.js" },
+  { name: "Figma", icon: <Figma aria-hidden="true" /> },
+  { name: "SwiftUI" },
+  { name: "Unity / C#", icon: <Gamepad2 /> },
+];
 
 export function StackStrip() {
   const { t } = useLanguage();
@@ -194,24 +215,16 @@ export function StackStrip() {
     <div className="stack-strip">
       <div className="section-shell stack-inner">
         <span className="eyebrow">{t("MI CAJA DE HERRAMIENTAS")}</span>
-        <div className="stack-names">
-          <span>
-            <Code2 /> React
-          </span>
-          <span className="next-logo">Next.js</span>
-          <span>
-            <b className="ts-logo">TS</b> TypeScript
-          </span>
-          <span>
-            <Figma aria-hidden="true" /> Figma
-          </span>
-          <span className="motion-logo">
-            <i /> Motion
-          </span>
-          <span>
-            Unity / C# <ArrowUpRight size={16} />
-          </span>
-        </div>
+        <Marquee className="stack-marquee" speed={38}>
+          {tools.map((tool) => (
+            <span key={tool.name} className="stack-item">
+              <span className={tool.className}>
+                {tool.icon} {tool.name}
+              </span>
+              <Asterisk className="stack-star" />
+            </span>
+          ))}
+        </Marquee>
       </div>
     </div>
   );

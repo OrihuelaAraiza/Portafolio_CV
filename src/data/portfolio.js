@@ -335,5 +335,31 @@ export const experiments = [
     href: "https://github.com/OrihuelaAraiza/SoundVision",
     icon: "audio",
   },
-
+  {
+    number: "02",
+    name: "Visuaid",
+    type: "iOS · SwiftUI · Vision",
+    description:
+      "Un asistente visual que detecta color, texto y formas con la cámara y los lee en voz alta. Incluye filtros de corrección para daltonismo.",
+    href: "https://github.com/OrihuelaAraiza/VisualAid",
+    icon: "eye",
+  },
+  {
+    number: "03",
+    name: "B-lance",
+    type: "Web · React · TypeScript · Motion",
+    description:
+      "Maqueta de contención emocional para jóvenes: un check-in de dos minutos, rutas de autorregulación y una pausa sensorial guiada. Un prototipo, no una herramienta clínica.",
+    href: "https://github.com/OrihuelaAraiza/B-Lance",
+    icon: "pulse",
+  },
+  {
+    number: "04",
+    name: "AR Labs",
+    type: "Unity · AR Foundation · ARKit",
+    description:
+      "Laboratorios de realidad aumentada para iPad: seguimiento simultáneo de imágenes, con un objeto 3D anclado a cada marcador.",
+    href: "https://github.com/OrihuelaAraiza/VR",
+    icon: "ar",
+  },
 ];

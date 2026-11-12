@@ -1,0 +1,809 @@
+/* ── Capa visual de noviembre de 2026 ─────────────────────────────────────
+   Movimiento, textura y narrativa sobre el sistema editorial existente. Los
+   tokens, la tipografía y la retícula siguen viniendo de index.css; aquí solo
+   vive lo nuevo. Todo lo que se mueve se apaga con data-motion="reduced". */
+
+/* Grano de papel: un ruido fijo y muy tenue que quita lo plano a los fondos. */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  opacity: 0.055;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+[data-theme="dark"] body::after {
+  opacity: 0.09;
+  filter: invert(1);
+}
+
+/* ── Titulares por líneas ─────────────────────────────────────────────── */
+.line {
+  display: block;
+  overflow: hidden;
+  padding: 0.12em 0.08em 0.16em;
+  margin: -0.12em -0.08em -0.16em;
+}
+.line-inner {
+  display: block;
+  transform-origin: 0 100%;
+}
+.magnetic {
+  display: inline-flex;
+}
+
+/* ── Campo tramado (WebGL) ────────────────────────────────────────────── */
+.dither-field {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+.dither-field canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  transition: opacity 1.4s ease;
+}
+.dither-field canvas[data-rendered] {
+  opacity: 1;
+}
+
+/* ── Portada ──────────────────────────────────────────────────────────── */
+.hero {
+  position: relative;
+  overflow: clip;
+}
+.hero-shell {
+  position: relative;
+  z-index: 1;
+}
+.hero-field {
+  --field-ink: #20211f;
+  --field-accent: #d84619;
+  --field-alpha: 0.27;
+  --field-density: 0.92;
+  --field-scale: 1.15;
+  --field-cell: 6;
+  --field-dot: 0.5;
+  mask-image: radial-gradient(125% 105% at 92% 2%, #000 14%, transparent 74%);
+}
+[data-theme="dark"] .hero-field {
+  --field-ink: #efece4;
+  --field-accent: #ff996e;
+  --field-alpha: 0.2;
+}
+/* La etiqueta de edición queda sobre el campo: una pastilla de papel la
+   mantiene legible. */
+.hero-edition {
+  padding: 3px 9px;
+  margin-right: -9px;
+  border-radius: 3px;
+  background: var(--paper);
+}
+.hero-copy h1 .line {
+  padding-right: 0.12em;
+  margin-right: -0.12em;
+}
+.hero-visual {
+  container-type: inline-size;
+  box-shadow: 0 30px 70px -45px #2a2f2466;
+}
+[data-theme="dark"] .hero-visual {
+  box-shadow: 0 30px 70px -45px #000;
+}
+/* `translate` y `scale` son propiedades propias: se componen con el transform
+   que Motion escribe para el parallax sin pisarlo. */
+@keyframes drift {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 -1.6cqi;
+  }
+}
+@keyframes cursor-tour {
+  0%,
+  12%,
+  92%,
+  100% {
+    translate: 0 0;
+    scale: 1;
+  }
+  30%,
+  36% {
+    translate: -34cqi 13cqi;
+    scale: 1;
+  }
+  33% {
+    translate: -34cqi 13cqi;
+    scale: 0.82;
+  }
+  58%,
+  72% {
+    translate: -56cqi 44cqi;
+    scale: 1;
+  }
+  65% {
+    translate: -56cqi 44cqi;
+    scale: 0.82;
+  }
+}
+@keyframes chip-pop {
+  0%,
+  62%,
+  100% {
+    scale: 1;
+  }
+  66% {
+    scale: 1.06;
+  }
+}
+@keyframes ping {
+  0% {
+    box-shadow: 0 0 0 0 #5375536e;
+  }
+  100% {
+    box-shadow: 0 0 0 9px #53755300;
+  }
+}
+@keyframes nudge {
+  0%,
+  100% {
+    translate: 0 0;
+  }
+  50% {
+    translate: 0 4px;
+  }
+}
+@keyframes spin {
+  to {
+    rotate: 360deg;
+  }
+}
+@keyframes blink {
+  50% {
+    opacity: 0.15;
+  }
+}
+.window-back {
+  animation: drift 7.5s ease-in-out infinite;
+}
+.window-front {
+  animation: drift 9s ease-in-out -3s infinite;
+}
+.cursor-chip {
+  animation: cursor-tour 13s cubic-bezier(0.65, 0, 0.35, 1) 2s infinite;
+}
+.design-chip {
+  animation: chip-pop 13s ease-in-out 2s infinite;
+}
+.status-dot {
+  animation: ping 2.2s ease-out infinite;
+}
+.scroll-cue svg {
+  animation: nudge 1.9s ease-in-out infinite;
+}
+.primary-cta {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.primary-cta::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: var(--ink);
+  transform: translateY(102%);
+  transition: transform 0.55s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.primary-cta:hover::before {
+  transform: none;
+}
+.primary-cta:hover,
+[data-theme="dark"] .primary-cta:hover {
+  color: var(--paper);
+}
+.primary-cta svg {
+  transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.primary-cta:hover svg {
+  transform: translateY(3px);
+}
+
+/* ── Cinta de herramientas ────────────────────────────────────────────── */
+.marquee {
+  overflow: hidden;
+  min-width: 0;
+}
+.marquee-track {
+  display: flex;
+  width: max-content;
+  will-change: transform;
+}
+.marquee-copy {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+}
+.marquee-static .marquee-copy {
+  flex-wrap: wrap;
+  row-gap: 14px;
+}
+.stack-marquee {
+  flex: 1;
+  color: var(--subtle);
+  mask-image: linear-gradient(90deg, transparent, #000 7%, #000 93%, transparent);
+}
+.stack-marquee.marquee-static {
+  mask-image: none;
+}
+.stack-item,
+.stack-item > span {
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+}
+.stack-item {
+  gap: 30px;
+  padding-right: 30px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.stack-item > span {
+  gap: 9px;
+}
+.stack-item svg {
+  width: 20px;
+  height: 20px;
+}
+.stack-item .stack-star {
+  width: 11px;
+  height: 11px;
+  color: var(--orange);
+  stroke-width: 2;
+}
+
+/* ── Prólogo ──────────────────────────────────────────────────────────── */
+.prologue {
+  padding-top: 118px;
+  padding-bottom: 28px;
+}
+.prologue-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line);
+}
+.prologue-note {
+  color: var(--metadata);
+}
+.prologue-note svg {
+  width: 12px;
+  height: 12px;
+  color: var(--orange);
+  stroke-width: 2;
+  animation: spin 16s linear infinite;
+}
+.prologue-statement {
+  max-width: 1180px;
+  margin: 58px 0 66px;
+  font-family: var(--display);
+  font-size: clamp(29px, 4.35vw, 62px);
+  font-weight: 500;
+  line-height: 1.17;
+  letter-spacing: -0.052em;
+  text-wrap: pretty;
+}
+.prologue-accent {
+  font-family: Georgia, "Times New Roman", serif;
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.045em;
+  color: var(--orange);
+}
+.prologue-facts {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  margin: 0;
+  border-top: 1px solid var(--line);
+}
+.prologue-facts > div {
+  display: flex;
+  align-items: baseline;
+  gap: 18px;
+  padding: 24px 24px 0;
+  border-left: 1px solid var(--line);
+}
+.prologue-facts > div:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+.prologue-facts dt {
+  font-family: var(--display);
+  font-size: 46px;
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  font-variant-numeric: tabular-nums;
+}
+.prologue-facts dd {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.prologue-facts small {
+  display: block;
+  margin-top: 6px;
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--metadata);
+}
+
+/* ── Tarjetas de proyecto: inclinación y foco de luz ──────────────────── */
+.project-art {
+  --mx: 50%;
+  --my: 50%;
+  --rx: 0deg;
+  --ry: 0deg;
+}
+.project-glow {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  opacity: 0;
+  background: radial-gradient(
+    420px circle at var(--mx) var(--my),
+    #ffffff66,
+    transparent 62%
+  );
+  transition: opacity 0.45s;
+}
+@media (hover: hover) {
+  .project-art:hover .project-glow {
+    opacity: 1;
+  }
+  .project-art:hover .project-browser {
+    transform: perspective(1100px) translateY(-9px) rotateX(var(--rx))
+      rotateY(var(--ry)) scale(1.03);
+    transition-duration: 0.4s;
+    transition-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+    box-shadow: 0 34px 50px -18px #1e2a1c47;
+  }
+  .phone-pair {
+    transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .project-art:hover .phone-pair {
+    transform: perspective(1100px) rotateX(var(--rx)) rotateY(var(--ry));
+  }
+}
+
+/* ── Capítulo de videojuegos: una banda nocturna ──────────────────────────
+   La sección redefine los tokens del sistema con la paleta oscura: todo lo que
+   hay dentro —titulares, tabs, enlaces— cambia sin reglas propias. Entra y
+   sale con un borde tramado, el mismo recurso del fondo de la portada. */
+.lab-section {
+  position: relative;
+  --background: 150 5% 6%;
+  --foreground: 45 15% 92%;
+  --primary: 17 96% 68%;
+  --primary-foreground: 12 30% 10%;
+  --secondary: 140 5% 14%;
+  --secondary-foreground: 45 15% 92%;
+  --muted: 150 4% 17%;
+  --muted-foreground: 55 5% 66%;
+  --accent: 140 5% 19%;
+  --accent-foreground: 45 15% 92%;
+  --border: 130 4% 24%;
+  --input: 130 4% 29%;
+  --ring: 17 96% 68%;
+  --paper: #101311;
+  --ink: #efece4;
+  --subtle: #afb2a8;
+  --line: #2b302b;
+  --line-strong: #535b4e;
+  --surface: #181c18;
+  --metadata: #abb1a3;
+  --orange: #ff996e;
+  --accent-ink: #ffa27b;
+  background: var(--paper);
+  color: var(--ink);
+  /* `clip` solo en horizontal: los bordes tramados salen por arriba y abajo. */
+  overflow-x: clip;
+}
+[data-theme="dark"] .lab-section {
+  --paper: #0a0c0b;
+  --surface: #131613;
+  --line: #262b26;
+}
+.lab-section::before,
+.lab-section::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  height: 18px;
+  z-index: 1;
+  background: var(--paper);
+  mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='18' shape-rendering='crispEdges'%3E%3Cpath d='M6 0h6v6H6zM0 6h6v6H0zM12 6h6v6h-6zM0 12h12v6H0zM18 12h6v6h-6z'/%3E%3C/svg%3E")
+    repeat-x;
+}
+.lab-section::before {
+  bottom: 100%;
+}
+.lab-section::after {
+  top: 100%;
+  transform: scaleY(-1);
+}
+.lab-section .reel-tabs button[data-state="active"] {
+  background: #efece4;
+  color: #171b16;
+}
+.reel-screen {
+  border-color: #ffffff21;
+  box-shadow:
+    0 50px 90px -50px #000,
+    0 0 0 6px #ffffff06;
+}
+.reel-crt,
+.reel-brackets {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  transition: opacity 0.4s;
+}
+.reel-crt {
+  background:
+    repeating-linear-gradient(0deg, transparent 0 2px, #0000002e 2px 3px),
+    radial-gradient(120% 95% at 50% 50%, transparent 58%, #000000a6 100%);
+}
+.reel-brackets i {
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  border: solid #ffab8b;
+  border-width: 2px 0 0 2px;
+}
+.reel-brackets i:nth-child(1) {
+  top: 14px;
+  left: 14px;
+}
+.reel-brackets i:nth-child(2) {
+  top: 14px;
+  right: 14px;
+  rotate: 90deg;
+}
+.reel-brackets i:nth-child(3) {
+  bottom: 14px;
+  right: 14px;
+  rotate: 180deg;
+}
+.reel-brackets i:nth-child(4) {
+  bottom: 14px;
+  left: 14px;
+  rotate: 270deg;
+}
+.reel-screen.is-playing .reel-crt,
+.reel-screen.is-playing .reel-brackets {
+  opacity: 0;
+}
+.reel-hud {
+  position: absolute;
+  top: 30px;
+  left: 44px;
+  right: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  color: #e2e4df;
+}
+.reel-hud-live {
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+.reel-hud-live i {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #ff5a3c;
+  animation: blink 1.5s steps(1) infinite;
+}
+.reel-hud-start {
+  color: #ffab8b;
+  animation: blink 1.15s steps(1) infinite;
+}
+.reel-corner {
+  left: 44px;
+  bottom: 34px;
+}
+.experiments-head {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 74px;
+  color: var(--metadata);
+}
+.experiments {
+  margin-top: 16px;
+}
+.experiment {
+  position: relative;
+  isolation: isolate;
+}
+.experiment::before {
+  content: "";
+  position: absolute;
+  inset: 0 -22px;
+  z-index: -1;
+  border-radius: 6px;
+  background: var(--surface);
+  opacity: 0;
+  transform: scaleY(0.82);
+  transition:
+    opacity 0.3s,
+    transform 0.45s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.experiment:hover::before {
+  opacity: 1;
+  transform: none;
+}
+.experiment-symbol {
+  border: 1px solid #ffffff14;
+}
+.experiment-symbol.eye {
+  background: #1d2e29;
+  color: #a9e0c7;
+}
+.experiment-symbol.pulse {
+  background: #33222a;
+  color: #f2b6c6;
+}
+.experiment-symbol.ar {
+  background: #2f2b1c;
+  color: #ead9a0;
+}
+.experiment-link svg {
+  transition: transform 0.35s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.experiment:hover .experiment-link svg {
+  transform: translate(4px, -4px);
+}
+
+/* ── Sobre mí: retrato con parallax y línea de tiempo ─────────────────── */
+.experience-list {
+  position: relative;
+  padding-left: 28px;
+}
+.experience-rail {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 4px;
+  width: 1px;
+  background: var(--line-strong);
+}
+.experience-rail > span {
+  display: block;
+  width: 3px;
+  height: 100%;
+  margin-left: -1px;
+  background: var(--orange);
+  transform-origin: top;
+}
+.experience-list > div {
+  position: relative;
+  transition: padding 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+.experience-list > div::before {
+  content: "";
+  position: absolute;
+  left: -28px;
+  top: 50%;
+  width: 9px;
+  height: 9px;
+  margin-top: -5px;
+  border: 2px solid var(--orange);
+  border-radius: 50%;
+  background: var(--surface);
+  transition: background 0.3s;
+}
+.experience-list > div:hover {
+  padding-left: 8px;
+}
+.experience-list > div:hover::before {
+  background: var(--orange);
+}
+
+/* ── Contacto ─────────────────────────────────────────────────────────── */
+.contact-section {
+  position: relative;
+  overflow: clip;
+  padding-top: 0;
+}
+.contact-field {
+  --field-ink: #7d2409;
+  --field-accent: #ffd2ad;
+  --field-alpha: 0.5;
+  --field-glow: 1.15;
+  --field-density: 0.8;
+  --field-scale: 1;
+  --field-cell: 6;
+  --field-dot: 0.5;
+  mask-image: linear-gradient(#000 0%, #000 30%, transparent 78%);
+}
+[data-theme="dark"] .contact-field {
+  --field-ink: #5c1d0d;
+}
+.contact-shell {
+  position: relative;
+  z-index: 1;
+}
+.contact-marquee {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 58px;
+  padding: 30px 0 34px;
+  border-bottom: 1px solid #ffffff40;
+  font-family: var(--display);
+  font-size: clamp(58px, 9.2vw, 138px);
+  font-weight: 500;
+  line-height: 1;
+  letter-spacing: -0.06em;
+  white-space: nowrap;
+  color: transparent;
+  -webkit-text-stroke: 1px #fff5e9b3;
+}
+.contact-marquee span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.32em;
+  padding-right: 0.32em;
+}
+.contact-marquee svg {
+  width: 0.46em;
+  height: 0.46em;
+  color: #fff5e9;
+  stroke-width: 1;
+}
+
+/* ── Cambio de tema: el nuevo se abre en círculo desde el control ─────── */
+@keyframes theme-reveal {
+  from {
+    clip-path: circle(0 at var(--vt-x) var(--vt-y));
+  }
+  to {
+    clip-path: circle(150vmax at var(--vt-x) var(--vt-y));
+  }
+}
+:root[data-vt="theme"]::view-transition-old(root) {
+  animation: none;
+  z-index: 1;
+}
+:root[data-vt="theme"]::view-transition-new(root) {
+  animation: theme-reveal 0.75s cubic-bezier(0.65, 0, 0.35, 1);
+  z-index: 2;
+}
+
+/* ── Ajustes por tamaño ───────────────────────────────────────────────── */
+@media (max-width: 1150px) {
+  .stack-item {
+    gap: 24px;
+    padding-right: 24px;
+    font-size: 14px;
+  }
+}
+@media (max-width: 900px) {
+  .hero-field {
+    mask-image: radial-gradient(150% 62% at 100% 0%, #000 10%, transparent 74%);
+  }
+  .prologue {
+    padding-top: 84px;
+  }
+  .prologue-statement {
+    margin: 44px 0 50px;
+  }
+  .prologue-facts dt {
+    font-size: 38px;
+  }
+  .prologue-facts > div {
+    flex-direction: column;
+    gap: 10px;
+    padding: 20px 16px 0;
+  }
+  .reel-hud,
+  .reel-corner {
+    left: 30px;
+    right: 30px;
+  }
+  .reel-hud {
+    top: 24px;
+  }
+  .reel-corner {
+    bottom: 26px;
+  }
+  .experiments-head {
+    margin-top: 56px;
+  }
+}
+@media (max-width: 680px) {
+  .stack-item {
+    gap: 20px;
+    padding-right: 20px;
+    font-size: 13px;
+  }
+  .stack-item svg {
+    width: 17px;
+    height: 17px;
+  }
+  .prologue {
+    padding-top: 66px;
+    padding-bottom: 10px;
+  }
+  .prologue-note {
+    display: none;
+  }
+  .prologue-statement {
+    margin: 34px 0 40px;
+    letter-spacing: -0.045em;
+  }
+  .prologue-facts {
+    grid-template-columns: 1fr;
+  }
+  .prologue-facts > div,
+  .prologue-facts > div:first-child {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 18px;
+    padding: 16px 0;
+    border-left: 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .prologue-facts dt {
+    min-width: 58px;
+  }
+  .reel-hud-start,
+  .reel-brackets {
+    display: none;
+  }
+  .reel-hud,
+  .reel-corner {
+    left: 18px;
+    right: 18px;
+  }
+  .reel-hud {
+    top: 16px;
+    font-size: 9px;
+  }
+  .experiments-head {
+    margin-top: 44px;
+  }
+  .experiment::before {
+    inset: 0 -10px;
+  }
+  .hero-field {
+    --field-alpha: 0.2;
+  }
+  .experience-list {
+    padding-left: 24px;
+  }
+  .experience-list > div::before {
+    left: -24px;
+  }
+  .contact-marquee {
+    margin-bottom: 40px;
+    padding: 22px 0 24px;
+  }
+}

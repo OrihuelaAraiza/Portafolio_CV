@@ -8,7 +8,12 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip";
 import { profile } from "@/data/portfolio";
+import DitherField from "@/components/fx/DitherField";
+import Asterisk from "./Asterisk";
 import ContactForm from "./ContactForm";
+import Line from "./Line";
+import Magnetic from "./Magnetic";
+import Marquee from "./Marquee";
 import Reveal from "./Reveal";
 
 export default function Contact() {
@@ -28,7 +33,15 @@ export default function Contact() {
   }
   return (
     <section id="contacto" className="contact-section">
-      <div className="section-shell">
+      <DitherField className="contact-field" />
+      <Marquee className="contact-marquee" speed={70} direction={1}>
+        {["Hablemos", "Let’s talk", "Construyamos algo"].map((phrase) => (
+          <span key={phrase} aria-hidden="true">
+            {phrase} <Asterisk />
+          </span>
+        ))}
+      </Marquee>
+      <div className="section-shell contact-shell">
         <Reveal>
           <div className="contact-kicker">
             <span className="eyebrow">{t("¿TIENES UNA IDEA EN MENTE?")}</span>
@@ -36,13 +49,18 @@ export default function Contact() {
           </div>
           <a className="contact-title" href={`mailto:${profile.email}`}>
             <h2>
-              {t("Hagamos algo")}
-              <br />
-              <span>{t("que se sienta diferente.")}</span>
+              <Line>{t("Hagamos algo")}</Line>{" "}
+              <Line delay={0.1}>
+                <span className="contact-serif">
+                  {t("que se sienta diferente.")}
+                </span>
+              </Line>
             </h2>
-            <span className="contact-arrow">
-              <ArrowUpRight strokeWidth={1} />
-            </span>
+            <Magnetic strength={0.35}>
+              <span className="contact-arrow">
+                <ArrowUpRight strokeWidth={1} />
+              </span>
+            </Magnetic>
           </a>
           <div className="contact-bottom">
             <p>

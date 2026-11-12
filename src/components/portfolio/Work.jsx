@@ -6,6 +6,7 @@ import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { profile } from "@/data/portfolio";
+import Line from "./Line";
 import Reveal from "./Reveal";
 
 const filters = [
@@ -17,6 +18,24 @@ const filters = [
 ];
 const matches = (project, filter) =>
   filter === "all" || (filter === "featured" ? project.featured : project.category === filter);
+// La portada se inclina hacia el puntero y un foco de luz lo sigue. Todo va por
+// variables CSS sobre el propio botón: mover el ratón no vuelve a renderizar.
+function tilt(event) {
+  if (event.pointerType !== "mouse") return;
+  const art = event.currentTarget;
+  const box = art.getBoundingClientRect();
+  const x = (event.clientX - box.left) / box.width;
+  const y = (event.clientY - box.top) / box.height;
+  art.style.setProperty("--mx", `${(x * 100).toFixed(1)}%`);
+  art.style.setProperty("--my", `${(y * 100).toFixed(1)}%`);
+  art.style.setProperty("--ry", `${((x - 0.5) * 9).toFixed(2)}deg`);
+  art.style.setProperty("--rx", `${((0.5 - y) * 7).toFixed(2)}deg`);
+}
+function settle(event) {
+  event.currentTarget.style.setProperty("--rx", "0deg");
+  event.currentTarget.style.setProperty("--ry", "0deg");
+}
+
 function ProjectCard({ project, onOpen, index }) {
   const { t } = useLanguage();
   const { motionDisabled: reduce } = useAppearance();
@@ -32,6 +51,9 @@ function ProjectCard({ project, onOpen, index }) {
         variant="ghost"
         className={`project-art ${project.theme} ${mobile ? "mobile-art" : ""}`}
         onClick={(event) => onOpen(project, event.currentTarget)}
+        onPointerMove={reduce ? undefined : tilt}
+        onPointerLeave={reduce ? undefined : settle}
+        data-cursor={t("Ver")}
         data-project-id={project.id}
         aria-label={t("Ver proyecto {title}", { title: project.title })}
       >
@@ -39,6 +61,7 @@ function ProjectCard({ project, onOpen, index }) {
           <span>{project.categoryLabel}</span>
           <span>{project.year}</span>
         </span>
+        <span className="project-glow" aria-hidden="true" />
         {mobile ? (
           <div className="phone-pair">
             <div className="phone-frame phone-secondary">
@@ -130,10 +153,11 @@ export default function Work({ onOpen }) {
               {t("TRABAJO SELECCIONADO")}
             </span>
             <h2>
-              {t("Del concepto")}
-              <br />
-              {t("a la")}{" "}
-              <span className="serif-word">{t("experiencia.")}</span>
+              <Line>{t("Del concepto")}</Line>{" "}
+              <Line delay={0.1}>
+                {t("a la")}{" "}
+                <span className="serif-word">{t("experiencia.")}</span>
+              </Line>
             </h2>
           </div>
           <p>

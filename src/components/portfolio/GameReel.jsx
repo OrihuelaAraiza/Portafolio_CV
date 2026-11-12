@@ -74,7 +74,10 @@ export default function GameReel() {
           {t("Explorar el código")} <ArrowUpRight size={17} />
         </a>
       </div>
-      <div className="reel-screen" id="game-reel-player">
+      <div
+        className={`reel-screen ${started ? "is-playing" : ""}`}
+        id="game-reel-player"
+      >
         {started ? (
           <video
             ref={video}
@@ -95,6 +98,7 @@ export default function GameReel() {
             variant="ghost"
             className="reel-cover"
             onClick={() => setStarted(true)}
+            data-cursor="Play"
             aria-label={t("Reproducir {clip} de We Can Fix This", {
               clip: t(clip.label).toLowerCase(),
             })}
@@ -117,8 +121,21 @@ export default function GameReel() {
             <span className="reel-corner">
               {t("UN MUNDO QUE RESPONDE A LO QUE HACES.")}
             </span>
+            <span className="reel-hud" aria-hidden="true">
+              <span className="reel-hud-live">
+                <i /> {clip.id === "trailer" ? "TRAILER" : "GAMEPLAY"} · P1–P4
+              </span>
+              <span className="reel-hud-start">PRESS START</span>
+            </span>
           </Button>
         )}
+        <span className="reel-crt" aria-hidden="true" />
+        <span className="reel-brackets" aria-hidden="true">
+          <i />
+          <i />
+          <i />
+          <i />
+        </span>
         {failed && (
           <div className="video-error" role="alert">
             <p>{t("No se pudo reproducir el video.")}</p>

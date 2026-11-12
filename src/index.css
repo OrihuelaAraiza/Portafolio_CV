@@ -1131,7 +1131,7 @@ h3 {
   font-weight: 450;
   line-height: 1.2;
 }
-.contact-title h2 span {
+.contact-title h2 .contact-serif {
   font-family: Georgia, "Times New Roman", serif;
   font-style: italic;
   font-weight: 400;
@@ -2203,7 +2203,7 @@ h3 {
     letter-spacing: -0.06em;
     max-width: 95%;
   }
-  .contact-title h2 span {
+  .contact-title h2 .contact-serif {
     display: block;
     max-width: 340px;
   }

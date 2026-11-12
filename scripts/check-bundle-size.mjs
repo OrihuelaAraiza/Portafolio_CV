@@ -14,7 +14,13 @@ const DIST = resolve(process.cwd(), "dist");
 // ES/EN adds a complete local translation catalog (about 8 kB gzip).
 // Both languages are bundled so switching also works offline and never resets
 // the form or gallery while waiting for another language download.
-const BUDGET = { js: 175 * 1024, css: 20 * 1024 };
+//
+// Noviembre de 2026: la capa visual (prólogo, cinta, titulares por líneas,
+// inclinación de tarjetas, banda de videojuegos) sube el límite de JS de 175 a
+// 181 kB y el de CSS de 20 a 24 kB. Lo pesado de esa capa no entra en esta
+// cuenta porque llega por import(): OGL y el shader del fondo (~16 kB) y Lenis
+// con el cursor y el riel de capítulos (~7 kB).
+const BUDGET = { js: 181 * 1024, css: 24 * 1024 };
 
 const html = readFileSync(join(DIST, "index.html"), "utf8");
 const referenced = new Set(
