@@ -20,7 +20,6 @@ export default function IOSShowcase({ onOpen }) {
   const [decision, setDecision] = useState("storage");
   const [comparisonLarge, setComparisonLarge] = useState(false);
   const screenRef = useRef(null);
-  const decisionRef = useRef(null);
   const comparisonRef = useRef(null);
   const local = (pair) => pair[language === "en" ? 1 : 0];
   const current = chapters.find((item) => item.id === chapter);
@@ -246,16 +245,7 @@ export default function IOSShowcase({ onOpen }) {
             ])}
           </h3>
         </div>
-        <Tabs
-          value={decision}
-          onValueChange={(value) =>
-            revealChange(() => setDecision(value), {
-              target: decisionRef.current,
-              origin: document.activeElement,
-              key: `decision-${value}`,
-            })
-          }
-        >
+        <Tabs value={decision} onValueChange={setDecision}>
           <TabsList
             className="ios-decision-tabs"
             aria-label={local([
@@ -269,7 +259,7 @@ export default function IOSShowcase({ onOpen }) {
               </TabsTrigger>
             ))}
           </TabsList>
-          <div ref={decisionRef} className="ios-decision-panels">
+          <div className="ios-decision-panels">
             {decisions.map((item) => (
               <TabsContent
                 className="ios-decision"

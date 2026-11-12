@@ -258,6 +258,24 @@
 .ios-decision[data-state="inactive"] {
   display: none;
 }
+/* Text changes immediately. Animate only the incoming panel so transparent
+   areas never retain a snapshot of the previous explanation or code. */
+.ios-decision[data-state="active"] {
+  animation: code-panel-enter 160ms ease-out;
+}
+@keyframes code-panel-enter {
+  from {
+    opacity: 0.8;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+:root[data-motion="reduced"] .ios-decision {
+  animation: none;
+}
 .ios-decision > div > p {
   font-size: 14px;
   color: var(--subtle);
@@ -429,6 +447,9 @@
   }
 }
 @media (prefers-reduced-motion: reduce) {
+  .ios-decision {
+    animation: none;
+  }
   .ios-section * {
     scroll-behavior: auto;
   }

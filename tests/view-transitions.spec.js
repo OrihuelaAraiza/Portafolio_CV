@@ -94,6 +94,56 @@ test("no anima cuando el visitante pausa el movimiento", async ({ page }) => {
 test.describe("revelados de contenido", () => {
   test.use({ reducedMotion: "no-preference" });
 
+  test("cambia código rápidamente sin conservar capturas del texto anterior", async ({
+    page,
+  }) => {
+    await page.goto("/#ios");
+    const persistence = page.getByRole("tab", {
+      name: "Persistencia",
+      exact: true,
+    });
+    await persistence.scrollIntoViewIfNeeded();
+    await persistence.focus();
+    await page.evaluate(() => {
+      const start = document.startViewTransition.bind(document);
+      window.__codeSnapshots = 0;
+      document.startViewTransition = (update) => {
+        window.__codeSnapshots += 1;
+        return start(update);
+      };
+    });
+
+    for (const [tab, file] of [
+      ["Accesibilidad", "ProjectJourneyView.swift"],
+      ["Movimiento", "LoopyView.swift"],
+      ["Persistencia", "LoopStore.swift"],
+    ]) {
+      await page.keyboard.press("ArrowRight");
+      await expect(
+        page.getByRole("tab", { name: tab, exact: true }),
+      ).toBeFocused();
+      // Check the first paint after selection, before a delayed transition
+      // could eventually make an otherwise stale selection look correct.
+      const frame = await page.evaluate(
+        () =>
+          new Promise((resolve) => {
+            requestAnimationFrame(() =>
+              resolve({
+                selected: document.querySelector(
+                  '.ios-decision-tabs [aria-selected="true"]',
+                ).textContent,
+                files: [
+                  ...document.querySelectorAll(".ios-decision .xcode-file-tab"),
+                ].map((el) => el.textContent),
+                snapshots: window.__codeSnapshots,
+              }),
+            );
+          }),
+      );
+      expect(frame).toEqual({ selected: tab, files: [file], snapshots: 0 });
+    }
+  });
+
   test("idioma, filtros, código y capturas conservan selección y foco", async ({
     page,
   }) => {
@@ -137,7 +187,6 @@ test.describe("revelados de contenido", () => {
     await expect(page.locator("html")).not.toHaveAttribute("data-vt");
     expect(await page.evaluate(() => window.__reveals)).toEqual([
       "language",
-      "content",
       "content",
       "content",
     ]);
