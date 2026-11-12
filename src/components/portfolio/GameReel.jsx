@@ -83,6 +83,7 @@ export default function GameReel() {
             ref={video}
             key={clip.id}
             controls
+            onPlay={() => document.querySelectorAll("video").forEach((player) => { if (player !== video.current) player.pause(); })}
             autoPlay
             playsInline
             preload="none"
@@ -170,7 +171,7 @@ export default function GameReel() {
       </div>
       <p className="reel-description">
         {t(
-          "Cooperación, roles y estaciones de reparación en una nave en crisis. Videos del prototipo aportados en mayo de 2026; el repositorio documenta la evolución de sus sistemas.",
+          "Cooperación, roles y estaciones de reparación en una nave en crisis.",
         )}
       </p>
     </article>

@@ -81,7 +81,7 @@ test("las flechas mueven la selección antes de activar", async ({ page }) => {
   await expect(options.nth(1)).toHaveAttribute("aria-selected", "true");
   await page.keyboard.press("Enter");
 
-  await expect(page).toHaveURL(/project=brassbound/);
+  await expect(page).toHaveURL(/project=nexo-crm/);
 });
 
 test("una sección lleva el scroll a su destino", async ({ page }) => {

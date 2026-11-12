@@ -1,0 +1,38 @@
+.loop-case-study {
+  margin-block: 28px;
+  border-top: 1px solid var(--line);
+  padding-top: 24px;
+}
+.loop-case-study > h3 {
+  margin-bottom: 15px;
+  font-size: 20px;
+  letter-spacing: -0.03em;
+}
+.loop-case-study details {
+  padding-block: 12px;
+  border-bottom: 1px solid var(--line);
+}
+.loop-case-study summary {
+  cursor: pointer;
+  font-size: 13px;
+  padding-block: 8px;
+  line-height: 1.6;
+}
+.loop-case-study p {
+  font-size: 13px;
+  color: var(--subtle);
+  margin-block: 12px;
+}
+.loop-case-study pre {
+  overflow-x: auto;
+  padding: 18px;
+  border-radius: 6px;
+  background: #20231f;
+  color: #eae8dd;
+  font: 11px/1.85 var(--mono);
+}
+.loop-case-study .text-link {
+  margin-top: 16px;
+  font-size: 12px;
+  white-space: normal;
+}

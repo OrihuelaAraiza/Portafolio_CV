@@ -3766,3 +3766,28 @@ h3 {
 }
 
 .detail-links-top { margin-bottom: 24px; flex-wrap: wrap; }
+
+/* iOS and web share the same editorial identity. */
+.hero, .story-layout, .story-step, .prologue-statement { position: relative; }
+.native-hero { aspect-ratio: 1.02; }
+.native-web { width: 74%; top: 29%; left: -7%; transform: rotate(-7deg); opacity: .85; }
+.native-phone { position: absolute; top: 10%; right: 14%; width: 36%; border: 5px solid #252821; border-radius: 28px; overflow: hidden; transform: rotate(5deg); box-shadow: 12px 18px 30px #26271f30; z-index: 2; }
+.native-phone img { width: 100%; height: auto; }
+.native-phone a { display: block; }
+.native-phone a:focus-visible { outline-offset: -8px; }
+.native-app-label { position: absolute; left: 7%; top: 13%; display: flex; align-items: center; gap: 10px; z-index: 3; padding: 8px; border-radius: 8px; background: var(--canvas-surface); color: var(--ink); }
+.native-app-label img { border-radius: 10px; }
+.native-app-label strong { display: block; font-family: var(--display); font-size: 24px; letter-spacing: -.06em; }
+.native-app-label small { display: block; font-family: var(--mono); font-size: 8px; color: inherit; margin-top: 3px; }
+.native-hero .design-chip { bottom: 12%; left: 5%; }
+.ios-section { min-height: 820px; }
+.ios-loading { padding-top: 90px; color: var(--subtle); }
+.loop-card-actions { display: flex; gap: 24px; margin-top: 18px; flex-wrap: wrap; }
+.loop-card-actions .text-link { font-size: 12px; min-height: 44px; }
+.project-grid .loop-featured-card { grid-column: 1 / -1; }
+.project-grid .loop-featured-card .project-art { aspect-ratio: 2.8; }
+.loop-featured-card .phone-frame { width: 19%; }
+.loop-featured-card .phone-secondary { left: 30%; top: 18%; }
+.loop-featured-card .phone-primary { left: 51%; top: 11%; }
+@media(max-width: 1100px) { .desktop-nav { gap: 17px; }.native-app-label { left: 5%; }.native-app-label img { width: 36px; height: 36px; }.native-phone { right: 10%; width: 39%; border-radius: 22px; }.stack-names { flex-wrap: wrap; gap: 16px 25px; padding-block: 20px; } }
+@media(max-width: 700px) { .native-hero { aspect-ratio: 1.12; }.native-phone { width: 34%; right: 14%; border-radius: 23px; }.native-web { top: 28%; }.native-app-label { top: 14%; left: 6%; }.project-grid .loop-featured-card .project-art { aspect-ratio: 1.42; }.loop-featured-card .phone-frame { width: 30%; }.loop-featured-card .phone-secondary { left: 21%; top: 23%; }.loop-featured-card .phone-primary { left: 48%; top: 17%; }.typewriter-role { font-size: 11px; } }

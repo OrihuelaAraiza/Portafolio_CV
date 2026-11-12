@@ -1,0 +1,22 @@
+.ios-phone,
+.ios-lab-media,
+.detail-video {
+  position: relative;
+}
+.media-failure {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  background: var(--paper);
+  color: var(--ink);
+  font-size: 13px;
+  text-align: center;
+}
+.media-failure a {
+  text-decoration: underline;
+  margin-top: 16px;
+  line-height: 1.6;
+}

@@ -8,18 +8,18 @@ export const site = {
   url: "https://juanpabloorihuela.vercel.app",
   locale: "es_MX",
   lang: "es",
-  title: "Juan Pablo Orihuela — Frontend & Creative Developer",
+  title: "Juan Pablo Orihuela — iOS & Frontend Developer",
   description:
-    "Juan Pablo Orihuela, frontend developer en Ciudad de México. React, TypeScript y UI/UX con videojuegos como diferenciador: explora Nexo CRM, Brassbound, ROMI y prototipos en Unity.",
+    "Juan Pablo Orihuela, iOS y frontend developer en Ciudad de México. SwiftUI, SwiftData y React: explora Loop, productos web y videojuegos, con demos y decisiones de implementación.",
   // Texto de la tarjeta al compartir el enlace, distinto del meta description.
   social: {
-    title: "Juan Pablo Orihuela — Frontend & Creative Developer",
+    title: "Juan Pablo Orihuela — iOS & Frontend Developer",
     description:
-      "Interfaces con intención: frontend, visualización de datos y videojuegos. Casos de proyecto, demos y código de Juan Pablo Orihuela.",
+      "Apps iOS y experiencias web con intención. Loop, SwiftUI, React y videojuegos: proyectos, interacciones y código de Juan Pablo Orihuela.",
   },
   ogImage: "/og-image.png",
   ogImageSize: { width: 1200, height: 630 },
-  jobTitle: "Frontend & Creative Developer",
+  jobTitle: "iOS & Frontend Developer",
   city: "Ciudad de México",
   country: "MX",
   // Rutas que vercel.json redirige a la SPA y que la aplicación entiende.

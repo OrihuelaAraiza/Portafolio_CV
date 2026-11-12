@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import { useAppearance } from "@/hooks/useAppearance";
 
 const roles = [
-  "Frontend Developer & UI/UX",
-  "Unity · C# · Creative Development",
-  "CTO @ ROMI",
   "iOS Developer @ e-tribe",
+  "Frontend Developer & UI/UX",
+  "CTO @ ROMI",
+  "Unity · C# · Creative Development",
 ];
 
 export default function TypewriterRole() {

@@ -12,7 +12,7 @@ test("renders the portfolio, loads real captures, and has no overflow or runtime
   );
   await expect(
     page.getByRole("button", { name: /^Ver proyecto / }),
-  ).toHaveCount(4);
+  ).toHaveCount(5);
   for (const image of await page.locator("img").all()) {
     await image.scrollIntoViewIfNeeded();
     await expect

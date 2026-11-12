@@ -149,7 +149,7 @@ const previousProjects = [
     design:
       "Navegación por tareas, información del clima y acceso visible a la captura de imágenes y a la comunidad.",
     engineering:
-      "Interfaz nativa en SwiftUI. Proyecto realizado junto a José Manuel Amador García y Rodrigo López Moreno; las capturas muestran el prototipo existente.",
+      "Interfaz nativa en SwiftUI. Proyecto realizado junto a José Manuel Amador García y Rodrigo López Moreno.",
     status: "Prototipo iOS",
   },
   {
@@ -178,12 +178,12 @@ const previousProjects = [
     design:
       "Un dashboard con jerarquía entre clases, asistencias y calificaciones, acompañado de una identidad visual propia.",
     engineering:
-      "Vistas nativas y estados de interfaz en SwiftUI. Las imágenes pertenecen al prototipo incluido en el portafolio original.",
+      "Vistas nativas y estados de interfaz en SwiftUI.",
     status: "Prototipo iOS",
   },
 ];
 
-// Selection is editorial: frontend first, with game development as a differentiator.
+// Selection leads with native iOS, alongside web and game development.
 // Project dates identify documented versions, not employment start dates.
 const recentProjects = [
   {
@@ -199,7 +199,7 @@ const recentProjects = [
     stack: ["JavaScript", "Chart.js", "Gemini", "Cloudflare Workers"],
     cover: "/projects/nexo.webp",
     screens: [
-      { src: "/projects/nexo.webp", label: "Resumen de negocio con datos de ejercicio" },
+      { src: "/projects/nexo.webp", label: "Resumen de negocio" },
       { src: "/projects/nexo-clientes.webp", label: "Tabla de clientes y acciones de seguimiento" },
     ],
     live: "https://nexo-electrodomesticos-crm.jp-orihuela.chatgpt.site",
@@ -252,10 +252,10 @@ const recentProjects = [
     stack: ["Unity", "C#", "Input System", "URP"],
     cover: "/videos/trailer-poster.webp",
     screens: [
-      { src: "/videos/trailer-poster.webp", label: "Fotograma del tráiler aportado en mayo de 2026" },
-      { src: "/videos/gameplay-poster.webp", label: "Fotograma del gameplay aportado en mayo de 2026" },
+      { src: "/videos/trailer-poster.webp", label: "Tráiler de We Can Fix This" },
+      { src: "/videos/gameplay-poster.webp", label: "Gameplay de We Can Fix This" },
     ],
-    video: "/videos/we-can-fix-this-gameplay.mp4",
+    video: { src: "/videos/we-can-fix-this-gameplay.mp4", poster: "/videos/gameplay-poster.webp", label: "Gameplay de We Can Fix This", caption: "Gameplay · 02:21 · Demo sin audio · Mayo de 2026" },
     repo: "https://github.com/OrihuelaAraiza/We_Can_Fix_This_",
     description: "Prototipo cooperativo local para 1–4 jugadores. La tripulación de una nave averiada coordina roles y repara estaciones antes de que se agote la integridad de la nave.",
     challenge: "Hacer legibles los fallos simultáneos y conservar la selección de roles y dispositivos al pasar del lobby a la partida.",
@@ -274,20 +274,22 @@ const recentProjects = [
     categoryLabel: "App iOS · Producto personal",
     year: "2026",
     theme: "loop",
+    featured: true,
     role: "Desarrollo iOS · Diseño de interacción",
     stack: ["SwiftUI", "SwiftData", "StoreKit 2"],
     cover: "/projects/loop-detalle.webp",
     screens: [
-      { src: "/projects/loop-detalle.webp", label: "Detalle de proyecto con datos ficticios de prueba" },
-      { src: "/projects/loop-ruta.webp", label: "Recorrido e ideas con datos ficticios de prueba" },
+      { src: "/projects/loop-detalle.webp", label: "Detalle del proyecto" },
+      { src: "/projects/loop-ruta.webp", label: "Recorrido e ideas" },
     ],
     repo: "https://github.com/OrihuelaAraiza/loop",
+    video: { src: "/videos/loop-preview.mp4", poster: "/projects/loop/welcome-es-light-normal.webp", label: "Demo visual de Loop: bienvenida y recorrido", caption: "Bienvenida y recorrido · 20 s · Sin audio · Simulador, noviembre de 2026" },
     description: "Una app nativa para registrar intentos, fotos e ideas de proyectos personales y retomar donde te quedaste. El progreso se presenta como un recorrido, sin rachas ni presión por volver.",
     challenge: "Conservar el contexto de un proyecto entre sesiones y dar valor a avances pequeños sin convertirlos en una obligación.",
     design: "Bienvenida breve, pistas para retomar, comparación de fotos y una mascota con gestos. El movimiento y la personalización acompañan las acciones de la persona.",
     engineering: "SwiftUI y SwiftData, biblioteca local, respaldos con fotos y restauración validada. Incluye StoreKit 2, español e inglés y ajustes de accesibilidad.",
     proof: "Persistencia local, respaldos y una interacción con identidad propia.",
-    verification: "Capturas de simulador del Bloque I, con datos sintéticos. El repositorio documenta pruebas de interfaz, migración y restauración, con sus límites.",
+    verification: "Capturas y videos históricos del Bloque I con datos ficticios. Las suites originales se retiraron el 10 de noviembre; el README distingue esa evidencia de las comprobaciones acotadas posteriores.",
     scope: "En desarrollo, todavía sin publicación en App Store. Las capturas no acreditan el cierre de los requisitos de lanzamiento.",
     status: "iOS · En desarrollo",
   },
@@ -302,7 +304,7 @@ const recentProjects = [
     role: "Frontend · Prototipado de producto",
     stack: ["JavaScript", "CSS", "IndexedDB", "Vite"],
     cover: "/projects/romimente.webp",
-    screens: [{ src: "/projects/romimente.webp", label: "Dashboard del prototipo con perfiles ficticios" }],
+    screens: [{ src: "/projects/romimente.webp", label: "Panel de consulta" }],
     repo: "https://github.com/OrihuelaAraiza/romimente-amparo-demo",
     description: "Demo navegable para Clínica El Amparo que explora agenda, expedientes, recursos y un portal de paciente. Un ejercicio de arquitectura de información y continuidad entre perfiles.",
     challenge: "Organizar formularios extensos, documentos y seguimiento sin perder la relación entre una persona, su expediente y sus tareas.",
@@ -311,16 +313,16 @@ const recentProjects = [
     proof: "Flujos por perfil, formularios y persistencia del prototipo.",
     verification: "Pruebas de navegador disponibles en el repositorio. La captura procede de una sesión local con el perfil de demostración.",
     scope: "Solo datos ficticios. Sin autenticación real, servidor clínico ni sincronización; no es un sistema autorizado para atención clínica.",
-    status: "Demo con datos ficticios",
+    status: "Demo interactiva",
   },
 ];
 
 export const projects = [
+  recentProjects[3],
   recentProjects[0],
   recentProjects[1],
   { ...previousProjects[0], featured: true, proof: "Navegación multilingüe y componentes para un ecosistema de salud." },
   recentProjects[2],
-  recentProjects[3],
   recentProjects[4],
   ...previousProjects.slice(1),
 ].map((project, index) => ({ ...project, number: String(index + 1).padStart(2, "0") }));
@@ -349,7 +351,7 @@ export const experiments = [
     name: "B-lance",
     type: "Web · React · TypeScript · Motion",
     description:
-      "Maqueta de contención emocional para jóvenes: un check-in de dos minutos, rutas de autorregulación y una pausa sensorial guiada. Un prototipo, no una herramienta clínica.",
+      "Maqueta de contención emocional para jóvenes: un check-in de dos minutos, rutas de autorregulación y una pausa sensorial guiada.",
     href: "https://github.com/OrihuelaAraiza/B-Lance",
     icon: "pulse",
   },

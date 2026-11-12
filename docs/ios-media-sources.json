@@ -1,0 +1,132 @@
+[
+  {
+    "asset": "/projects/loop/welcome-es-light-normal.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-bienvenida-es-claro-normal.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/welcome-es-light-large.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-bienvenida-es-claro-AXXXL.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/welcome-es-dark-normal.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-bienvenida-es-oscuro-normal.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/welcome-es-dark-large.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-bienvenida-es-oscuro-AXXXL.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/welcome-en-light-normal.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-bienvenida-en-claro-normal.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/welcome-en-light-large.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-bienvenida-en-claro-AXXXL.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/welcome-en-dark-normal.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-bienvenida-en-oscuro-normal.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/welcome-en-dark-large.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-bienvenida-en-oscuro-AXXXL.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/resume-es-light-normal.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-retoma-es-claro-normal.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/resume-es-light-large.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-retoma-es-claro-AXXXL.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/resume-es-dark-normal.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-retoma-es-oscuro-normal.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/resume-es-dark-large.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-retoma-es-oscuro-AXXXL.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/resume-en-light-normal.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-retoma-en-claro-normal.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/resume-en-light-large.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-retoma-en-claro-AXXXL.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/resume-en-dark-normal.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-retoma-en-oscuro-normal.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/resume-en-dark-large.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-retoma-en-oscuro-AXXXL.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/journey-es-light-normal.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-recorrido-3-es-claro-normal.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/journey-es-light-large.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-recorrido-3-es-claro-AXXXL.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/journey-es-dark-normal.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-recorrido-3-es-oscuro-normal.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/journey-es-dark-large.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-recorrido-3-es-oscuro-AXXXL.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/journey-en-light-normal.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-recorrido-3-en-claro-normal.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/journey-en-light-large.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-recorrido-3-en-claro-AXXXL.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/journey-en-dark-normal.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-recorrido-3-en-oscuro-normal.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/journey-en-dark-large.webp",
+    "source": "docs/desarrollo/capturas/bloque-i/ios26.5/i-recorrido-3-en-oscuro-AXXXL.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/comparison.webp",
+    "source": "docs/desarrollo/capturas/fase-1/fase1-comparacion-lado-a-lado.png",
+    "commit": "2efd3c0"
+  },
+  {
+    "asset": "/projects/loop/comparison-large.webp",
+    "source": "docs/desarrollo/capturas/fase-1/fase1-comparar-apilado-es-claro-AXXXL.png",
+    "commit": "2efd3c0"
+  }
+]

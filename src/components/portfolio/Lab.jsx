@@ -22,7 +22,7 @@ export default function Lab({ onOpenProject }) {
           <div className="section-heading">
             <div>
               <span className="eyebrow">
-                <span className="section-index">02 /</span>{" "}
+                <span className="section-index">03 /</span>{" "}
                 {t("MÁS ALLÁ DEL NAVEGADOR")}
               </span>
               <h2>

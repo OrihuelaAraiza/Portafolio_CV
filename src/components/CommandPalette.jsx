@@ -24,6 +24,7 @@ import { profile } from "@/data/portfolio";
 import { useAppearance } from "@/hooks/useAppearance";
 
 const sections = [
+  { id: "ios", label: "iOS · Apps nativas" },
   { id: "inicio", label: "Inicio" },
   { id: "proyectos", label: "Proyectos" },
   { id: "enfoque", label: "Mi enfoque" },

@@ -3,6 +3,10 @@ import { useState } from "react";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { FiGithub as Github } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
+import LoopCaseStudy from "./portfolio/LoopCaseStudy";
+import "./portfolio/project-detail.css";
+import ProjectVideo from "./portfolio/ProjectVideo";
+import SimulatorPreview from "./portfolio/SimulatorPreview";
 import LanguageSwitch from "@/components/portfolio/LanguageSwitch";
 import {
   DialogContent,
@@ -122,22 +126,22 @@ export default function ProjectDetail({ project, returnFocus }) {
           </div>
         ))}
       </div>
-      {project.verification && (
-        <div className="detail-evidence">
-          <div>
-            <h3>{t("Evidencia para explorar")}</h3>
-            <p>{project.verification}</p>
-          </div>
-          <div>
-            <h3>{t("Alcance del proyecto")}</h3>
-            <p>{project.scope}</p>
-          </div>
-        </div>
-      )}
+      {project.id === "loop" && <LoopCaseStudy />}
       {project.video && (
         <figure className="detail-video">
-          <video controls playsInline preload="none" poster="/videos/gameplay-poster.webp" src={project.video} aria-label={t("Gameplay de We Can Fix This")} />
-          <figcaption>{t("Gameplay · 02:21 · Demo sin audio · Mayo de 2026")}</figcaption>
+          {project.id === "loop" ? (
+            <SimulatorPreview
+              className="detail-simulator"
+              media={{ ...project.video, label: "Loop" }}
+            />
+          ) : (
+            <>
+              <ProjectVideo
+                media={{ ...project.video, label: t(project.video.label) }}
+              />
+              <figcaption>{t(project.video.label)}</figcaption>
+            </>
+          )}
         </figure>
       )}
       <div className="detail-footer">
@@ -146,7 +150,6 @@ export default function ProjectDetail({ project, returnFocus }) {
             <span key={tag}>{tag}</span>
           ))}
         </div>
-
       </div>
     </DialogContent>
   );

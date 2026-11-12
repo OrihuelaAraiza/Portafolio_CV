@@ -8,16 +8,18 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { profile } from "@/data/portfolio";
 import Line from "./Line";
 import Reveal from "./Reveal";
+import ProjectBackdrop from "./ProjectBackdrop";
 
 const filters = [
   { id: "featured", label: "Selección" },
+  { id: "mobile", label: "iOS & Mobile" },
   { id: "all", label: "Todos" },
   { id: "web", label: "Web" },
   { id: "games", label: "Videojuegos" },
-  { id: "mobile", label: "iOS & Mobile" },
 ];
 const matches = (project, filter) =>
-  filter === "all" || (filter === "featured" ? project.featured : project.category === filter);
+  filter === "all" ||
+  (filter === "featured" ? project.featured : project.category === filter);
 // La portada se inclina hacia el puntero y un foco de luz lo sigue. Todo va por
 // variables CSS sobre el propio botón: mover el ratón no vuelve a renderizar.
 function tilt(event) {
@@ -42,7 +44,7 @@ function ProjectCard({ project, onOpen, index }) {
   const mobile = project.category === "mobile";
   return (
     <motion.article
-      className="project-card"
+      className={`project-card ${project.id === "loop" ? "loop-featured-card" : ""}`}
       initial={reduce ? false : { opacity: 0, y: 16 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.2) }}
@@ -57,6 +59,7 @@ function ProjectCard({ project, onOpen, index }) {
         data-project-id={project.id}
         aria-label={t("Ver proyecto {title}", { title: project.title })}
       >
+        <ProjectBackdrop kind={project.category} />
         <span className="project-art-top">
           <span>{project.categoryLabel}</span>
           <span>{project.year}</span>
@@ -90,12 +93,16 @@ function ProjectCard({ project, onOpen, index }) {
               <i />
               <i />
               <i />
-              <span>{project.live ? new URL(project.live).hostname : project.stack.slice(0, 2).join(" · ")}</span>
+              <span>
+                {project.live
+                  ? new URL(project.live).hostname
+                  : project.stack.slice(0, 2).join(" · ")}
+              </span>
             </div>
             <img
               data-cover=""
               src={project.cover}
-              alt={t("Captura real de {title}", { title: project.title })}
+              alt={t("Interfaz de {title}", { title: project.title })}
               width="1440"
               height="1000"
               loading="lazy"
@@ -133,6 +140,19 @@ function ProjectCard({ project, onOpen, index }) {
           <span key={tag}>{tag}</span>
         ))}
       </div>
+      {project.id === "loop" && (
+        <div className="loop-card-actions">
+          <a href="#ios" className="text-link">
+            {t("Ver recorrido")} <ArrowUpRight size={15} />
+          </a>
+          <button
+            className="text-link"
+            onClick={(event) => onOpen(project, event.currentTarget)}
+          >
+            {t("Explorar implementación")} <ArrowUpRight size={15} />
+          </button>
+        </div>
+      )}
     </motion.article>
   );
 }
@@ -141,7 +161,8 @@ export default function Work({ onOpen }) {
   const { t, projects } = useLanguage();
   const [filter, setFilter] = useState(
     () =>
-      ({ "/web": "web", "/apps": "mobile" })[window.location.pathname] || "featured",
+      ({ "/web": "web", "/apps": "mobile" })[window.location.pathname] ||
+      "featured",
   );
   return (
     <section id="proyectos" className="work-section section-shell">
@@ -149,7 +170,7 @@ export default function Work({ onOpen }) {
         <div className="section-heading">
           <div>
             <span className="eyebrow">
-              <span className="section-index">01 /</span>{" "}
+              <span className="section-index">02 /</span>{" "}
               {t("TRABAJO SELECCIONADO")}
             </span>
             <h2>
@@ -177,7 +198,10 @@ export default function Work({ onOpen }) {
               <TabsTrigger key={id} value={id}>
                 {t(label)}
                 <span>
-                  {projects.filter((project) => matches(project, id)).length.toString().padStart(2, "0")}
+                  {projects
+                    .filter((project) => matches(project, id))
+                    .length.toString()
+                    .padStart(2, "0")}
                 </span>
               </TabsTrigger>
             ))}
@@ -193,8 +217,16 @@ export default function Work({ onOpen }) {
         </div>
         <p className="selection-note" aria-live="polite">
           {filter === "featured"
-            ? t("Empieza por estos cuatro: producto, datos, interacción y videojuegos.")
-            : t("{count} proyectos · Abre una ficha para explorar decisiones, capturas y código.", { count: projects.filter((project) => matches(project, filter)).length })}
+            ? t(
+                "Apps nativas, productos web y videojuegos. Cinco formas de cuidar una interacción.",
+              )
+            : t(
+                "{count} proyectos · Abre una ficha para explorar decisiones, capturas y código.",
+                {
+                  count: projects.filter((project) => matches(project, filter))
+                    .length,
+                },
+              )}
         </p>
         {filters.map(({ id }) => (
           <TabsContent key={id} value={id} className="project-grid">

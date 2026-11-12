@@ -40,8 +40,8 @@ const stages = [
     number: "03",
     name: "La experiencia",
     title: "Y entonces, cobra vida.",
-    text: "El movimiento conecta una acción con su respuesta. Mi formación en animación y videojuegos se encuentra con el frontend: ritmo, profundidad y atención al detalle.",
-    tags: "REACT · THREE.JS · INTERACCIÓN",
+    text: "El movimiento conecta una acción con su respuesta. Llevo mi formación en animación y videojuegos a SwiftUI y React: ritmo, estados claros y atención al detalle.",
+    tags: "SWIFTUI · REACT · INTERACCIÓN",
     icon: Code2,
   },
 ];
@@ -96,7 +96,7 @@ export default function Approach() {
           <div className="section-heading">
             <div>
               <span className="eyebrow">
-                <span className="section-index">03 /</span>{" "}
+                <span className="section-index">04 /</span>{" "}
                 {t("DE LA IDEA A LO QUE SIENTES")}
               </span>
               <h2>

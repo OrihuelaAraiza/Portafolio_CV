@@ -1,6 +1,6 @@
 # Juan Pablo Orihuela — Portafolio
 
-Portafolio de frontend y UI/UX con videojuegos como diferenciador, en React + Vite. Una selección de proyectos reales, capturas locales, fichas de proyecto, experimentos de interacción y contacto directo.
+Portafolio de desarrollo iOS y frontend, con videojuegos como diferenciador, en React + Vite. Loop encabeza la selección con un recorrido de capturas reales, demos e implementación Swift; convive con proyectos web, experimentos de interacción y contacto directo.
 
 ## Desarrollo
 
@@ -20,7 +20,7 @@ npm run check
 
 `check` ejecuta ESLint, el build de producción, el presupuesto de carga inicial y pruebas de navegador en escritorio y móvil. Playwright cubre filtros, galerías, Escape y restauración del foco, enlaces directos, historial, menú móvil, carga de capturas, descarga del CV, portapapeles, temas, preferencias de movimiento, scroll 3D y reproducción real de los videos. Cubre además la paleta de comandos, el formulario de contacto, la transición compartida al abrir una ficha, el marcado generado para buscadores y la capa visual: prólogo, cinta de herramientas, fondo tramado con y sin WebGL, riel de capítulos, scroll suave por anclas y cambio de tema. Las auditorías automáticas con axe revisan la página, el diálogo, la paleta y el formulario con sus errores visibles, en ambos temas.
 
-`.github/workflows/ci.yml` repite esa verificación en cada push y pull request. `npm run size` mide en gzip lo que el navegador descarga para la primera pintura —los archivos que `dist/index.html` referencia— y falla si supera el presupuesto de `scripts/check-bundle-size.mjs`. Los chunks que llegan por `import()`, como Three.js y la ficha de proyecto, quedan fuera de esa cuenta porque no bloquean la portada.
+`.github/workflows/ci.yml` repite esa verificación en cada push y pull request. `npm run size` mide en gzip lo que el navegador descarga para la primera pintura —los archivos que `dist/index.html` referencia— y falla si supera el presupuesto de `scripts/check-bundle-size.mjs`. Los chunks que llegan por `import()`, como Three.js, el visor iOS y la ficha de proyecto, quedan fuera de esa cuenta porque no bloquean la portada.
 
 ```sh
 npm run build
@@ -33,10 +33,12 @@ El resultado estático se genera en `dist/`. `vercel.json` conserva los accesos 
 
 - `src/data/portfolio.js`: perfil, proyectos, capturas, enlaces y descripciones.
 - `src/data/en.json`: traducciones al inglés; las claves son los textos originales en español.
+- `src/data/ios.js`: capítulos, decisiones técnicas y laboratorio de Loop, con textos ES/EN en el chunk diferido.
 - `public/projects/`: capturas reales optimizadas a WebP, sin dependencia de servicios externos en tiempo de ejecución.
-- `public/videos/`: tráiler y gameplay de We Can Fix This aportados por el autor, con posters extraídos de los videos.
+- `public/videos/`: tráiler y gameplay de We Can Fix This y clips de simulador de Loop. Descarga de video bajo demanda.
 - `public/JuanPabloOrihuela_CV.pdf`: CV original; sustituir este archivo para actualizar la descarga.
 - `docs/content-sources.md`: procedencia y límites del contenido.
+- `docs/ios-media-sources.json`: correspondencia entre las capturas iOS optimizadas y sus originales en el historial de Loop.
 
 Para añadir un proyecto, completa su entrada en `portfolio.js` y agrega las capturas locales. Los proyectos móviles usan al menos dos capturas. Los botones de demo y código se muestran solo cuando existe un enlace. Cada ficha admite un enlace directo, por ejemplo `/?project=romi`.
 
@@ -62,7 +64,9 @@ El idioma de `<html>` y las descripciones de metadata se actualizan durante la v
 
 - `src/components/portfolio/`: secciones y componentes de presentación.
 - `src/components/ProjectDetail.jsx`: ficha con galería, cargada bajo demanda.
-- `src/components/three/`: escultura procedural Three.js, cargada al acercarse a la sección de proceso.
+- `src/components/three/`: escultura del proceso y órbitas de Loop. Comparten el chunk de Three.js y se cargan al acercarse a cada sección.
+- `src/components/portfolio/ProjectBackdrop.jsx`: fondos de cards en CSS, animados solo mientras están visibles.
+- `src/components/portfolio/SimulatorPreview.jsx`: pantallas de video sin controles de navegador, con pausa externa y respeto a preferencias de movimiento.
 - `src/components/fx/`: fondo tramado en WebGL (`DitherField` + `createDitherField`, sobre OGL) y la capa diferida `Effects` con scroll suave (Lenis), cursor y riel de capítulos.
 - `src/components/portfolio/Prologue.jsx`, `Marquee.jsx`, `Line.jsx`, `Magnetic.jsx`: prólogo narrativo, cinta continua, titulares por líneas y atracción al puntero.
 - `src/styles/enhancements.css`: estilos de la capa visual; `index.css` conserva tokens y composición.
@@ -81,13 +85,13 @@ La paleta de comandos se abre con ⌘K, con Ctrl K fuera de Apple o desde el bot
 
 Al abrir una ficha, la portada de la tarjeta y la captura de la ficha comparten un nombre de transición y el navegador interpola entre ambas con la View Transitions API. La ficha se precarga en tiempo ocioso para que se monte en el mismo fotograma. Sin soporte en el navegador, o con el movimiento reducido, la ficha se abre igual sin animar.
 
-Motion gestiona las transiciones, el parallax de la portada y el relato de tres momentos del proceso. El texto de roles usa un efecto de escritura con cursor. El scroll sigue siendo nativo, sin secuestrar la rueda ni el gesto táctil.
+Motion gestiona las transiciones, el parallax de la portada y el relato de tres momentos del proceso. El título rota con escritura y borrado entre iOS Developer, Frontend Developer & UI/UX, CTO y desarrollo creativo con Unity. Empieza por iOS, deja un texto estable para lectores de pantalla y muestra un rol completo cuando se pausa el movimiento. Lenis suaviza el scroll en escritorio cuando el movimiento está habilitado; la navegación mantiene su alternativa nativa.
 
 Three.js renderiza una escultura que pasa de estructura a material y movimiento con el scroll y responde al puntero. El motor se importa bajo demanda; limita la resolución y la frecuencia de renderizado, se detiene fuera de pantalla o con la pestaña oculta y libera sus recursos al desmontarse. Si WebGL no está disponible, queda una composición estática y todo el contenido sigue accesible. El chunk independiente de Three.js supera el umbral orientativo de 500 kB de Vite; no forma parte de la carga inicial de la portada.
 
-El tema sigue al sistema hasta elegir uno con el control de la cabecera; la preferencia se aplica antes del primer render y se conserva al recargar. El botón de pausa y `prefers-reduced-motion` desactivan la escritura animada, el parallax y el movimiento continuo del 3D. El almacenamiento local es opcional: si está bloqueado, los controles siguen funcionando durante la visita.
+El tema sigue al sistema hasta elegir uno con el control de la cabecera; la preferencia se aplica antes del primer render y se conserva al recargar. El botón de pausa y `prefers-reduced-motion` desactivan el parallax y el movimiento continuo del 3D. El almacenamiento local es opcional: si está bloqueado, los controles siguen funcionando durante la visita.
 
-Los videos tienen controles nativos y se descargan únicamente después de pulsar reproducir. Cambiar entre tráiler y gameplay detiene el anterior; salir de pantalla o cambiar de pestaña pausa el video. Las fuentes se distribuyen localmente a través de Fontsource.
+El reel de videojuegos conserva sus controles nativos y arranque explícito. Las pantallas de Loop se reproducen en bucle, silenciadas y sin barras de reproductor, solo al entrar en pantalla. Su botón discreto permite pausar o reproducir; con movimiento reducido esperan una acción explícita. Salir de pantalla o cambiar de pestaña pausa los videos. Las fuentes se distribuyen localmente a través de Fontsource.
 
 El contacto ofrece tres caminos: el enlace de correo, el botón de copiar la dirección y un formulario que valida en el navegador y arma el mensaje. El formulario no envía nada por la red: al validarse abre el cliente de correo con el asunto y el cuerpo ya escritos, y deja el mismo texto en pantalla por si no hay cliente configurado. La validación es propia, sin librería de formularios, y marca los campos solo después del primer intento de envío, con `aria-invalid`, mensajes enlazados por `aria-describedby` y el foco puesto en el primer campo con problema. No hay envíos simulados ni llamadas a GitHub desde el navegador. `src/main.jsx` integra Vercel Analytics; el formulario no transmite su contenido a un servidor propio.
 
@@ -130,8 +134,18 @@ Una auditoría automática sin incidencias no equivale a una certificación de a
 
 ## Selección actual · noviembre de 2026
 
-La portada presenta Nexo CRM, Brassbound, ROMI y We Can Fix This. El filtro Todos abre el catálogo de once proyectos, incluidos Loop y ROMImente. Los filtros Web, Videojuegos e iOS & Mobile conservan las rutas anteriores. Las fichas y la paleta siguen disponibles aunque un proyecto no esté en la selección inicial.
+La selección presenta Loop, Nexo CRM, Brassbound, ROMI y We Can Fix This, en ese orden. El filtro Todos abre el catálogo de once proyectos, incluido ROMImente. Los filtros Web, Videojuegos e iOS & Mobile conservan las rutas anteriores. Las fichas y la paleta siguen disponibles aunque un proyecto no esté en la selección inicial.
 
-`featured` controla la selección; `proof` resume lo que demuestra una tarjeta; `verification` y `scope` añaden evidencia y límites a las fichas. `video` permite incluir gameplay sin descarga ni reproducción automática. Una ficha web puede tener solo código, sin URL de demo.
+`featured` controla la selección; `proof` resume lo que demuestra una tarjeta; `verification` y `scope` conservan la procedencia como datos de referencia y no se renderizan en las fichas. `video` es un objeto con `src`, `poster`, `label` y `caption`: cada proyecto muestra su propio medio; Loop usa la pantalla integrada y el gameplay conserva el reproductor estándar. Una ficha web puede tener solo código, sin URL de demo.
 
-La investigación, procedencia de capturas, diagnóstico y siguientes prioridades están en [docs/content-sources.md](docs/content-sources.md#actualización-del-9-de-noviembre-de-2026). `tests/project-refresh.spec.js` cubre selección, archivo, proyectos sin demo, evidencia traducida, medios, foco y accesibilidad de las nuevas fichas.
+## Recorrido iOS
+
+`#ios` carga `IOSShowcase` al acercarse a la sección. Ofrece tres capítulos, capturas ES/EN, apariencia claro/oscuro y texto normal/grande independientes del tema del sitio. Los controles muestran capturas del simulador: no ejecutan la app en el navegador. Las decisiones de persistencia, accesibilidad y movimiento permiten descargar fragmentos Swift de un commit local específico, con su procedencia en la cabecera. El repositorio público enlazado conserva una versión anterior.
+
+La demo dura 20 segundos y concatena bienvenida y recorrido. El laboratorio incluye la celebración de Loopy, una comparación con texto grande y el trazo del recorrido. Las pantallas comienzan al entrar en vista cuando el movimiento está habilitado; se pausan al salir, esconder la pestaña o mediante su control externo. Una pausa manual se conserva al volver a la sección. Un error de carga muestra un enlace de descarga.
+
+`tests/ios.spec.js` cubre el enlace directo, controles, idioma, foco, reproducción real, carga diferida, errores de medios y accesibilidad de los tres capítulos en ambos temas. La procedencia del material y sus límites están documentados al final de `docs/content-sources.md`.
+
+La investigación, procedencia de capturas, diagnóstico y siguientes prioridades están en [docs/content-sources.md](docs/content-sources.md#actualización-del-9-de-noviembre-de-2026). `tests/project-refresh.spec.js` cubre selección, archivo, proyectos sin demo, texto traducido, medios, foco y accesibilidad de las nuevas fichas.
+
+`tests/visual-polish.spec.js` comprueba reproducción integrada, pausa manual/global, fondos que descansan fuera de pantalla, fallback del nuevo 3D y ausencia de notas editoriales visibles en ES/EN. Las órbitas limitan resolución a 1.4× y render a 30 fps, sin modelos ni texturas externas.

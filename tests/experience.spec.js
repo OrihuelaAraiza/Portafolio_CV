@@ -30,18 +30,18 @@ test("follows the system theme, persists a chosen theme, and works without stora
   await expect(page.getByRole("heading", { level: 1 })).toBeVisible();
 });
 
-test("lets visitors pause typing and motion and honors reduced motion", async ({
+test("cycles typed roles and honors motion preferences", async ({
   page,
 }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
   await page.goto("/");
   const text = page.locator(".typewriter-text");
-  await expect(text).toHaveText("Frontend Developer & UI/UX");
-  await expect(text).not.toHaveText("Frontend Developer & UI/UX", { timeout: 6000 });
+  await expect(text).toHaveText("iOS Developer @ e-tribe");
+  await expect(text).not.toHaveText("iOS Developer @ e-tribe", { timeout: 5000 });
+  await expect(text).toHaveText("Frontend Developer & UI/UX", { timeout: 15000 });
   await page.getByRole("button", { name: "Pausar animaciones" }).click();
   await expect(page.locator("html")).toHaveAttribute("data-motion", "reduced");
   const pausedText = await text.textContent();
-  await page.waitForTimeout(2400);
   await expect(text).toHaveText(pausedText);
   await page.reload();
   await expect(

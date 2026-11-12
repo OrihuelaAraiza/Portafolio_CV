@@ -53,7 +53,7 @@ export default function About() {
         <div className="about-copy">
           <Reveal>
             <span className="eyebrow">
-              <span className="section-index">04 /</span>{" "}
+              <span className="section-index">05 /</span>{" "}
               {t("UN POCO SOBRE MÍ")}
             </span>
             <h2>

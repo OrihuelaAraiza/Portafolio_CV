@@ -1,0 +1,109 @@
+.project-backdrop {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  color: var(--project-ink);
+  contain: strict;
+}
+.project-backdrop > span {
+  position: absolute;
+  animation-play-state: paused;
+}
+.project-backdrop[data-moving="true"] > span {
+  animation-play-state: running;
+}
+.backdrop-wash {
+  inset: -20%;
+  background:
+    radial-gradient(ellipse at 22% 65%, #ffffff90, transparent 52%),
+    radial-gradient(ellipse at 85% 15%, currentColor, transparent 55%);
+  opacity: 0.18;
+  animation: card-wash 18s ease-in-out infinite alternate;
+}
+.backdrop-lines {
+  inset: -30%;
+  background-image:
+    linear-gradient(currentColor 1px, transparent 1px),
+    linear-gradient(90deg, currentColor 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.075;
+  transform: rotate(-16deg);
+  mask-image: linear-gradient(135deg, black, transparent 75%);
+  animation: card-grid 24s linear infinite;
+}
+.backdrop-orbit {
+  width: 70%;
+  aspect-ratio: 1;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  opacity: 0.17;
+  animation: card-orbit 22s ease-in-out infinite alternate;
+}
+.orbit-one {
+  left: -20%;
+  top: 12%;
+}
+.orbit-two {
+  right: -24%;
+  bottom: -25%;
+  animation-delay: -10s;
+}
+.orbit-three {
+  width: 28%;
+  right: 7%;
+  top: -20%;
+  animation-delay: -16s;
+  opacity: 0.1;
+}
+.backdrop-mobile .backdrop-lines {
+  background-image: radial-gradient(currentColor 0.8px, transparent 0.8px);
+  background-size: 18px 18px;
+}
+.backdrop-mobile .orbit-one {
+  width: 72%;
+  left: 8%;
+  top: -20%;
+  transform: scaleY(0.52) rotate(-20deg);
+}
+.backdrop-mobile .orbit-two {
+  width: 92%;
+  right: -10%;
+  bottom: -38%;
+}
+.backdrop-games .backdrop-lines {
+  transform: perspective(400px) rotateX(48deg) rotateZ(-12deg);
+  opacity: 0.12;
+}
+.backdrop-games .backdrop-orbit {
+  border-radius: 18%;
+  transform: rotate(22deg);
+}
+.backdrop-games .backdrop-wash {
+  opacity: 0.1;
+}
+@keyframes card-wash {
+  to {
+    transform: translate3d(5%, -4%, 0) scale(1.1);
+  }
+}
+@keyframes card-grid {
+  to {
+    translate: 40px 40px;
+  }
+}
+@keyframes card-orbit {
+  to {
+    translate: 5% -8%;
+    rotate: 20deg;
+    scale: 1.06;
+  }
+}
+[data-motion="reduced"] .project-backdrop > span {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-backdrop > span {
+    animation: none;
+  }
+}

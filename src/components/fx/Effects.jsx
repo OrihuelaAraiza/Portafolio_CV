@@ -21,9 +21,34 @@ function SmoothScroll() {
       wheelMultiplier: 1,
       autoRaf: true,
       prevent: (node) =>
-        Boolean(node.closest?.('[role="dialog"], [cmdk-root], video, textarea')),
+        Boolean(
+          node.closest?.('[role="dialog"], [cmdk-root], video, textarea'),
+        ),
       virtualScroll: () => !document.body.hasAttribute("data-scroll-locked"),
     });
+    // Keep an anchor's destination accurate while deferred sections change
+    // the page height. The next user interaction releases that destination.
+    let anchorTarget = null;
+    function scrollToAnchor() {
+      if (!anchorTarget?.isConnected) return;
+      const padding =
+        parseFloat(
+          getComputedStyle(document.documentElement).scrollPaddingTop,
+        ) || 0;
+      lenis.resize();
+      lenis.scrollTo(
+        anchorTarget.getBoundingClientRect().top + window.scrollY - padding,
+      );
+    }
+    const resize = new ResizeObserver(scrollToAnchor);
+    resize.observe(document.body);
+    const releaseAnchor = () => {
+      anchorTarget = null;
+    };
+    const interruptions = ["wheel", "touchstart", "pointerdown", "keydown"];
+    interruptions.forEach((type) =>
+      window.addEventListener(type, releaseAnchor, { passive: true }),
+    );
     // Las anclas se resuelven aquí y no con la opción `anchors` de Lenis: así
     // no compiten el salto nativo y la interpolación, el hash se sigue
     // escribiendo en la URL y, desde el teclado, el foco viaja con el scroll.
@@ -48,12 +73,8 @@ function SmoothScroll() {
       event.preventDefault();
       if (window.location.hash !== link.hash)
         window.history.pushState(window.history.state, "", link.hash);
-      const padding =
-        parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) ||
-        0;
-      lenis.scrollTo(
-        target.getBoundingClientRect().top + window.scrollY - padding,
-      );
+      anchorTarget = target;
+      scrollToAnchor();
       if (event.detail === 0) {
         target.setAttribute("tabindex", "-1");
         target.focus({ preventScroll: true });
@@ -62,6 +83,10 @@ function SmoothScroll() {
     document.addEventListener("click", onClick);
     document.documentElement.classList.add("has-smooth-scroll");
     return () => {
+      resize.disconnect();
+      interruptions.forEach((type) =>
+        window.removeEventListener(type, releaseAnchor),
+      );
       document.removeEventListener("click", onClick);
       document.documentElement.classList.remove("has-smooth-scroll");
       lenis.destroy();
@@ -149,6 +174,7 @@ function Cursor() {
 const chapters = [
   { id: "inicio", label: "Inicio" },
   { id: "prologo", label: "Prólogo" },
+  { id: "ios", label: "iOS" },
   { id: "proyectos", label: "Proyectos" },
   { id: "laboratorio", label: "Videojuegos" },
   { id: "enfoque", label: "Mi enfoque" },

@@ -9,10 +9,10 @@ import Reveal from "./Reveal";
 // El hilo del portafolio dicho en cuatro frases. Los asteriscos marcan las
 // palabras que llevan el acento; la traducción conserva la misma marca.
 const statement =
-  "Me formé haciendo *videojuegos.* Ahí aprendí que cada acción merece *una respuesta.* Hoy llevo esa idea al *frontend:* interfaces claras, rápidas y *con intención,* donde el movimiento explica en lugar de adornar.";
+  "Me formé haciendo *videojuegos.* Ahí aprendí que cada acción merece *una respuesta.* Hoy llevo esa idea a *iOS y la web:* interfaces claras, rápidas y *con intención,* donde el movimiento explica en lugar de adornar.";
 
 const facts = [
-  { value: projects.length, label: "proyectos documentados", detail: "Web · iOS · Unity" },
+  { value: projects.length, label: "proyectos documentados", detail: "iOS · Web · Unity" },
   { value: 4, label: "plataformas", detail: "Web · iOS · visionOS · Unity" },
   { value: 2, label: "reconocimientos en hackathons", detail: "iOS Lab · Enactus" },
 ];

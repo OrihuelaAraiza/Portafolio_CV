@@ -21,7 +21,8 @@ import Lab from "@/components/portfolio/Lab";
 import About from "@/components/portfolio/About";
 import Contact from "@/components/portfolio/Contact";
 import Footer from "@/components/portfolio/Footer";
-import CommandPalette from "@/components/CommandPalette";
+import IOSSection from "@/components/portfolio/IOSSection";
+const CommandPalette = lazy(() => import("@/components/CommandPalette"));
 import { site } from "@/data/site";
 // El import se guarda aparte para poder precargarlo: la transición compartida
 // necesita que la ficha se monte en el mismo fotograma en que se abre, y con el
@@ -79,12 +80,13 @@ function Portfolio() {
       );
     }
     window.addEventListener("popstate", onPopState);
-    const target = {
-      "/about": "sobre-mi",
-      "/web": "proyectos",
-      "/apps": "proyectos",
-      "/games": "laboratorio",
-    }[window.location.pathname];
+    const target =
+      {
+        "/about": "sobre-mi",
+        "/web": "proyectos",
+        "/apps": "proyectos",
+        "/games": "laboratorio",
+      }[window.location.pathname] || window.location.hash.slice(1);
     if (target)
       requestAnimationFrame(() =>
         document
@@ -144,6 +146,7 @@ function Portfolio() {
         <Hero />
         <StackStrip />
         <Prologue />
+        <IOSSection onOpen={openProject} />
         <Work onOpen={openProject} />
         <Lab onOpenProject={openProject} />
         <Approach />
@@ -156,11 +159,15 @@ function Portfolio() {
           <Effects />
         </Suspense>
       )}
-      <CommandPalette
-        open={paletteOpen}
-        onOpenChange={setPaletteOpen}
-        onOpenProject={openProject}
-      />
+      {paletteOpen && (
+        <Suspense fallback={null}>
+          <CommandPalette
+            open={paletteOpen}
+            onOpenChange={setPaletteOpen}
+            onOpenProject={openProject}
+          />
+        </Suspense>
+      )}
       <Dialog
         open={!!activeProject}
         onOpenChange={(open) => {

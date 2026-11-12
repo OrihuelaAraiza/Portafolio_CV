@@ -51,7 +51,7 @@ test("la cinta de herramientas queda quieta y completa sin movimiento", async ({
   const strip = page.locator(".stack-marquee");
   await expect(strip).toHaveClass(/marquee-static/);
   await expect(strip.locator(".marquee-copy")).toHaveCount(1);
-  await expect(strip.locator(".stack-item")).toHaveCount(9);
+  await expect(strip.locator(".stack-item")).toHaveCount(11);
   await expect(strip).toContainText("TypeScript");
   await expect(strip).toContainText("Unity / C#");
 });
@@ -115,7 +115,7 @@ test("el riel de capítulos acompaña sin entrar en la navegación accesible", a
   const rail = page.locator(".chapter-rail");
   await expect(rail).toBeVisible();
   await expect(rail).toHaveAttribute("aria-hidden", "true");
-  await expect(rail.locator("a")).toHaveCount(7);
+  await expect(rail.locator("a")).toHaveCount(8);
   for (const link of await rail.locator("a").all())
     await expect(link).toHaveAttribute("tabindex", "-1");
   await expect(rail.locator("a.active")).toHaveAttribute("href", "#inicio");

@@ -118,3 +118,62 @@ El README de perfil describe el rol en ROMI como Frontend Developer; el portafol
 ### Validación
 
 `npm run check` completado: ESLint, build, presupuesto (179.3 / 22.2 kB gzip, límites 181 / 24) y la suite de Playwright en escritorio y móvil, que suma `tests/enhancements.spec.js` para la capa nueva. Revisión visual a 390 y 1440 px en ambos temas, con movimiento completo. Las capturas se hicieron con WebGL por software; no se midió rendimiento en dispositivos reales ni Core Web Vitals de campo.
+
+## Desarrollo iOS · 12 de noviembre de 2026
+
+Esta ampliación se integró sobre `main` en `b46a658`, después de `git fetch origin --prune` y `git pull --ff-only origin main`. Conserva la capa visual, el prólogo y las cuatro exploraciones incorporadas en esa versión. El posicionamiento ahora es iOS + frontend: Loop encabeza la selección, el hero y un capítulo propio antes de los proyectos.
+
+### Recursos investigados y decisión visual
+
+- [Apple Design Resources](https://developer.apple.com/design/resources/): kits, plantillas de icono y marcos oficiales, revisados como referencia. Se usa un contenedor de pantalla propio en CSS, sin copiar un modelo concreto de dispositivo ni importar un kit pesado.
+- [HIG — Accessibility](https://developer.apple.com/design/human-interface-guidelines/accessibility): la adaptación al tamaño de texto y a las preferencias de la persona guía la presentación de variantes reales de Dynamic Type.
+- [HIG — Motion](https://developer.apple.com/design/human-interface-guidelines/motion): referencia para explicar el propósito del movimiento y mostrar su relación con el estado de la interfaz.
+- [SF Symbols](https://developer.apple.com/sf-symbols/): referencia nativa. La web conserva Lucide y sus fuentes existentes para mantener la identidad y evitar añadir una segunda biblioteca de iconos.
+
+Los assets elegidos son el icono, Loopy, capturas y grabaciones del propio Loop. Los colores crema/coral de la app encajan con el naranja y la composición editorial del portafolio. No se generaron interfaces ficticias ni se compraron recursos. Se conservaron la tipografía y los efectos del sitio.
+
+### Procedencia de los medios
+
+El repositorio público verificado es [loop](https://github.com/OrihuelaAraiza/loop), con una versión anterior. El remote local apunta a `loop_app`, que devolvió 404 al comprobarlo en GitHub; no se publican enlaces a esa ruta. Las capturas históricas se recuperaron con `git show` del commit `2efd3c0eb40b5928eeb3b5e37647034bd947c269`, sin restaurarlas ni modificar el árbol de trabajo de la app. `ios-media-sources.json` registra los 26 originales de capturas y sus derivados WebP.
+
+| Medio del portafolio | Original en Loop | Conversión |
+| --- | --- | --- |
+| `projects/loop/welcome-*`, `resume-*`, `journey-*` | `docs/desarrollo/capturas/bloque-i/ios26.5/i-bienvenida-*`, `i-retoma-*`, `i-recorrido-3-*` | 24 variantes: ES/EN × claro/oscuro × normal/AXXXL × tres capítulos. WebP, 600 px de ancho, calidad 84. Noviembre de 2026. |
+| `comparison.webp`, `comparison-large.webp` | `docs/desarrollo/capturas/fase-1/fase1-comparacion-lado-a-lado.png` y `fase1-comparar-apilado-es-claro-AXXXL.png` | Mismo ancho/calidad. Octubre de 2026. |
+| `icon.webp` | `Loop/Resources/Assets.xcassets/AppIcon.appiconset/AppIcon.png`, checkout leído el 12 de noviembre | 128 px, WebP calidad 90. |
+| `loop-preview.mp4` | `docs/desarrollo/capturas/bloque-i/i-bienvenida-final-ios26.5.mp4` + `i-recorrido-final-ios26.5.mp4` | Bienvenida desde el segundo 5, 10 s; recorrido desde 0, 10 s. Concatenación de 20 s. |
+| `loop-journey.mp4` | `docs/desarrollo/capturas/bloque-i/i-recorrido-final-ios26.5.mp4` | Primeros 10 s. |
+| `loop-loopy.mp4` | `docs/desarrollo/capturas/fase-6/loopy-celebrando.mp4` | Desde 5.5 s, duración 4 s. Vista de prueba de octubre. `loopy-poster.webp` se extrajo al segundo 1 del clip resultante. |
+
+Los MP4 están codificados en H.264, ancho 600, 30 fps, sin audio y con `faststart`. La demo muestra bienvenida y recorrido; no prueba un flujo completo de creación y guardado. Los datos son sintéticos y las grabaciones proceden del simulador, no de un dispositivo físico. Los videos siguen en español al cambiar el idioma del sitio. La procedencia queda documentada aquí, sin leyendas editoriales en la interfaz.
+
+Los fragmentos de `LoopStore.swift`, `ProjectJourneyView.swift` y `LoopyView.swift` se leyeron del mismo commit. Se ofrecen como archivos `.swift` en `public/code/loop/`, con ruta original, línea y commit en la cabecera; son extractos, no archivos compilables aislados. El corte local no está disponible en el repositorio público verificado. La explicación distingue persistencia explícita y rollback, adaptación a Dynamic Type y condiciones para animar Loopy. No se deducen resultados de rendimiento ni cobertura actual de pruebas a partir de estos fragmentos.
+
+### Límites de evidencia
+
+Loop sigue en desarrollo y no se ofrece una ficha de App Store. El README de la app distingue la retirada de suites históricas del 10 de noviembre de las verificaciones limitadas añadidas después. Las pruebas de este portafolio comprueban la web, sus medios y controles, no certifican el funcionamiento actual de Loop ni su preparación para lanzamiento.
+
+### Verificación de la ampliación iOS
+
+ESLint, build y presupuesto aprobados: **178.9 kB JS / 22.6 kB CSS gzip**, dentro de los límites existentes de **181 / 24 kB**. El chunk de Three.js conserva su aviso de tamaño y su carga diferida.
+
+La suite completa ejecutó 150 casos: 144 aprobados, cuatro omisiones por plataforma y dos incidencias corregidas (destino de ancla tras cargar contenido diferido y una prueba que aún mantenía parte del video en pantalla). Después de esas correcciones, las tres suites afectadas —capa visual, iOS y proyectos— terminaron con **40 aprobados y dos omisiones**, sin fallos. En conjunto, los 146 casos aplicables quedaron aprobados. Se verificaron además las tres descargas Swift por HTTP y por igualdad con el archivo original servido.
+
+Revisión visual en navegador a 320, 390, 768 y 1440 px, ES/EN, ambos temas y reproducción del clip en vista móvil. Sin desbordamiento horizontal observado. Los nuevos medios usan carga bajo demanda y los videos se pausan fuera de pantalla; las capturas no certifican pruebas en iPhone físico ni rendimiento de campo. La imagen social se regeneró con el posicionamiento iOS + frontend.
+
+
+## Ajuste de presentación y movimiento · 12 de noviembre de 2026
+
+Por corrección del autor se retiraron de la interfaz las etiquetas «captura real / simulador», las notas de procedencia/fecha, las advertencias editoriales y los bloques de evidencia de las fichas. La documentación conserva sus fuentes. Los estados de proyecto y descripciones de funciones siguen siendo concretos; las imágenes originales no se retocaron.
+
+Se restauró la escritura rotativa de títulos, comenzando por iOS. Las pantallas de Loop usan video silenciado en bucle sin controles nativos del navegador, con un control externo de pausa y reproducción. Solo se animan cuando están visibles y la pestaña está activa; el movimiento reducido muestra un estado quieto hasta una acción explícita.
+
+Las cards incorporan capas CSS de luz, tramas y órbitas según categoría y paleta, sin crear un contexto WebGL por tarjeta. La nueva escena `LoopOrbit` usa dos curvas tubulares y tres puntos orbitales detrás del teléfono: geometría procedural, 30 fps máximos, DPR limitado a 1.4 y pausa fuera de vista. Comparte la dependencia Three.js con la escultura existente. Si WebGL no está disponible, queda una órbita CSS estática.
+
+Referencias técnicas revisadas: [Three.js — Rendering on Demand](https://threejs.org/manual/pages/rendering-on-demand.html) y [How to dispose of Objects](https://threejs.org/manual/pages/how-to-dispose-of-objects.html). El código cancela el ciclo de render, desconecta observadores y libera geometrías, materiales y renderer al desmontarse. No se incorporaron modelos, HDR, librerías ni servicios externos nuevos.
+
+### Verificación del ajuste
+
+ESLint, build y presupuesto aprobados: **179.2 kB JS / 23.2 kB CSS gzip**, dentro de los límites de **181 / 24 kB**. La suite completa ejecutó 158 casos: 152 aprobados, cuatro omisiones por plataforma y dos esperas insuficientes al comprobar el título escrito. Se amplió únicamente el margen de espera de esa prueba; su repetición en escritorio y móvil aprobó ambos casos. En conjunto, los **154 casos aplicables** quedaron aprobados.
+
+La cobertura nueva comprueba reproducción automática visible, pausa manual persistente, movimiento reducido, pausa fuera de pantalla, fondos de cards y fallback sin WebGL. Revisión visual de la composición en escritorio y móvil, incluido el tema oscuro. El render diferido de Three.js conserva el aviso de chunk mayor a 500 kB; no forma parte de la carga inicial medida.
