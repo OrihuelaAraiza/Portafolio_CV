@@ -1,6 +1,7 @@
 import { useLanguage } from "@/hooks/useLanguage";
 import { useAppearance } from "@/hooks/useAppearance";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { revealChange } from "@/lib/viewTransition";
 import { motion } from "framer-motion";
 import { ArrowUpRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -45,7 +46,11 @@ function ProjectCard({ project, onOpen, index }) {
   return (
     <motion.article
       className={`project-card ${project.id === "loop" ? "loop-featured-card" : ""}`}
-      initial={reduce ? false : { opacity: 0, y: 16 }}
+      initial={
+        reduce || document.documentElement.dataset.vt === "content"
+          ? false
+          : { opacity: 0, y: 16 }
+      }
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: Math.min(index * 0.05, 0.2) }}
     >
@@ -159,6 +164,7 @@ function ProjectCard({ project, onOpen, index }) {
 
 export default function Work({ onOpen }) {
   const { t, projects } = useLanguage();
+  const results = useRef(null);
   const [filter, setFilter] = useState(
     () =>
       ({ "/web": "web", "/apps": "mobile" })[window.location.pathname] ||
@@ -188,7 +194,16 @@ export default function Work({ onOpen }) {
           </p>
         </div>
       </Reveal>
-      <Tabs value={filter} onValueChange={setFilter}>
+      <Tabs
+        value={filter}
+        onValueChange={(value) =>
+          revealChange(() => setFilter(value), {
+            target: results.current,
+            origin: document.activeElement,
+            key: `projects-${value}`,
+          })
+        }
+      >
         <div className="work-toolbar">
           <TabsList
             className="project-filters"
@@ -228,20 +243,22 @@ export default function Work({ onOpen }) {
                 },
               )}
         </p>
-        {filters.map(({ id }) => (
-          <TabsContent key={id} value={id} className="project-grid">
-            {projects
-              .filter((project) => matches(project, id))
-              .map((project, index) => (
-                <ProjectCard
-                  key={project.id}
-                  project={project}
-                  onOpen={onOpen}
-                  index={index}
-                />
-              ))}
-          </TabsContent>
-        ))}
+        <div ref={results} className="project-results">
+          {filters.map(({ id }) => (
+            <TabsContent key={id} value={id} className="project-grid">
+              {projects
+                .filter((project) => matches(project, id))
+                .map((project, index) => (
+                  <ProjectCard
+                    key={project.id}
+                    project={project}
+                    onOpen={onOpen}
+                    index={index}
+                  />
+                ))}
+            </TabsContent>
+          ))}
+        </div>
       </Tabs>
       <a
         className="text-link mobile-github"

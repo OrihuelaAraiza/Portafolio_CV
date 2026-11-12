@@ -1,4 +1,5 @@
 import { useLanguage } from "@/hooks/useLanguage";
+import CodeEditor from "./CodeEditor";
 import { decisions, sourceRoot } from "@/data/ios";
 
 export default function LoopCaseStudy() {
@@ -15,15 +16,7 @@ export default function LoopCaseStudy() {
             {local(item.label)} · {local(item.title)}
           </summary>
           <p>{local(item.text)}</p>
-          <pre
-            tabIndex={0}
-            aria-label={local([
-              "Fragmento de código Swift",
-              "Swift code excerpt",
-            ])}
-          >
-            <code>{item.code}</code>
-          </pre>
+          <CodeEditor file={item.file} code={item.code} line={item.line} />
           <a
             className="text-link"
             href={`${sourceRoot}${item.file.split("/").at(-1)}`}

@@ -107,12 +107,6 @@ function HeroVisual({ scrollProgress }) {
         </div>
       </motion.div>
 
-      <div className="canvas-footer">
-        <span>
-          <span className="status-dot" /> {t("IDEAS EN MOVIMIENTO")}
-        </span>
-        <Code2 size={16} />
-      </div>
     </div>
   );
 }

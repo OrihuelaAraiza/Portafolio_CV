@@ -142,14 +142,6 @@ body::after {
     scale: 1.06;
   }
 }
-@keyframes ping {
-  0% {
-    box-shadow: 0 0 0 0 #5375536e;
-  }
-  100% {
-    box-shadow: 0 0 0 9px #53755300;
-  }
-}
 @keyframes nudge {
   0%,
   100% {
@@ -164,11 +156,6 @@ body::after {
     rotate: 360deg;
   }
 }
-@keyframes blink {
-  50% {
-    opacity: 0.15;
-  }
-}
 .window-back {
   animation: drift 7.5s ease-in-out infinite;
 }
@@ -180,9 +167,6 @@ body::after {
 }
 .design-chip {
   animation: chip-pop 13s ease-in-out 2s infinite;
-}
-.status-dot {
-  animation: ping 2.2s ease-out infinite;
 }
 .scroll-cue svg {
   animation: nudge 1.9s ease-in-out infinite;
@@ -497,35 +481,6 @@ body::after {
 .reel-screen.is-playing .reel-brackets {
   opacity: 0;
 }
-.reel-hud {
-  position: absolute;
-  top: 30px;
-  left: 44px;
-  right: 44px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-family: var(--mono);
-  font-size: 10px;
-  letter-spacing: 0.14em;
-  color: #e2e4df;
-}
-.reel-hud-live {
-  display: flex;
-  align-items: center;
-  gap: 9px;
-}
-.reel-hud-live i {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: #ff5a3c;
-  animation: blink 1.5s steps(1) infinite;
-}
-.reel-hud-start {
-  color: #ffab8b;
-  animation: blink 1.15s steps(1) infinite;
-}
 .reel-corner {
   left: 44px;
   bottom: 34px;
@@ -685,16 +640,44 @@ body::after {
     clip-path: circle(0 at var(--vt-x) var(--vt-y));
   }
   to {
-    clip-path: circle(150vmax at var(--vt-x) var(--vt-y));
+    clip-path: circle(var(--vt-radius) at var(--vt-x) var(--vt-y));
   }
 }
-:root[data-vt="theme"]::view-transition-old(root) {
+:root[data-vt="theme"]::view-transition-old(root),
+:root[data-vt="language"]::view-transition-old(root) {
   animation: none;
   z-index: 1;
 }
-:root[data-vt="theme"]::view-transition-new(root) {
+:root[data-vt="theme"]::view-transition-new(root),
+:root[data-vt="language"]::view-transition-new(root) {
   animation: theme-reveal 0.75s cubic-bezier(0.65, 0, 0.35, 1);
   z-index: 2;
+}
+
+:root[data-vt="language"]::view-transition-new(root) {
+  animation-duration: 0.55s;
+}
+:root[data-vt="content"]::view-transition-old(root),
+:root[data-vt="content"]::view-transition-new(root) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+::view-transition-group(content-reveal) {
+  animation-duration: 0.5s;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+::view-transition-old(content-reveal) {
+  animation: none;
+  opacity: 1;
+}
+::view-transition-new(content-reveal) {
+  animation: theme-reveal 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  mix-blend-mode: normal;
+}
+/* The shared cover only travels when opening a project. Other reveals capture
+   it with the surrounding content, including theme/language inside a dialog. */
+:root[data-vt] .detail-gallery img {
+  view-transition-name: none !important;
 }
 
 /* ── Ajustes por tamaño ───────────────────────────────────────────────── */
@@ -723,13 +706,9 @@ body::after {
     gap: 10px;
     padding: 20px 16px 0;
   }
-  .reel-hud,
   .reel-corner {
     left: 30px;
     right: 30px;
-  }
-  .reel-hud {
-    top: 24px;
   }
   .reel-corner {
     bottom: 26px;
@@ -774,18 +753,12 @@ body::after {
   .prologue-facts dt {
     min-width: 58px;
   }
-  .reel-hud-start,
   .reel-brackets {
     display: none;
   }
-  .reel-hud,
   .reel-corner {
     left: 18px;
     right: 18px;
-  }
-  .reel-hud {
-    top: 16px;
-    font-size: 9px;
   }
   .experiments-head {
     margin-top: 44px;

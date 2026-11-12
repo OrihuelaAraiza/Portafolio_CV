@@ -5,7 +5,9 @@ import { test, expect } from "@playwright/test";
 // movimiento reducido o la propia animación dejen la ficha sin abrir.
 
 const openFirstProject = async (page) => {
-  await page.getByRole("button", { name: "Ver proyecto ROMI", exact: true }).click();
+  await page
+    .getByRole("button", { name: "Ver proyecto ROMI", exact: true })
+    .click();
   await expect(page.getByRole("dialog", { name: "ROMI" })).toBeVisible();
   await expect(page).toHaveURL(/project=romi/);
 };
@@ -88,3 +90,89 @@ test("no anima cuando el visitante pausa el movimiento", async ({ page }) => {
   await openFirstProject(page);
   expect(await page.evaluate(() => window.__transitionCalls())).toBe(0);
 });
+
+test.describe("revelados de contenido", () => {
+  test.use({ reducedMotion: "no-preference" });
+
+  test("idioma, filtros, código y capturas conservan selección y foco", async ({
+    page,
+  }) => {
+    const errors = [];
+    page.on("pageerror", (error) => errors.push(error.message));
+    await page.goto("/");
+    await page.evaluate(() => {
+      const start = document.startViewTransition.bind(document);
+      window.__reveals = [];
+      document.startViewTransition = (update) => {
+        const transition = start(update);
+        transition.ready
+          .then(() =>
+            window.__reveals.push(document.documentElement.dataset.vt),
+          )
+          .catch(() => {});
+        return transition;
+      };
+    });
+    await page
+      .locator(".site-header")
+      .getByRole("button", { name: "English", exact: true })
+      .click();
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    await expect(page.locator("html")).not.toHaveAttribute("data-vt");
+    const filter = page.getByRole("tab", { name: /^Web/ });
+    await filter.click();
+    await expect(filter).toHaveAttribute("aria-selected", "true");
+    await expect(filter).toBeFocused();
+    await expect(page.locator("html")).not.toHaveAttribute("data-vt");
+    await page.getByRole("tab", { name: "Accessibility", exact: true }).click();
+    await expect(page.locator(".xcode-file-tab")).toHaveText(
+      "ProjectJourneyView.swift",
+    );
+    await expect(page.locator("html")).not.toHaveAttribute("data-vt");
+    await page.getByRole("tab", { name: "03 Explore" }).click();
+    await expect(page.locator(".ios-phone img")).toHaveAttribute(
+      "src",
+      /journey-en-/,
+    );
+    await expect(page.locator("html")).not.toHaveAttribute("data-vt");
+    expect(await page.evaluate(() => window.__reveals)).toEqual([
+      "language",
+      "content",
+      "content",
+      "content",
+    ]);
+    expect(errors).toEqual([]);
+  });
+});
+
+for (const mode of ["reduced", "unsupported"]) {
+  test(`los nuevos controles funcionan con ${mode}`, async ({ page }) => {
+    if (mode === "unsupported") {
+      await page.emulateMedia({ reducedMotion: "no-preference" });
+      await page.addInitScript(() => {
+        document.startViewTransition = undefined;
+      });
+    } else {
+      await page.addInitScript(() => {
+        document.startViewTransition = () => {
+          throw new Error("Unexpected animation");
+        };
+      });
+    }
+    const errors = [];
+    page.on("pageerror", (error) => errors.push(error.message));
+    await page.goto("/#ios");
+    await page.getByRole("tab", { name: "Accesibilidad", exact: true }).click();
+    await expect(page.locator(".xcode-file-tab")).toHaveText(
+      "ProjectJourneyView.swift",
+    );
+    await expect(page.locator(".xcode-gutter span").first()).toHaveText("299");
+    await page
+      .locator(".site-header")
+      .getByRole("button", { name: "English", exact: true })
+      .click();
+    await expect(page.locator("html")).toHaveAttribute("lang", "en");
+    await expect(page.locator("html")).not.toHaveAttribute("data-vt");
+    expect(errors).toEqual([]);
+  });
+}

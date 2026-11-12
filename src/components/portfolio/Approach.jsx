@@ -120,9 +120,6 @@ export default function Approach() {
               <span>
                 <Box size={14} /> INTERACTION STUDY / 001
               </span>
-              <span className="scene-live">
-                <i /> {t("3D EN TIEMPO REAL")}
-              </span>
             </div>
             <Sculpture progress={scrollYProgress} />
             <div className="scene-bottom">

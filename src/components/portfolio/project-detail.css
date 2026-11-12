@@ -23,14 +23,6 @@
   color: var(--subtle);
   margin-block: 12px;
 }
-.loop-case-study pre {
-  overflow-x: auto;
-  padding: 18px;
-  border-radius: 6px;
-  background: #20231f;
-  color: #eae8dd;
-  font: 11px/1.85 var(--mono);
-}
 .loop-case-study .text-link {
   margin-top: 16px;
   font-size: 12px;

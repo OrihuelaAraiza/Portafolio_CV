@@ -122,12 +122,6 @@ export default function GameReel() {
             <span className="reel-corner">
               {t("UN MUNDO QUE RESPONDE A LO QUE HACES.")}
             </span>
-            <span className="reel-hud" aria-hidden="true">
-              <span className="reel-hud-live">
-                <i /> {clip.id === "trailer" ? "TRAILER" : "GAMEPLAY"} · P1–P4
-              </span>
-              <span className="reel-hud-start">PRESS START</span>
-            </span>
           </Button>
         )}
         <span className="reel-crt" aria-hidden="true" />

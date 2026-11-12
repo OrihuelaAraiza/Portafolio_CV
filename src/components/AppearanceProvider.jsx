@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { flushSync } from "react-dom";
+import { revealChange } from "@/lib/viewTransition";
 import { MotionConfig } from "framer-motion";
 import { AppearanceContext } from "@/hooks/useAppearance";
 
@@ -59,23 +59,14 @@ export default function AppearanceProvider({ children }) {
   function toggleTheme(event) {
     const next = theme === "dark" ? "light" : "dark";
     const root = document.documentElement;
-    // El tema nuevo se abre en círculo desde el control que lo cambió. Sin la
-    // API, con el movimiento pausado o desde el teclado de la paleta, cambia
-    // sin transición.
-    const origin = event?.currentTarget?.getBoundingClientRect?.();
-    if (!motionDisabled && document.startViewTransition && origin) {
-      root.style.setProperty("--vt-x", `${origin.left + origin.width / 2}px`);
-      root.style.setProperty("--vt-y", `${origin.top + origin.height / 2}px`);
-      root.dataset.vt = "theme";
-      const transition = document.startViewTransition(() => {
-        flushSync(() => setTheme(next));
+    revealChange(
+      () => {
+        setTheme(next);
         root.dataset.theme = next;
         root.style.colorScheme = next;
-      });
-      transition.finished.finally(() => {
-        delete root.dataset.vt;
-      });
-    } else setTheme(next);
+      },
+      { kind: "theme", origin: event?.currentTarget, disabled: motionDisabled },
+    );
     try {
       localStorage.setItem("jp-theme", next);
     } catch {

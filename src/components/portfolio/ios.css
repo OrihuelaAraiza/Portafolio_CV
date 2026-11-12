@@ -267,31 +267,6 @@
   font-size: 12px;
   white-space: normal;
 }
-.ios-code {
-  min-width: 0;
-  background: #20231f;
-  color: #eae8dd;
-  border-radius: 8px;
-  padding: 18px 22px;
-}
-.ios-code > div {
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-  font-family: var(--mono);
-  font-size: 10px;
-  color: #c5c8b8;
-  border-bottom: 1px solid #55584e;
-  padding-bottom: 12px;
-}
-.ios-code pre {
-  font-family: var(--mono);
-  font-size: 11px;
-  line-height: 1.85;
-  overflow-x: auto;
-  margin: 16px 0;
-  tab-size: 2;
-}
 .ios-lab-heading {
   margin: 44px 0 28px;
 }
@@ -438,12 +413,6 @@
   .ios-decision {
     grid-template-columns: 1fr;
     gap: 25px;
-  }
-  .ios-code {
-    padding: 15px;
-  }
-  .ios-code pre {
-    font-size: 10px;
   }
   .ios-lab {
     grid-template-columns: 1fr;

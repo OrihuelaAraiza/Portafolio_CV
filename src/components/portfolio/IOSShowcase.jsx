@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { revealChange } from "@/lib/viewTransition";
 import { ArrowUpRight, ArrowRight, Play, Code2 } from "lucide-react";
 import { useLanguage } from "@/hooks/useLanguage";
 import { useAppearance } from "@/hooks/useAppearance";
@@ -6,6 +7,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { chapters, decisions, lab, sourceRoot } from "@/data/ios";
 import SimulatorPreview from "./SimulatorPreview";
 import LoopOrbit from "@/components/three/LoopOrbit";
+import CodeEditor from "./CodeEditor";
 import "./ios.css";
 
 export default function IOSShowcase({ onOpen }) {
@@ -17,6 +19,9 @@ export default function IOSShowcase({ onOpen }) {
   const [preview, setPreview] = useState(true);
   const [decision, setDecision] = useState("storage");
   const [comparisonLarge, setComparisonLarge] = useState(false);
+  const screenRef = useRef(null);
+  const decisionRef = useRef(null);
+  const comparisonRef = useRef(null);
   const local = (pair) => pair[language === "en" ? 1 : 0];
   const current = chapters.find((item) => item.id === chapter);
   const screen = `/projects/loop/${chapter}-${language}-${captureTheme}-${size}.webp`;
@@ -59,7 +64,7 @@ export default function IOSShowcase({ onOpen }) {
       <div className="ios-showcase">
         <div className="ios-device-stage">
           <LoopOrbit />
-          <div className="ios-screen" id="ios-screen">
+          <div className="ios-screen" id="ios-screen" ref={screenRef}>
             {preview ? (
               <SimulatorPreview
                 frameClassName="ios-phone"
@@ -117,8 +122,13 @@ export default function IOSShowcase({ onOpen }) {
           <Tabs
             value={chapter}
             onValueChange={(value) => {
-              setChapter(value);
-              setPreview(false);
+              revealChange(
+                () => {
+                  setChapter(value);
+                  setPreview(false);
+                },
+                { target: screenRef.current, key: `chapter-${value}` },
+              );
             }}
           >
             <TabsList
@@ -151,8 +161,14 @@ export default function IOSShowcase({ onOpen }) {
                 aria-label={local(["Apariencia", "Appearance"])}
                 value={captureTheme}
                 onChange={(e) => {
-                  setCaptureTheme(e.target.value);
-                  setPreview(false);
+                  const value = e.target.value;
+                  revealChange(
+                    () => {
+                      setCaptureTheme(value);
+                      setPreview(false);
+                    },
+                    { target: screenRef.current },
+                  );
                 }}
               >
                 <option value="light">{local(["Claro", "Light"])}</option>
@@ -165,8 +181,14 @@ export default function IOSShowcase({ onOpen }) {
                 aria-label={local(["Tamaño de texto", "Text size"])}
                 value={size}
                 onChange={(e) => {
-                  setSize(e.target.value);
-                  setPreview(false);
+                  const value = e.target.value;
+                  revealChange(
+                    () => {
+                      setSize(value);
+                      setPreview(false);
+                    },
+                    { target: screenRef.current },
+                  );
                 }}
               >
                 <option value="normal">{local(["Normal", "Default"])}</option>
@@ -224,7 +246,16 @@ export default function IOSShowcase({ onOpen }) {
             ])}
           </h3>
         </div>
-        <Tabs value={decision} onValueChange={setDecision}>
+        <Tabs
+          value={decision}
+          onValueChange={(value) =>
+            revealChange(() => setDecision(value), {
+              target: decisionRef.current,
+              origin: document.activeElement,
+              key: `decision-${value}`,
+            })
+          }
+        >
           <TabsList
             className="ios-decision-tabs"
             aria-label={local([
@@ -238,40 +269,36 @@ export default function IOSShowcase({ onOpen }) {
               </TabsTrigger>
             ))}
           </TabsList>
-          {decisions.map((item) => (
-            <TabsContent className="ios-decision" key={item.id} value={item.id}>
-              <div>
-                <h4>{local(item.title)}</h4>
-                <p>{local(item.text)}</p>
-                <a
-                  className="text-link"
-                  href={`${sourceRoot}${item.file.split("/").at(-1)}`}
-                  download
-                >
-                  {local([
-                    "Descargar fragmento Swift",
-                    "Download Swift excerpt",
-                  ])}{" "}
-                  <ArrowUpRight size={15} />
-                </a>
-              </div>
-              <div className="ios-code">
+          <div ref={decisionRef} className="ios-decision-panels">
+            {decisions.map((item) => (
+              <TabsContent
+                className="ios-decision"
+                key={item.id}
+                value={item.id}
+              >
                 <div>
-                  <span>{item.file.split("/").at(-1)}</span>
-                  <span>Swift</span>
+                  <h4>{local(item.title)}</h4>
+                  <p>{local(item.text)}</p>
+                  <a
+                    className="text-link"
+                    href={`${sourceRoot}${item.file.split("/").at(-1)}`}
+                    download
+                  >
+                    {local([
+                      "Descargar fragmento Swift",
+                      "Download Swift excerpt",
+                    ])}{" "}
+                    <ArrowUpRight size={15} />
+                  </a>
                 </div>
-                <pre
-                  tabIndex={0}
-                  aria-label={local([
-                    "Fragmento de código Swift",
-                    "Swift code excerpt",
-                  ])}
-                >
-                  <code>{item.code}</code>
-                </pre>
-              </div>
-            </TabsContent>
-          ))}
+                <CodeEditor
+                  file={item.file}
+                  code={item.code}
+                  line={item.line}
+                />
+              </TabsContent>
+            ))}
+          </div>
         </Tabs>
       </div>
       <div className="ios-lab-heading">
@@ -288,7 +315,11 @@ export default function IOSShowcase({ onOpen }) {
       <div className="ios-lab">
         {lab.map((item) => (
           <article key={item.id}>
-            <div className="ios-lab-media" id={`ios-lab-${item.id}`}>
+            <div
+              className="ios-lab-media"
+              id={`ios-lab-${item.id}`}
+              ref={item.id === "comparison" ? comparisonRef : undefined}
+            >
               {item.src ? (
                 <SimulatorPreview
                   media={{ ...item, label: local(item.title) }}
@@ -313,7 +344,11 @@ export default function IOSShowcase({ onOpen }) {
               <button
                 className="text-link"
                 aria-pressed={comparisonLarge}
-                onClick={() => setComparisonLarge((value) => !value)}
+                onClick={() =>
+                  revealChange(() => setComparisonLarge((value) => !value), {
+                    target: comparisonRef.current,
+                  })
+                }
               >
                 {comparisonLarge
                   ? local(["Ver lado a lado", "View side by side"])

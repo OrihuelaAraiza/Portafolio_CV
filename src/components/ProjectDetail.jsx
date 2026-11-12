@@ -1,5 +1,6 @@
 import { useLanguage } from "@/hooks/useLanguage";
-import { useState } from "react";
+import { useRef, useState } from "react";
+import { revealChange } from "@/lib/viewTransition";
 import { ArrowLeft, ArrowRight, ArrowUpRight } from "lucide-react";
 import { FiGithub as Github } from "react-icons/fi";
 import { Button } from "@/components/ui/button";
@@ -17,6 +18,17 @@ import {
 export default function ProjectDetail({ project, returnFocus }) {
   const { t } = useLanguage();
   const [screen, setScreen] = useState(0);
+  const gallery = useRef(null);
+  const changeScreen = (offset, origin) =>
+    revealChange(
+      () => {
+        setScreen(
+          (value) =>
+            (value + offset + project.screens.length) % project.screens.length,
+        );
+      },
+      { target: gallery.current, origin },
+    );
   const current = project.screens[screen];
   return (
     <DialogContent
@@ -63,6 +75,7 @@ export default function ProjectDetail({ project, returnFocus }) {
         </div>
       </div>
       <figure
+        ref={gallery}
         className={`detail-gallery ${project.theme} ${project.category === "mobile" ? "is-mobile" : ""}`}
       >
         <img
@@ -85,12 +98,7 @@ export default function ProjectDetail({ project, returnFocus }) {
               size="icon"
               disabled={project.screens.length < 2}
               aria-label={t("Captura anterior")}
-              onClick={() =>
-                setScreen(
-                  (screen - 1 + project.screens.length) %
-                    project.screens.length,
-                )
-              }
+              onClick={(event) => changeScreen(-1, event.currentTarget)}
             >
               <ArrowLeft />
             </Button>
@@ -102,7 +110,7 @@ export default function ProjectDetail({ project, returnFocus }) {
               size="icon"
               disabled={project.screens.length < 2}
               aria-label={t("Siguiente captura")}
-              onClick={() => setScreen((screen + 1) % project.screens.length)}
+              onClick={(event) => changeScreen(1, event.currentTarget)}
             >
               <ArrowRight />
             </Button>

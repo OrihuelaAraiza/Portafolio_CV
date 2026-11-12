@@ -1,0 +1,211 @@
+.xcode-editor {
+  --editor-bg: #fff;
+  --editor-chrome: #ececee;
+  --editor-tabs: #e1e1e4;
+  --editor-line: #d2d2d7;
+  --editor-ink: #26262b;
+  --editor-muted: #62626c;
+  --editor-gutter: #f6f6f8;
+  --swift-keyword: #a626a4;
+  --swift-type: #17646a;
+  --swift-function: #563c92;
+  --swift-number: #243fb6;
+  --swift-string: #b52d22;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid var(--editor-line);
+  border-radius: 11px;
+  background: var(--editor-bg);
+  color: var(--editor-ink);
+  box-shadow:
+    0 12px 35px #0000000b,
+    0 2px 5px #00000005;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  text-align: left;
+}
+[data-theme="dark"] .xcode-editor {
+  --editor-bg: #1f1f24;
+  --editor-chrome: #303035;
+  --editor-tabs: #27272c;
+  --editor-line: #45454d;
+  --editor-ink: #e3e3e9;
+  --editor-muted: #aaaab6;
+  --editor-gutter: #232328;
+  --swift-keyword: #fc79b2;
+  --swift-type: #7bdcc9;
+  --swift-function: #c6a8f5;
+  --swift-number: #d4c3ff;
+  --swift-string: #ff8b82;
+  box-shadow: 0 14px 35px #0003;
+}
+.xcode-toolbar {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 0 14px;
+  background: var(--editor-chrome);
+  border-bottom: 1px solid var(--editor-line);
+  color: var(--editor-muted);
+  font-size: 10px;
+}
+.xcode-window-controls {
+  display: flex;
+  gap: 7px;
+}
+.xcode-window-controls i {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ff5f57;
+  box-shadow: inset 0 0 0 1px #00000012;
+}
+.xcode-window-controls i:nth-child(2) {
+  background: #febc2e;
+}
+.xcode-window-controls i:nth-child(3) {
+  background: #28c840;
+}
+.xcode-project {
+  color: var(--editor-ink);
+  font-weight: 600;
+}
+.xcode-readonly {
+  margin-left: auto;
+}
+.xcode-tabbar {
+  display: flex;
+  background: var(--editor-tabs);
+  border-bottom: 1px solid var(--editor-line);
+}
+.xcode-file-tab {
+  min-width: 0;
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  padding: 10px 16px;
+  background: var(--editor-bg);
+  border-right: 1px solid var(--editor-line);
+  font-size: 11px;
+}
+.xcode-file-tab svg {
+  color: #d44b24;
+  flex-shrink: 0;
+}
+[data-theme="dark"] .xcode-file-tab svg {
+  color: #ff9b78;
+}
+.xcode-file-tab span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.xcode-breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  padding: 8px 13px;
+  border-bottom: 1px solid var(--editor-line);
+  color: var(--editor-muted);
+  font-size: 9px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+.xcode-breadcrumb > svg {
+  flex-shrink: 0;
+}
+.xcode-breadcrumb span {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+}
+.xcode-breadcrumb span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: inline;
+}
+.xcode-breadcrumb span:last-child svg {
+  display: inline;
+  margin-right: 5px;
+}
+.xcode-source {
+  display: flex;
+  align-items: stretch;
+  overflow: auto;
+  font:
+    12px/1.9 "SFMono-Regular",
+    Consolas,
+    "Liberation Mono",
+    monospace;
+  tab-size: 4;
+}
+.xcode-gutter {
+  position: sticky;
+  left: 0;
+  z-index: 1;
+  flex-shrink: 0;
+  padding: 19px 12px 24px 14px;
+  border-right: 1px solid var(--editor-line);
+  background: var(--editor-gutter);
+  color: var(--editor-muted);
+  text-align: right;
+  user-select: none;
+}
+.xcode-gutter span {
+  display: block;
+}
+.xcode-source pre {
+  flex: 1;
+  margin: 0;
+  padding: 19px 20px 24px 14px;
+  background: transparent;
+  color: inherit;
+  border: 0;
+  border-radius: 0;
+  overflow: visible;
+  font: inherit;
+}
+.xcode-source code {
+  font: inherit;
+}
+.swift-keyword {
+  color: var(--swift-keyword);
+}
+.swift-type {
+  color: var(--swift-type);
+}
+.swift-function {
+  color: var(--swift-function);
+}
+.swift-number {
+  color: var(--swift-number);
+}
+.swift-string {
+  color: var(--swift-string);
+}
+.swift-comment {
+  color: var(--editor-muted);
+}
+.xcode-statusbar {
+  display: flex;
+  gap: 14px;
+  padding: 7px 13px;
+  background: var(--editor-chrome);
+  color: var(--editor-muted);
+  border-top: 1px solid var(--editor-line);
+  font-size: 9px;
+}
+.xcode-statusbar > span:last-child {
+  margin-left: auto;
+}
+@media (max-width: 700px) {
+  .xcode-source {
+    font-size: 11px;
+  }
+  .xcode-toolbar {
+    gap: 12px;
+  }
+  .xcode-gutter {
+    padding-inline: 10px;
+  }
+}
