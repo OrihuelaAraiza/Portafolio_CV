@@ -14,6 +14,7 @@ import AppearanceProvider from "@/components/AppearanceProvider";
 import { useAppearance } from "@/hooks/useAppearance";
 import Header from "@/components/portfolio/Header";
 import Hero, { StackStrip } from "@/components/portfolio/Hero";
+import Prologue from "@/components/portfolio/Prologue";
 import Work from "@/components/portfolio/Work";
 import Approach from "@/components/portfolio/Approach";
 import Lab from "@/components/portfolio/Lab";
@@ -27,6 +28,9 @@ import { site } from "@/data/site";
 // chunk todavía en la red React mostraría el estado de carga.
 const importProjectDetail = () => import("@/components/ProjectDetail");
 const ProjectDetail = lazy(importProjectDetail);
+// Scroll suave, cursor y riel de capítulos: adornos que llegan después de la
+// primera pintura y que la página no necesita para funcionar.
+const Effects = lazy(() => import("@/components/fx/Effects"));
 
 function Portfolio() {
   const { t, projects } = useLanguage();
@@ -40,6 +44,14 @@ function Portfolio() {
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 150, damping: 30 });
   const { motionDisabled: reduce } = useAppearance();
+  const [effectsReady, setEffectsReady] = useState(false);
+  useEffect(() => {
+    const idle = window.requestIdleCallback;
+    const show = () => setEffectsReady(true);
+    const handle = idle ? idle(show, { timeout: 2000 }) : setTimeout(show, 600);
+    return () =>
+      idle ? window.cancelIdleCallback(handle) : clearTimeout(handle);
+  }, []);
   useEffect(() => {
     const idle = window.requestIdleCallback;
     const preload = () => importProjectDetail();
@@ -131,6 +143,7 @@ function Portfolio() {
       <main>
         <Hero />
         <StackStrip />
+        <Prologue />
         <Work onOpen={openProject} />
         <Lab onOpenProject={openProject} />
         <Approach />
@@ -138,6 +151,11 @@ function Portfolio() {
         <Contact />
       </main>
       <Footer />
+      {effectsReady && (
+        <Suspense fallback={null}>
+          <Effects />
+        </Suspense>
+      )}
       <CommandPalette
         open={paletteOpen}
         onOpenChange={setPaletteOpen}

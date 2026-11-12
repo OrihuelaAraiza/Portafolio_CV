@@ -1,0 +1,142 @@
+/* Estilos de la capa de efectos diferida (ver Effects.jsx). */
+
+html.has-smooth-scroll {
+  scroll-behavior: auto;
+}
+
+.cursor-follower {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 120;
+  pointer-events: none;
+  width: 0;
+  height: 0;
+}
+.cursor-shape {
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 76px;
+  height: 76px;
+  margin: -38px 0 0 -38px;
+  border-radius: 50%;
+  background: var(--orange);
+  color: #fff;
+  transform: scale(0.105);
+  transition:
+    transform 0.45s cubic-bezier(0.19, 1, 0.22, 1),
+    opacity 0.3s,
+    background 0.3s;
+}
+[data-theme="dark"] .cursor-shape {
+  color: #21150d;
+}
+.cursor-text {
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0;
+  transition: opacity 0.2s;
+}
+.cursor-follower[data-state="hidden"] .cursor-shape {
+  opacity: 0;
+  transform: scale(0);
+}
+.cursor-follower[data-state="link"] .cursor-shape {
+  transform: scale(0.42);
+  opacity: 0.22;
+}
+.cursor-follower[data-state="label"] .cursor-shape {
+  transform: scale(1);
+}
+.cursor-follower[data-state="label"] .cursor-text {
+  opacity: 1;
+  transition-delay: 0.08s;
+}
+
+.chapter-rail {
+  position: fixed;
+  right: 14px;
+  top: 50%;
+  z-index: 25;
+  display: none;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  transform: translateY(-50%);
+}
+@media (min-width: 1380px) and (min-height: 620px) {
+  .chapter-rail {
+    display: flex;
+  }
+}
+.chapter-rail a {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 10px;
+  height: 18px;
+  color: var(--metadata);
+}
+.chapter-rail i {
+  display: block;
+  width: 12px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.55;
+  transform-origin: right;
+  transition:
+    transform 0.4s cubic-bezier(0.19, 1, 0.22, 1),
+    background 0.3s,
+    opacity 0.3s;
+}
+.chapter-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  padding: 3px 7px;
+  border-radius: 3px;
+  background: var(--paper);
+  border: 1px solid var(--line);
+  color: var(--ink);
+  opacity: 0;
+  transform: translateX(6px);
+  transition:
+    opacity 0.25s,
+    transform 0.25s;
+  pointer-events: none;
+}
+.chapter-rail a:hover .chapter-label {
+  opacity: 1;
+  transform: none;
+}
+.chapter-rail a:hover i {
+  transform: scaleX(1.6);
+  opacity: 1;
+}
+.chapter-rail a.active i {
+  background: var(--orange);
+  opacity: 1;
+  height: 2px;
+  transform: scaleX(2.2);
+}
+
+/* Sobre la banda nocturna y sobre el terracota las marcas cambian de tinta. */
+.chapter-rail[data-chapter="laboratorio"] a {
+  color: #abb1a3;
+}
+.chapter-rail[data-chapter="laboratorio"] a.active i {
+  background: #ff996e;
+}
+.chapter-rail[data-chapter="contacto"] a {
+  color: #fff5e9;
+}
+.chapter-rail[data-chapter="contacto"] a.active i {
+  background: #fff5e9;
+}

@@ -91,3 +91,30 @@ Hermes se revisó como posible incorporación, pero no se añadió a la selecci�
 Revisión visual a 320, 390, 1024 y 1440 px, sin desbordamiento horizontal observado. Seis URLs de demo respondieron HTTP 200; eso no certifica sus servicios internos. Carga inicial de JS/CSS: **174.6 / 19.1 kB gzip**, dentro de los límites existentes de 175 / 20 kB. El chunk 3D conserva el aviso orientativo de Vite por superar 500 kB sin comprimir, y sigue cargándose bajo demanda. No se realizó una auditoría manual completa de accesibilidad ni medición de Core Web Vitals de campo.
 
 La verificación anterior corresponde al checkout local previo a la publicación. El despliegue debe cotejarse con el commit publicado en `main`. El CV PDF se conserva sin cambios.
+
+## Actualización del 12 de noviembre de 2026
+
+Petición del autor: mejoras visuales sin rediseño —fondos animados, efectos y narrativa— usando librerías y recursos de terceros, con libertad para tomar material de sus otros repositorios.
+
+### Material incorporado de otros repositorios
+
+Se leyeron los README públicos de `OrihuelaAraiza`. No se consultaron repositorios privados ni se modificó ninguno.
+
+| Entrada | Evidencia revisada | Texto y límites |
+| --- | --- | --- |
+| Visuaid | [README de VisualAid](https://github.com/OrihuelaAraiza/VisualAid): app SwiftUI con detección de color dominante, OCR con lectura por voz, filtros de daltonismo y detección de formas | Se describe lo que el README documenta. Proyecto académico; no se afirma publicación ni uso por terceros. Sin capturas: se enlaza el código. |
+| B-lance | [README de B-Lance](https://github.com/OrihuelaAraiza/B-Lance) y `package.json` (React 19, TypeScript, Motion, Vite): check-in de unos dos minutos, rutas de autorregulación y pausa sensorial guiada | Se conserva el límite que el propio README declara: es una maqueta, no diagnostica ni sustituye atención profesional. |
+| AR Labs | [README de VR](https://github.com/OrihuelaAraiza/VR): laboratorios Unity con AR Foundation y ARKit, seguimiento de una y de dos imágenes | Laboratorios de curso. Se nombra «AR Labs» en el portafolio; el repositorio se llama `VR`. |
+| Prólogo | Formación en Ingeniería en Animación y Videojuegos (CV) y enfoque declarado en el [README de perfil](https://github.com/OrihuelaAraiza/OrihuelaAraiza): interfaces «that feel alive», motion y scrollytelling | Las tres cifras son comprobables en el propio sitio: proyectos del catálogo (se calcula de `projects.length`), plataformas con trabajo enlazado (web, iOS, visionOS, Unity) y los dos reconocimientos que ya figuraban en el perfil. |
+
+El README de perfil describe el rol en ROMI como Frontend Developer; el portafolio mantiene **CTO de ROMI**, confirmado por el autor el 7 de septiembre de 2026. Conviene alinear ese README. Vida Líquida y MySafeBox aparecen ahí como trabajo destacado pero no se incorporaron: no se revisó evidencia suficiente para redactar una ficha.
+
+### Recursos y librerías
+
+- [React Bits](https://reactbits.dev/) (código en [DavidHDev/react-bits](https://github.com/DavidHDev/react-bits), MIT + Commons Clause): se revisaron `Dither`, `ScrollVelocity`, `ScrollReveal`, `Magnet` y `SpotlightCard` como referencia de patrones. El repositorio ya apuntaba a este registro en `jsrepo.json`. Los componentes del portafolio están escritos para sus tokens, su control de movimiento y su presupuesto; no son copias.
+- [OGL](https://github.com/oframe/ogl) para el shader del fondo y [Lenis](https://lenis.darkroom.engineering/) para el scroll suave, ambos cargados bajo demanda.
+- Se descartaron GSAP (duplicaría a Motion, que ya está en la carga inicial) y los fondos basados en three.js + postprocesado (el tramado cabe en un solo pase).
+
+### Validación
+
+`npm run check` completado: ESLint, build, presupuesto (179.3 / 22.2 kB gzip, límites 181 / 24) y la suite de Playwright en escritorio y móvil, que suma `tests/enhancements.spec.js` para la capa nueva. Revisión visual a 390 y 1440 px en ambos temas, con movimiento completo. Las capturas se hicieron con WebGL por software; no se midió rendimiento en dispositivos reales ni Core Web Vitals de campo.

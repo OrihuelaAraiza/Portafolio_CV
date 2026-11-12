@@ -1,18 +1,36 @@
 import { useLanguage } from "@/hooks/useLanguage";
+import { useRef } from "react";
+import { motion, useScroll, useSpring, useTransform } from "framer-motion";
+import { useAppearance } from "@/hooks/useAppearance";
 import { ArrowDownRight, ArrowUpRight, Download } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { profile } from "@/data/portfolio";
 import portrait from "@/assets/home.jpeg";
+import Line from "./Line";
 import Reveal from "./Reveal";
 
 export default function About() {
   const { t } = useLanguage();
+  const { motionDisabled: reduce } = useAppearance();
+  const frame = useRef(null);
+  const list = useRef(null);
+  const { scrollYProgress: frameProgress } = useScroll({
+    target: frame,
+    offset: ["start end", "end start"],
+  });
+  const portraitY = useTransform(frameProgress, [0, 1], ["-7%", "7%"]);
+  const { scrollYProgress: listProgress } = useScroll({
+    target: list,
+    offset: ["start 0.85", "end 0.6"],
+  });
+  const rail = useSpring(listProgress, { stiffness: 120, damping: 28 });
   return (
     <section id="sobre-mi" className="about-section">
       <div className="section-shell about-grid">
         <Reveal className="portrait-column">
-          <div className="portrait-frame">
-            <img
+          <div className="portrait-frame" ref={frame}>
+            <motion.img
+              style={reduce ? undefined : { y: portraitY, scale: 1.16 }}
               src={portrait}
               alt="Juan Pablo Orihuela"
               loading="lazy"
@@ -39,9 +57,10 @@ export default function About() {
               {t("UN POCO SOBRE MÍ")}
             </span>
             <h2>
-              {t("Ojo de diseñador.")}
-              <br />
-              <span className="serif-word">{t("Mente de developer.")}</span>
+              <Line>{t("Ojo de diseñador.")}</Line>{" "}
+              <Line delay={0.1}>
+                <span className="serif-word">{t("Mente de developer.")}</span>
+              </Line>
             </h2>
             <p>
               {t(
@@ -58,7 +77,10 @@ export default function About() {
             </p>
           </Reveal>
           <Reveal>
-            <div className="experience-list">
+            <div className="experience-list" ref={list}>
+              <span className="experience-rail" aria-hidden="true">
+                <motion.span style={{ scaleY: reduce ? 1 : rail }} />
+              </span>
               <div>
                 <span className="experience-year">{t("ACTUALIDAD")}</span>
                 <span>

@@ -16,6 +16,7 @@ import {
 import { FiFigma as Figma } from "react-icons/fi";
 import { useAppearance } from "@/hooks/useAppearance";
 import Sculpture from "@/components/three/Sculpture";
+import Line from "./Line";
 import Reveal from "./Reveal";
 
 const stages = [
@@ -99,10 +100,13 @@ export default function Approach() {
                 {t("DE LA IDEA A LO QUE SIENTES")}
               </span>
               <h2>
-                {t("El detalle no es el final.")}
-                <br />
-                {t("Es")}{" "}
-                <span className="serif-word">{t("el punto de partida.")}</span>
+                <Line>{t("El detalle no es el final.")}</Line>{" "}
+                <Line delay={0.1}>
+                  {t("Es")}{" "}
+                  <span className="serif-word">
+                    {t("el punto de partida.")}
+                  </span>
+                </Line>
               </h2>
             </div>
             <span className="scrolly-hint">
